@@ -375,7 +375,7 @@ class Services_JSON {
 						array_values( $var ) );
 
 					foreach ( $properties as $property ) {
-						if ( self::isError( $property ) ) {
+						if ( $this->isError( $property ) ) {
 							return $property;
 						}
 					}
@@ -387,7 +387,7 @@ class Services_JSON {
 				$elements = array_map( array( $this, 'encode' ), $var );
 
 				foreach ( $elements as $element ) {
-					if ( self::isError( $element ) ) {
+					if ( $this->isError( $element ) ) {
 						return $element;
 					}
 				}
@@ -402,7 +402,7 @@ class Services_JSON {
 					array_values( $vars ) );
 
 				foreach ( $properties as $property ) {
-					if ( self::isError( $property ) ) {
+					if ( $this->isError( $property ) ) {
 						return $property;
 					}
 				}
@@ -428,7 +428,7 @@ class Services_JSON {
 	function name_value( $name, $value ) {
 		$encoded_value = $this->encode( $value );
 
-		if ( self::isError( $encoded_value ) ) {
+		if ( $this->isError( $encoded_value ) ) {
 			return $encoded_value;
 		}
 
