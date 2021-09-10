@@ -1,6 +1,6 @@
 <?php
 
-if ( ! class_exists( Services_JSON ) ) {
+if ( ! class_exists( 'Services_JSON' ) ) {
 	require_once 'JSON.php';
 }
 
