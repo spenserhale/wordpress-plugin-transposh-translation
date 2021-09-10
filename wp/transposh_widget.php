@@ -17,7 +17,7 @@
  */
 
 //Define subwidget files prefix
-define( 'TRANSPOSH_WIDGET_PREFIX', 'tpw_' );
+const TRANSPOSH_WIDGET_PREFIX = 'tpw_';
 
 /**
  * Class for subwidgets to inherit from

@@ -18,7 +18,7 @@
  * adapted metabox sample code from http://www.code-styling.de/
  */
 
-define( 'TR_NONCE', "transposh_nonce" );
+const TR_NONCE = "transposh_nonce";
 
 // class that reperesent the admin page
 class transposh_plugin_admin {

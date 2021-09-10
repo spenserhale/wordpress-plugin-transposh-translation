@@ -12,12 +12,12 @@
  */
 
 // This magic value will cause the option to be set from post
-define( 'TP_FROM_POST', 'tp_post_1x' );
+const TP_FROM_POST = 'tp_post_1x';
 // types of options
-define( 'TP_OPT_BOOLEAN', 0 );
-define( 'TP_OPT_STRING', 1 );
-define( 'TP_OPT_IP', 2 );
-define( 'TP_OPT_OTHER', 3 );
+const TP_OPT_BOOLEAN = 0;
+const TP_OPT_STRING  = 1;
+const TP_OPT_IP      = 2;
+const TP_OPT_OTHER   = 3;
 
 /**
  * @property string $desc Description

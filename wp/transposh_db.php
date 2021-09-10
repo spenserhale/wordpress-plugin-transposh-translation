@@ -20,15 +20,15 @@
 //Constants
 //
 //Table name in database for storing translations
-define( 'TRANSLATIONS_TABLE', 'translations' );
-define( 'TRANSLATIONS_LOG', 'translations_log' );
+const TRANSLATIONS_TABLE = 'translations';
+const TRANSLATIONS_LOG   = 'translations_log';
 
 //Database version
-define( 'DB_VERSION', '1.06' );
+const DB_VERSION = '1.06';
 
 //Constant used as key in options database
-define( 'TRANSPOSH_DB_VERSION', "transposh_db_version" );
-define( 'TRANSPOSH_OPTIONS_DBSETUP', 'transposh_inside_dbupgrade' );
+const TRANSPOSH_DB_VERSION      = "transposh_db_version";
+const TRANSPOSH_OPTIONS_DBSETUP = 'transposh_inside_dbupgrade';
 
 class transposh_database {
 
