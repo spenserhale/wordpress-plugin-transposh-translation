@@ -474,7 +474,7 @@ class transposh_plugin_admin {
 			'languages' );
 		echo '<ul id="default_list"><li id="' . $this->transposh->options->default_language . '" class="languages">'
 		     . transposh_utils::display_flag( "{$this->transposh->transposh_plugin_url}/img/flags", $flag,
-				$langorigname, false/* $this->transposh->options->get_widget_css_flags() */ )
+				$langorigname/* $this->transposh->options->get_widget_css_flags() */ )
 		     . '<input type="hidden" name="languages[]" value="' . $this->transposh->options->default_language . '" />'
 		     . '&nbsp;<span class="langname">' . $langorigname . '</span><span class="langname hidden">' . $langname . '</span></li>';
 		echo '</ul></div>';

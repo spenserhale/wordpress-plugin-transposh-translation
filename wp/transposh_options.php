@@ -266,8 +266,8 @@ class transposh_plugin_options {
 		$this->register_option( 'parser_dont_break_entities', TP_OPT_BOOLEAN, 0 );
 		$this->register_option( 'debug_enable', TP_OPT_BOOLEAN, 0 );
 		$this->register_option( 'debug_loglevel', TP_OPT_OTHER, 3 );
-		$this->register_option( 'debug_logfile', TP_OPT_STRING, '' );
-		$this->register_option( 'debug_remoteip', TP_OPT_IP, '' );
+		$this->register_option( 'debug_logfile', TP_OPT_STRING );
+		$this->register_option( 'debug_remoteip', TP_OPT_IP );
 
 
 		$this->register_option( 'transposh_admin_hide_warnings', TP_OPT_OTHER );
@@ -308,7 +308,7 @@ class transposh_plugin_options {
 	 */
 	public function get_sorted_engines(): array {
 		if ( $this->preferred_translators ) {
-			tp_logger( $this->preferred_translators, 3 );
+			tp_logger( $this->preferred_translators );
 
 			return array_merge( array_flip( explode( ",", $this->preferred_translators ) ),
 				transposh_consts::$engines );
@@ -338,7 +338,7 @@ class transposh_plugin_options {
 			update_option( TRANSPOSH_OPTIONS, $this->options );
 			$this->changed = false;
 		} else {
-			tp_logger( "no changes and no updates done", 3 );
+			tp_logger( "no changes and no updates done" );
 		}
 	}
 

@@ -807,7 +807,7 @@ class tp_parser {
 		// fix feed
 		if ( $this->feed_fix ) {
 			// fix urls on feed
-			tp_logger( 'fixing rss feed', 3 );
+			tp_logger( 'fixing rss feed' );
 			foreach ( array( 'link', 'wfw:commentrss', 'comments' ) as $tag ) {
 				foreach ( $this->html->find( $tag ) as $e ) {
 					$e->innertext = htmlspecialchars( call_user_func( $this->url_rewrite_func, $e->innertext ) );

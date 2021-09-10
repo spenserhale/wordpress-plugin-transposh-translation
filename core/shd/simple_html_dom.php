@@ -38,7 +38,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 	function file_get_html() {
 		$dom  = new simple_html_dom;
 		$args = func_get_args();
-		$dom->load( file_get_contents( ...$args ), true );
+		$dom->load( file_get_contents( ...$args ) );
 
 		return $dom;
 	}
@@ -73,7 +73,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 	function file_get_dom() {
 		$dom  = new simple_html_dom;
 		$args = func_get_args();
-		$dom->load( file_get_contents( ...$args ), true );
+		$dom->load( file_get_contents( ...$args ) );
 
 		return $dom;
 	}
@@ -744,7 +744,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		// load html from file
 		public function load_file(): void {
 			$args = func_get_args();
-			$this->load( file_get_contents( ...$args ), true );
+			$this->load( file_get_contents( ...$args ) );
 		}
 
 		// set callback function
@@ -1259,7 +1259,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 
 		public function loadFile(): void {
 			$args = func_get_args();
-			$this->load( file_get_contents( ...$args ), true );
+			$this->load( file_get_contents( ...$args ) );
 		}
 	}
 }

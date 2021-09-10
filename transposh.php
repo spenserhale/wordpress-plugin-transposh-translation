@@ -152,7 +152,7 @@ class transposh_plugin {
 		$this->transposh_plugin_dir = plugin_dir_path( __FILE__ );
 
 		if ( $this->options->debug_enable ) {
-			tp_logger( 'Transposh object created: ' . $_SERVER['REQUEST_URI'], 3 );
+			tp_logger( 'Transposh object created: ' . $_SERVER['REQUEST_URI'] );
 		}
 
 		$this->transposh_plugin_basename = plugin_basename( __FILE__ );
@@ -383,21 +383,21 @@ class transposh_plugin {
 
 		// Refrain from touching the administrative interface and important pages
 		if ( $this->is_special_page( $_SERVER['REQUEST_URI'] ) && ! $this->attempt_json ) {
-			tp_logger( "Skipping translation for admin pages", 3 );
+			tp_logger( "Skipping translation for admin pages" );
 		} elseif ( $bad_content ) {
 			tp_logger( "Seems like content we should not handle" );
 		}
 		// This one fixed a bug transposh created with other pages (xml generator for other plugins - such as the nextgen gallery)
 		// TODO: need to further investigate (will it be needed?)
 		elseif ( $this->target_language == '' ) {
-			tp_logger( "Skipping translation where target language is unset", 3 );
+			tp_logger( "Skipping translation where target language is unset" );
 			if ( ! $buffer ) {
 				tp_logger( "seems like we had a premature flushing" );
 				$this->tried_buffer = true;
 			}
 		} // Don't translate the default language unless specifically allowed to...
 		elseif ( $this->options->is_default_language( $this->target_language ) && ! $this->options->enable_default_translate ) {
-			tp_logger( "Skipping translation for default language {$this->target_language}", 3 );
+			tp_logger( "Skipping translation for default language {$this->target_language}" );
 		} else {
 			// This one allows to redirect to a static element which we can find, since the redirection will remove
 			// the target language, we are able to avoid nasty redirection loops
@@ -607,7 +607,7 @@ class transposh_plugin {
 	 * @param  WP  $wp  - here we get the WP class
 	 */
 	public function on_parse_request( $wp ): void {
-		tp_logger( 'on_parse_req', 3 );
+		tp_logger( 'on_parse_req' );
 		tp_logger( $wp->query_vars );
 
 		// fix for custom-permalink (and others that might be double parsing?)
@@ -625,7 +625,7 @@ class transposh_plugin {
 		if ( ! $this->target_language ) {
 			$this->target_language = $this->options->default_language;
 		}
-		tp_logger( "requested language: {$this->target_language}", 3 );
+		tp_logger( "requested language: {$this->target_language}" );
 
 		if ( $this->tried_buffer ) {
 			tp_logger( "we will retrigger the output buffering" );
@@ -1136,7 +1136,7 @@ class transposh_plugin {
 	 * @return string Modified where
 	 */
 	public function posts_where_request( $where ): string {
-		tp_logger( $where, 3 );
+		tp_logger( $where );
 		// from query.php line 1742 (v2.8.6)
 		// If a search pattern is specified, load the posts that match
 		$q = &$GLOBALS['wp_query']->query_vars;
@@ -1183,7 +1183,7 @@ class transposh_plugin {
 				}
 			}
 		}
-		tp_logger( $search, 3 );
+		tp_logger( $search );
 
 		return $search . $where;
 	}
@@ -1753,8 +1753,8 @@ class transposh_plugin {
 			$qstr = '&text=' . $q;
 		}
 		$url = 'https://translate.yandex.net/api/v1/tr.json/translate?lang=' . $sl . $tl . $qstr . '&srv=tr-url&id=' . $sid . '-0-0';
-		tp_logger( $url, 3 );
-		tp_logger( $q, 3 );
+		tp_logger( $url );
+		tp_logger( $q );
 		$ch = curl_init();
 		// yandex wants a referer someimes
 		curl_setopt( $ch, CURLOPT_REFERER, "https://translate.yandex.com/" );
@@ -1769,18 +1769,18 @@ class transposh_plugin {
 			return false;
 		}
 		curl_close( $ch );
-		tp_logger( $output, 3 );
+		tp_logger( $output );
 		$jsonarr = json_decode( $output );
-		tp_logger( $jsonarr, 3 );
+		tp_logger( $jsonarr );
 		if ( ! $jsonarr ) {
 			tp_logger( 'No JSON here, failing' );
-			tp_logger( $output, 3 );
+			tp_logger( $output );
 
 			return false;
 		}
 		if ( $jsonarr->code != 200 ) {
 			tp_logger( 'Some sort of error!' );
-			tp_logger( $output, 3 );
+			tp_logger( $output );
 			if ( $jsonarr->code == 406 ) { //invalid session
 				update_option( TRANSPOSH_OPTIONS_YANDEXPROXY, array( '', time() ) );
 			}
@@ -1806,8 +1806,8 @@ class transposh_plugin {
 			$qstr .= $q;
 		}
 		$url = 'http://fanyi.baidu.com/v2transapi';
-		tp_logger( $url, 3 );
-		tp_logger( $q, 3 );
+		tp_logger( $url );
+		tp_logger( $q );
 		$ch = curl_init();
 		curl_setopt( $ch, CURLOPT_URL, $url );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
@@ -1822,12 +1822,12 @@ class transposh_plugin {
 			return false;
 		}
 		curl_close( $ch );
-		tp_logger( $output, 3 );
+		tp_logger( $output );
 		$jsonarr = json_decode( $output );
-		tp_logger( $jsonarr, 3 );
+		tp_logger( $jsonarr );
 		if ( ! $jsonarr ) {
 			tp_logger( 'No JSON here, failing' );
-			tp_logger( $output, 3 );
+			tp_logger( $output );
 
 			return false;
 		}
@@ -1920,9 +1920,9 @@ class transposh_plugin {
 				tp_logger( "Attempt: $attempt", 1 );
 				$url = $gurl . '/translate_a/t?client=te&v=1.0&tl=' . $tl . '&sl=' . $sl . '&tk=' . $this->iq( $iqstr,
 						'406448.272554134' );
-				tp_logger( $url, 3 );
-				tp_logger( $q, 3 );
-				tp_logger( $iqstr, 3 );
+				tp_logger( $url );
+				tp_logger( $q );
+				tp_logger( $iqstr );
 				$ch = curl_init();
 				curl_setopt( $ch, CURLOPT_URL, $url );
 				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
@@ -1943,7 +1943,7 @@ class transposh_plugin {
 				$info   = curl_getinfo( $ch );
 				tp_logger( 'Curl code is: ' . $info['http_code'], 1 );
 				curl_close( $ch );
-				tp_logger( $output, 3 );
+				tp_logger( $output );
 				if ( $info['http_code'] != 200 ) {
 					tp_logger( "method fail - $attempt", 1 );
 					$failed = true;
@@ -1968,7 +1968,7 @@ class transposh_plugin {
 			return false;
 		}
 
-		tp_logger( $output, 3 );
+		tp_logger( $output );
 		// weird output that happens - $output='[[[[["Nnọọ"]],,"en"],[[["ụwa"]],,"en"],[[["Kedu ihe na-eme"]],,"en"]]]';
 		$jsonarr = json_decode( $output );
 		if ( ! $jsonarr ) {
@@ -1978,7 +1978,7 @@ class transposh_plugin {
 			$jsonarr = json_decode( $newout );
 			if ( ! $jsonarr ) {
 				tp_logger( 'No JSON here, failing' );
-				tp_logger( $output, 3 );
+				tp_logger( $output );
 
 				return false;
 			}
@@ -2054,7 +2054,7 @@ class transposh_plugin {
 	public function run_oht(): void {
 		tp_logger( "oht should run", 2 );
 		$oht = get_option( TRANSPOSH_OPTIONS_OHT, array() );
-		tp_logger( $oht, 3 );
+		tp_logger( $oht );
 		$ohtp      = get_option( TRANSPOSH_OPTIONS_OHT_PROJECTS, array() );
 		$projectid = time();
 		//send less data
