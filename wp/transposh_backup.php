@@ -124,9 +124,9 @@ class transposh_backup {
 		$body['home_url'] = $this->transposh->home_url;
 		$body['key']      = $this->transposh->options->transposh_key;
 		$result           = wp_remote_get( TRANSPOSH_RESTORE_SERVICE_URL . "?to={$body['to']}&key={$body['key']}&home_url={$body['home_url']}" ); // gotta be a better way...
-		$lines            = split( "[\n|\r]", $result['body'] );
+		$lines            = preg_split( "[\n|\r]", $result['body'] );
 		foreach ( $lines as $line ) {
-			$trans = split( ',', $line );
+			$trans = preg_split( ',', $line );
 			if ( $trans[0] ) {
 				$this->transposh->database->restore_translation( $trans[0], $trans[1], $trans[2], $trans[3],
 					$trans[4] );
