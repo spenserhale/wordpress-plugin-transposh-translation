@@ -401,14 +401,14 @@ class transposh_plugin_widget extends WP_Widget {
 							if ( $subfile[0] === '.' ) {
 								continue;
 							}
-							if ( substr( $subfile, 0, 4 ) == TRANSPOSH_WIDGET_PREFIX && substr( $subfile,
+							if ( strpos( $subfile, TRANSPOSH_WIDGET_PREFIX ) === 0 && substr( $subfile,
 									- 4 ) === '.php' ) {
 								$widget_files[] = "$file/$subfile";
 							}
 						}
 					}
 				}
-				if ( substr( $file, 0, 4 ) == TRANSPOSH_WIDGET_PREFIX && substr( $file, - 4 ) === '.php' ) {
+				if ( strpos( $file, TRANSPOSH_WIDGET_PREFIX ) === 0 && substr( $file, - 4 ) === '.php' ) {
 					$widget_files[] = $file;
 				}
 			}
