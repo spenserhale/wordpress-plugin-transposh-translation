@@ -162,7 +162,7 @@ class transposh_3rdparty {
 	 */
 	public function bp_activity_after_save( $params ) {
 		// we don't need to modify our own activity stream
-		if ( $params->type == 'new_translation' ) {
+		if ( $params->type === 'new_translation' ) {
 			return;
 		}
 		if ( transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'], $this->transposh->home_url ) ) {

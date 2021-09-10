@@ -72,7 +72,7 @@ class transposh_plugin_admin {
 	 * Return either "checked" or ""
 	 */
 	public function can_translate( $role_name ) {
-		if ( $role_name != 'anonymous' ) {
+		if ( $role_name !== 'anonymous' ) {
 			$role = $GLOBALS['wp_roles']->get_role( $role_name );
 			if ( isset( $role ) && $role->has_cap( TRANSLATOR ) ) {
 				return true;
@@ -331,7 +331,7 @@ class transposh_plugin_admin {
 		// figure out page and other stuff...
 		//echo 'loaded!?';
 		global $wp_locale;
-		if ( $wp_locale->text_direction == 'rtl' ) {
+		if ( $wp_locale->text_direction === 'rtl' ) {
 			$this->localeleft  = 'right';
 			$this->localeright = 'left';
 		}
@@ -373,7 +373,7 @@ class transposh_plugin_admin {
 			             '<p>' . __( 'For One Hour Translation, after registering. The key will be reachable at:',
 					TRANSPOSH_TEXT_DOMAIN ) . '<a href="https://www.onehourtranslation.com/profile/apiKeys/">https://www.onehourtranslation.com/profile/apiKeys/</a>' . '</p>'
 		) );
-		if ( $this->page == 'tp_main' ) {
+		if ( $this->page === 'tp_main' ) {
 			add_screen_option( 'layout_columns', array( 'max' => 4, 'default' => 2 ) );
 			add_meta_box( 'transposh-sidebox-news', __( 'Plugin news', TRANSPOSH_TEXT_DOMAIN ),
 				array( &$this, 'on_sidebox_news_content' ), '', 'normal', 'core' );
@@ -381,7 +381,7 @@ class transposh_plugin_admin {
 				array( &$this, 'on_sidebox_stats_content' ), '', 'column3', 'core' );
 			// add_meta_box('transposh-contentbox-community', __('Transposh community features', TRANSPOSH_TEXT_DOMAIN), array(&$this, 'on_contentbox_community_content'), '', 'normal', 'core');
 		}
-		if ( $this->page == 'tp_editor' ) {
+		if ( $this->page === 'tp_editor' ) {
 			require_once( "transposh_editor.php" );
 			$this->editor_table = new transposh_editor_table();
 			$this->editor_table->add_screen_options();
@@ -458,7 +458,7 @@ class transposh_plugin_admin {
 	public function tp_langs() {
 		// we need some styles
 		global $wp_locale;
-		if ( $wp_locale->text_direction == 'rtl' ) {
+		if ( $wp_locale->text_direction === 'rtl' ) {
 			echo '<style type="text/css">
 	#sortable li, #default_lang li { float: right !important;}
         .logoicon {
@@ -670,7 +670,7 @@ class transposh_plugin_admin {
 	public function tp_engines() {
 		// we need some styles
 		global $wp_locale;
-		if ( $wp_locale->text_direction == 'rtl' ) {
+		if ( $wp_locale->text_direction === 'rtl' ) {
 			echo '<style type="text/css">
 	#sortable li, #default_lang li { float: right !important;}
         .logoicon {

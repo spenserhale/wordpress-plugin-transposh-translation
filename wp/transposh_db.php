@@ -330,7 +330,7 @@ class transposh_database {
 		$translation = esc_sql( html_entity_decode( $trans, ENT_NOQUOTES, 'UTF-8' ) );
 		// The translation might be cached (notice the additional postfix)
 		[ $rev, $cached ] = $this->cache_fetch( 'R_' . $translation, $lang );
-		if ( $rev == 'r' ) {
+		if ( $rev === 'r' ) {
 			tp_logger( "Exit from cache: $translation $cached", 4 );
 
 			return $cached;
@@ -726,7 +726,7 @@ class transposh_database {
 	public function get_all_human_translation_history( $date = "null", $limit = "" ) {
 		$limitterm = '';
 		$dateterm  = '';
-		if ( $date != "null" ) {
+		if ( $date !== "null" ) {
 			$dateterm = "and UNIX_TIMESTAMP(timestamp) > $date";
 		}
 		if ( $limit ) {
@@ -769,7 +769,7 @@ class transposh_database {
 		if ( $source != '' ) {
 			$sourceterm = "source=$source";
 		}
-		if ( $date != "null" ) {
+		if ( $date !== "null" ) {
 			$dateterm = "";
 			if ( $sourceterm ) {
 				$dateterm = "AND ";
@@ -807,7 +807,7 @@ class transposh_database {
 		if ( $source != '' ) {
 			$sourceterm = "source=$source";
 		}
-		if ( $date != "null" ) {
+		if ( $date !== "null" ) {
 			$dateterm = "";
 			if ( $sourceterm ) {
 				$dateterm = "AND ";

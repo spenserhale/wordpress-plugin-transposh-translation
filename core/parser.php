@@ -216,12 +216,12 @@ class tp_parser {
 	 * @return int length of entity
 	 */
 	public function is_html_entity( $string, $position ) {
-		if ( $string[ $position ] == '&' ) {
+		if ( $string[ $position ] === '&' ) {
 			$end_pos = $position + 1;
-			while ( $string[ $end_pos ] == '#' || $this->is_digit( $string[ $end_pos ] ) || $this->is_a_to_z_character( $string[ $end_pos ] ) ) {
+			while ( $string[ $end_pos ] === '#' || $this->is_digit( $string[ $end_pos ] ) || $this->is_a_to_z_character( $string[ $end_pos ] ) ) {
 				++ $end_pos;
 			}
-			if ( $string[ $end_pos ] == ';' ) {
+			if ( $string[ $end_pos ] === ';' ) {
 				return $end_pos - $position + 1;
 			}
 		}
@@ -457,9 +457,9 @@ class tp_parser {
 				//skip past entity
 				$pos += $len_of_entity;
 			} // we have a special case for <> tags which might have came to us (maybe in xml feeds) (we'll skip them...)
-			elseif ( $string[ $pos ] == '<' ) {
+			elseif ( $string[ $pos ] === '<' ) {
 				$this->tag_phrase( $string, $start, $pos );
-				while ( $string[ $pos ] != '>' && $pos < strlen( $string ) ) {
+				while ( $string[ $pos ] !== '>' && $pos < strlen( $string ) ) {
 					$pos ++;
 				}
 				$pos ++;
@@ -566,13 +566,13 @@ class tp_parser {
 
 		// we can only do translation for elements which are in the body, not in other places, and this must
 		// move here due to the possibility of early recurse in default language
-		if ( $node->tag == 'body' ) {
+		if ( $node->tag === 'body' ) {
 			$this->inbody = true;
 		}
 
 		// this again should be here, the different behaviour on select and textarea
 		// for now - we assume that they can't include each other
-		elseif ( $node->tag == 'select' || $node->tag == 'textarea' || $node->tag == 'noscript' ) {
+		elseif ( $node->tag === 'select' || $node->tag === 'textarea' || $node->tag === 'noscript' ) {
 			$this->inselect    = true;
 			$inselect_set_here = true;
 		}
@@ -606,29 +606,29 @@ class tp_parser {
 			return;
 		}
 
-		if ( $node->tag == 'text' ) {
+		if ( $node->tag === 'text' ) {
 			// this prevents translation of a link that just surrounds its address
-			if ( $node->parent->tag == 'a' && $node->parent->href == $node->outertext ) {
+			if ( $node->parent->tag === 'a' && $node->parent->href == $node->outertext ) {
 				return;
 			}
 			// link tags inners are to be ignored
-			if ( $node->parent->tag == 'link' ) {
+			if ( $node->parent->tag === 'link' ) {
 				return;
 			}
 			if ( trim( $node->outertext ) ) {
 				$this->parsetext( $node->outertext );
 			}
 		} // for anchors we will rewrite urls if we can
-		elseif ( $node->tag == 'a' ) {
+		elseif ( $node->tag === 'a' ) {
 			array_push( $this->atags, $node );
 		} // same for options, although normally not required (ticket #34)
-		elseif ( $node->tag == 'option' ) {
+		elseif ( $node->tag === 'option' ) {
 			array_push( $this->otags, $node );
 		} // in submit type inputs, we want to translate the value
-		elseif ( $node->tag == 'input' && $node->type == 'submit' ) {
+		elseif ( $node->tag === 'input' && $node->type === 'submit' ) {
 			$this->parsetext( $node->value );
 		} // for iframes we will rewrite urls if we can
-		elseif ( $node->tag == 'iframe' ) {
+		elseif ( $node->tag === 'iframe' ) {
 			if ( $this->url_rewrite_func ) {
 				$node->src = call_user_func_array( $this->url_rewrite_func, array( $node->src ) );
 				tp_logger( 'iframe: ' . $node->src, 4 );
@@ -647,7 +647,7 @@ class tp_parser {
 		}
 
 		// Meta content (keywords, description) are also good places to translate (but not in robots... or http-equiv)
-		if ( $node->tag == 'meta' && $node->content && ( $node->name != 'robots' ) && ( $node->name != 'viewport' ) && ( $node->{'http-equiv'} != 'Content-Type' ) ) {
+		if ( $node->tag === 'meta' && $node->content && ( $node->name !== 'robots' ) && ( $node->name !== 'viewport' ) && ( $node->{'http-equiv'} !== 'Content-Type' ) ) {
 			$this->parsetext( $node->content );
 		}
 
@@ -740,7 +740,7 @@ class tp_parser {
 		$this->stats = new tp_parserstats();
 		// handler for possible json (buddypress)
 		if ( $this->might_json ) {
-			if ( $string[0] == '{' ) {
+			if ( $string[0] === '{' ) {
 				$jsoner = json_decode( $string );
 				if ( $jsoner != null ) {
 					tp_logger( "json detected (buddypress?)", 4 );
@@ -974,7 +974,7 @@ class tp_parser {
 				tp_logger( "$title-original: $e->$title}", 4 );
 				if ( isset( $e->nodes ) ) {
 					foreach ( $e->nodes as $ep ) {
-						if ( $ep->tag == 'phrase' ) {
+						if ( $ep->tag === 'phrase' ) {
 							[ $source, $translated_text ] = call_user_func_array( $this->fetch_translate_func,
 								array( $ep->phrase, $this->lang ) );
 							// more stats
@@ -1039,7 +1039,7 @@ class tp_parser {
 			$newtext = '';
 
 			foreach ( $e->nodes as $ep ) {
-				if ( $ep->tag == 'phrase' ) {
+				if ( $ep->tag === 'phrase' ) {
 					// even more stats
 					$this->stats->total_phrases ++;
 					$this->stats->meta_phrases ++;
@@ -1119,7 +1119,7 @@ class tp_parser {
 		// mark translateable elements
 		$this->translate_tagging( $this->html->root );
 		foreach ( $this->html->nodes as $ep ) {
-			if ( $ep->tag == 'phrase' ) {
+			if ( $ep->tag === 'phrase' ) {
 				$result[ $ep->phrase ] = $ep->phrase;
 			}
 		}

@@ -464,45 +464,45 @@ class transposh_plugin {
 		// this is an ajax special case, currently crafted and tested on buddy press, lets hope this won't make hell break loose.
 		// it basically sets language based on referred when accessing wp-load.php (which is the way bp does ajax)
 		tp_logger( substr( $_SERVER['SCRIPT_FILENAME'], - 11 ), 5 );
-		if ( substr( $_SERVER['SCRIPT_FILENAME'], - 11 ) == 'wp-load.php' ) {
+		if ( substr( $_SERVER['SCRIPT_FILENAME'], - 11 ) === 'wp-load.php' ) {
 			$this->target_language = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'],
 				$this->home_url );
 			$this->attempt_json    = true;
 		}
 
 		//buddypress old activity
-		if ( isset( $_POST['action'] ) && $_POST['action'] == 'activity_get_older_updates' ) {
+		if ( isset( $_POST['action'] ) && $_POST['action'] === 'activity_get_older_updates' ) {
 			$this->target_language = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'],
 				$this->home_url );
 			$this->attempt_json    = true;
 		}
 		//alm news
-		if ( isset( $_GET['action'] ) && $_GET['action'] == 'alm_query_posts' ) {
+		if ( isset( $_GET['action'] ) && $_GET['action'] === 'alm_query_posts' ) {
 			// $_SERVER['REQUEST_URI'] = $_SERVER['HTTP_REFERER'];
 			$this->target_language = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'],
 				$this->home_url );
 		}
 		//woocommerce_update_order_review
-		if ( isset( $_POST['action'] ) && $_POST['action'] == 'woocommerce_update_order_review' ) {
+		if ( isset( $_POST['action'] ) && $_POST['action'] === 'woocommerce_update_order_review' ) {
 			$this->target_language = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'],
 				$this->home_url );
 			$this->attempt_json    = true;
 		}
 
-		if ( isset( $_GET['wc-ajax'] ) && $_GET['wc-ajax'] == 'update_order_review' ) {
+		if ( isset( $_GET['wc-ajax'] ) && $_GET['wc-ajax'] === 'update_order_review' ) {
 			$this->target_language = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'],
 				$this->home_url );
 			$this->attempt_json    = true;
 		}
 
 		//woocommerce_get_refreshed_fragments
-		if ( isset( $_POST['action'] ) && $_POST['action'] == 'woocommerce_get_refreshed_fragments' ) {
+		if ( isset( $_POST['action'] ) && $_POST['action'] === 'woocommerce_get_refreshed_fragments' ) {
 			$this->target_language = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'],
 				$this->home_url );
 			$this->attempt_json    = true;
 		}
 
-		if ( isset( $_POST['action'] ) && $_POST['action'] == 'woocommerce_add_to_cart' ) {
+		if ( isset( $_POST['action'] ) && $_POST['action'] === 'woocommerce_add_to_cart' ) {
 			$this->target_language = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'],
 				$this->home_url );
 			$this->attempt_json    = true;
@@ -1360,7 +1360,7 @@ class transposh_plugin {
 		if ( in_array( $domain, transposh_consts::$ignored_po_domains ) ) {
 			return $translation;
 		}
-		if ( $translation != $orig && $translation != "'" ) { // who thought about this, causing apostrophes to break
+		if ( $translation != $orig && $translation !== "'" ) { // who thought about this, causing apostrophes to break
 			$translation = TP_GTXT_BRK . $translation . TP_GTXT_BRK_CLOSER;
 		}
 
@@ -1599,7 +1599,7 @@ class transposh_plugin {
 		}
 		$sl          = $_GET['sl'] ?? '';
 		$suggestmode = false; // the suggest mode takes one string only, and does not save to the database
-		if ( isset( $_GET['m'] ) && $_GET['m'] == 's' ) {
+		if ( isset( $_GET['m'] ) && $_GET['m'] === 's' ) {
 			$suggestmode = true;
 		}
 		if ( $suggestmode ) {

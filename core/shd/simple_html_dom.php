@@ -464,7 +464,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 				case '$=':
 					return preg_match( "/" . preg_quote( $pattern, '/' ) . "$/", $value );
 				case '*=':
-					if ( $pattern[0] == '/' ) {
+					if ( $pattern[0] === '/' ) {
 						return preg_match( $pattern, $value );
 					}
 
@@ -1003,7 +1003,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 				}
 
 				// handle mismatch '<'
-				if ( $this->doc[ $this->pos - 1 ] == '<' ) {
+				if ( $this->doc[ $this->pos - 1 ] === '<' ) {
 					$node->nodetype            = HDOM_TYPE_TEXT;
 					$node->tag                 = 'text';
 					$node->attr                = array();
@@ -1029,7 +1029,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 						//no value attr: nowrap, checked selected...
 						$node->_[ HDOM_INFO_QUOTE ][] = HDOM_QUOTE_NO;
 						$node->attr[ $name ]          = true;
-						if ( $this->char != '>' ) {
+						if ( $this->char !== '>' ) {
 							$this->char = $this->doc[ -- $this->pos ];
 						} // prev
 					}

@@ -154,7 +154,7 @@ class transposh_plugin_widget extends WP_Widget {
 	 */
 	public function load_widget( $file ) {
 		tp_logger( "widget loaded: $file", 4 );
-		if ( $file[0] == '*' ) {
+		if ( $file[0] === '*' ) {
 			$upload     = wp_upload_dir();
 			$upload_dir = $upload['basedir'] . '/' . TRANSPOSH_DIR_UPLOAD . '/' . TRANSPOSH_DIR_WIDGETS;
 			$widget_src = $upload_dir . '/' . substr( $file, 1 );
@@ -189,7 +189,7 @@ class transposh_plugin_widget extends WP_Widget {
 			$class = $this->load_widget( $key );
 			if ( class_exists( $class ) ) {
 				$tmpclass = new $class;
-				if ( $key[0] == '*' ) {
+				if ( $key[0] === '*' ) {
 					$upload = wp_upload_dir();
 					$tmpclass->tp_widget_css( substr( $key, 1 ), $upload['basedir'] . '/' . TRANSPOSH_DIR_UPLOAD . '/',
 						$upload['baseurl'] . '/' . TRANSPOSH_DIR_UPLOAD );
@@ -219,7 +219,7 @@ class transposh_plugin_widget extends WP_Widget {
 			$class = $this->load_widget( $key );
 			if ( class_exists( $class ) ) {
 				$tmpclass = new $class;
-				if ( $key[0] == '*' ) {
+				if ( $key[0] === '*' ) {
 					$upload = wp_upload_dir();
 					$tmpclass->tp_widget_js( substr( $key, 1 ), $upload['basedir'] . '/' . TRANSPOSH_DIR_UPLOAD . '/',
 						$upload['baseurl'] . '/' . TRANSPOSH_DIR_UPLOAD );
@@ -391,24 +391,24 @@ class transposh_plugin_widget extends WP_Widget {
 		$widget_files = array();
 		if ( $widgets_dir ) {
 			while ( ( $file = readdir( $widgets_dir ) ) !== false ) {
-				if ( substr( $file, 0, 1 ) == '.' ) {
+				if ( substr( $file, 0, 1 ) === '.' ) {
 					continue;
 				}
 				if ( is_dir( $widget_root . '/' . $file ) ) {
 					$widgets_subdir = @ opendir( $widget_root . '/' . $file );
 					if ( $widgets_subdir ) {
 						while ( ( $subfile = readdir( $widgets_subdir ) ) !== false ) {
-							if ( substr( $subfile, 0, 1 ) == '.' ) {
+							if ( substr( $subfile, 0, 1 ) === '.' ) {
 								continue;
 							}
 							if ( substr( $subfile, 0, 4 ) == TRANSPOSH_WIDGET_PREFIX && substr( $subfile,
-									- 4 ) == '.php' ) {
+									- 4 ) === '.php' ) {
 								$widget_files[] = "$file/$subfile";
 							}
 						}
 					}
 				}
-				if ( substr( $file, 0, 4 ) == TRANSPOSH_WIDGET_PREFIX && substr( $file, - 4 ) == '.php' ) {
+				if ( substr( $file, 0, 4 ) == TRANSPOSH_WIDGET_PREFIX && substr( $file, - 4 ) === '.php' ) {
 					$widget_files[] = $file;
 				}
 			}

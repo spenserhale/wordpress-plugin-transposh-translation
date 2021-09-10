@@ -299,13 +299,13 @@ class transposh_utils {
 			return false;
 		}
 
-		$uri = isset( $parsed['scheme'] ) ? $parsed['scheme'] . ':' . ( ( strtolower( $parsed['scheme'] ) == 'mailto' ) ? '' : '//' ) : '';
+		$uri = isset( $parsed['scheme'] ) ? $parsed['scheme'] . ':' . ( ( strtolower( $parsed['scheme'] ) === 'mailto' ) ? '' : '//' ) : '';
 		$uri .= isset( $parsed['user'] ) ? $parsed['user'] . ( isset( $parsed['pass'] ) ? ':' . $parsed['pass'] : '' ) . '@' : '';
 		$uri .= $parsed['host'] ?? '';
 		$uri .= isset( $parsed['port'] ) ? ':' . $parsed['port'] : '';
 
 		if ( isset( $parsed['path'] ) ) {
-			$uri .= ( substr( $parsed['path'], 0, 1 ) == '/' ) ?
+			$uri .= ( substr( $parsed['path'], 0, 1 ) === '/' ) ?
 				$parsed['path'] : ( ( ! empty( $uri ) ? '/' : '' ) . $parsed['path'] );
 		}
 
@@ -386,7 +386,7 @@ class transposh_utils {
 				}
 			}
 		}
-		if ( substr( $href, strlen( $href ) - 1 ) == '/' ) {
+		if ( substr( $href, strlen( $href ) - 1 ) === '/' ) {
 			$url .= '/';
 		}
 
@@ -449,7 +449,7 @@ class transposh_utils {
 		//$url2 = rtrim($url2,'/');
 		// tp_logger("h $home_url hr $href ur $url ur2 $url2");
 		//$href = $this->home_url.$url2;
-		if ( substr( $href, strlen( $href ) - 1 ) == '/' ) {
+		if ( substr( $href, strlen( $href ) - 1 ) === '/' ) {
 			$url2 .= '/';
 		}
 		$url2 = str_replace( '//', '/', $url2 );
@@ -507,7 +507,7 @@ class transposh_utils {
 		$http_accept_language = "auto"
 	) {
 		// if $http_accept_language was left out, read it from the HTTP-Header
-		if ( $http_accept_language == "auto" ) {
+		if ( $http_accept_language === "auto" ) {
 			$http_accept_language = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 		}
 
@@ -524,7 +524,7 @@ class transposh_utils {
 			PREG_SET_ORDER );
 
 		// default language (in case of no hits) is the first in the array
-		if ( $default_lang == 'auto' ) {
+		if ( $default_lang === 'auto' ) {
 			$bestlang = $available_languages[0];
 		} else {
 			$bestlang = $default_lang;
@@ -560,7 +560,7 @@ class transposh_utils {
 	}
 
 	public static function language_from_country( $available_languages, $country, $default_lang = "auto" ) {
-		if ( $default_lang == 'auto' ) {
+		if ( $default_lang === 'auto' ) {
 			$bestlang = $available_languages[0];
 		} else {
 			$bestlang = $default_lang;
