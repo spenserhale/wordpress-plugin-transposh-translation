@@ -753,7 +753,9 @@ class Services_JSON {
 	public function isError( $data, $code = null ) {
 		if ( class_exists( 'pear' ) ) {
 			return PEAR::isError( $data, $code );
-		} elseif ( is_object( $data ) && ( $data instanceof services_json_error ) ) {
+		}
+
+		if ( $data instanceof services_json_error ) {
 			return true;
 		}
 
