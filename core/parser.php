@@ -822,7 +822,7 @@ class tp_parser {
 			}
 			// guid is not really a url -- in some future, we can check if permalink is true and probably falsify it
 			foreach ( $this->html->find( 'guid' ) as $e ) {
-				$e->innertext = $e->innertext . '-' . $this->lang;
+				$e->innertext .= '-' . $this->lang;
 				unset( $e->nodes );
 			}
 			// fix feed language

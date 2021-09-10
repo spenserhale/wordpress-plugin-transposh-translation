@@ -327,7 +327,7 @@ class transposh_plugin_options {
 
 	function set_transposh_admin_hide_warning( $id ) {
 		if ( ! $this->get_transposh_admin_hide_warning( $id ) ) {
-			$this->transposh_admin_hide_warnings = $this->transposh_admin_hide_warnings . $id . ',';
+			$this->transposh_admin_hide_warnings .= $id . ',';
 		}
 	}
 
