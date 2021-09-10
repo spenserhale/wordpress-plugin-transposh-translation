@@ -734,13 +734,13 @@ class transposh_plugin_admin {
 			$timeforevent = floor( ( max( array( wp_next_scheduled( 'transposh_oht_event' ) - time(), 0 ) ) ) / 60 );
 			if ( ( max( array( wp_next_scheduled( 'transposh_oht_event' ) - time(), 0 ) ) ) ) {
 				$this->header( sprintf( __( '%d phrases currently queued for next job in ~%d minutes',
-					TRANSPOSH_TEXT_DOMAIN ), sizeof( $oht ), $timeforevent ) );
+					TRANSPOSH_TEXT_DOMAIN ), count( $oht ), $timeforevent ) );
 			}
 		}
 		$ohtp = get_option( TRANSPOSH_OPTIONS_OHT_PROJECTS, array() );
 		if ( ! empty( $ohtp ) ) {
 			$this->header( sprintf( __( '%d projects have been submitted and waiting for completion',
-				TRANSPOSH_TEXT_DOMAIN ), sizeof( $ohtp ) ) );
+				TRANSPOSH_TEXT_DOMAIN ), count( $ohtp ) ) );
 		}
 		$this->sectionstop();
 	}

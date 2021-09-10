@@ -369,7 +369,7 @@ class Services_JSON {
 				 */
 
 				// treat as a JSON object
-				if ( is_array( $var ) && count( $var ) && ( array_keys( $var ) !== range( 0, sizeof( $var ) - 1 ) ) ) {
+				if ( is_array( $var ) && count( $var ) && ( array_keys( $var ) !== range( 0, count( $var ) - 1 ) ) ) {
 					$properties = array_map( array( $this, 'name_value' ),
 						array_keys( $var ),
 						array_values( $var ) );
@@ -380,7 +380,7 @@ class Services_JSON {
 						}
 					}
 
-					return '{' . join( ',', $properties ) . '}';
+					return '{' . implode( ',', $properties ) . '}';
 				}
 
 				// treat it like a regular array
@@ -392,7 +392,7 @@ class Services_JSON {
 					}
 				}
 
-				return '[' . join( ',', $elements ) . ']';
+				return '[' . implode( ',', $elements ) . ']';
 
 			case 'object':
 				$vars = get_object_vars( $var );
@@ -407,7 +407,7 @@ class Services_JSON {
 					}
 				}
 
-				return '{' . join( ',', $properties ) . '}';
+				return '{' . implode( ',', $properties ) . '}';
 
 			default:
 				return ( $this->use & SERVICES_JSON_SUPPRESS_ERRORS )
