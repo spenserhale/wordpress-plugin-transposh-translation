@@ -391,14 +391,14 @@ class transposh_plugin_widget extends WP_Widget {
 		$widget_files = array();
 		if ( $widgets_dir ) {
 			while ( ( $file = readdir( $widgets_dir ) ) !== false ) {
-				if ( substr( $file, 0, 1 ) === '.' ) {
+				if ( $file[0] === '.' ) {
 					continue;
 				}
 				if ( is_dir( $widget_root . '/' . $file ) ) {
 					$widgets_subdir = @ opendir( $widget_root . '/' . $file );
 					if ( $widgets_subdir ) {
 						while ( ( $subfile = readdir( $widgets_subdir ) ) !== false ) {
-							if ( substr( $subfile, 0, 1 ) === '.' ) {
+							if ( $subfile[0] === '.' ) {
 								continue;
 							}
 							if ( substr( $subfile, 0, 4 ) == TRANSPOSH_WIDGET_PREFIX && substr( $subfile,

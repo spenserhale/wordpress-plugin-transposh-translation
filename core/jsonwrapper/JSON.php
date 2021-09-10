@@ -502,7 +502,7 @@ class Services_JSON {
 						: (float) $str;
 				} elseif ( preg_match( '/^("|\').*(\1)$/s', $str, $m ) && $m[1] == $m[2] ) {
 					// STRINGS RETURNED IN UTF-8 FORMAT
-					$delim       = substr( $str, 0, 1 );
+					$delim       = $str[0];
 					$chrs        = substr( $str, 1, - 1 );
 					$utf8        = '';
 					$strlen_chrs = strlen( $chrs );
