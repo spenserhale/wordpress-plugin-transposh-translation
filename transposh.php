@@ -173,7 +173,7 @@ class transposh_plugin {
 		add_filter( 'comment_post_redirect', array( &$this, 'comment_post_redirect_filter' ) );
 		add_filter( 'comment_text', array( &$this, 'comment_text_wrap' ), 9999 ); // this is a late filter...
 		add_action( 'init', array( &$this, 'on_init' ), 0 ); // really high priority
-//        add_action('admin_init', array(&$this, 'on_admin_init')); might use to mark where not to work?
+		add_action( 'admin_init', array( &$this, 'on_admin_init' ) );
 		add_action( 'parse_request', array( &$this, 'on_parse_request' ), 0 ); // should have high enough priority
 		add_action( 'plugins_loaded', array( &$this, 'plugin_loaded' ) );
 		add_action( 'shutdown', array( &$this, 'on_shutdown' ) );
@@ -367,6 +367,11 @@ class transposh_plugin {
           global $wp;
           $this->on_parse_request($wp);
           } */
+
+		if ( ! isset( $this->target_language ) ) {
+			return $buffer;
+		}
+
 		tp_logger( 'processing page hit with language:' . $this->target_language, 1 );
 		$bad_content = false;
 		foreach ( headers_list() as $header ) {
@@ -442,9 +447,11 @@ class transposh_plugin {
 		return $buffer;
 	}
 
-//    function on_admin_init() {
-//        tp_logger("admin init called");
-//    }
+    public function on_admin_init() {
+        tp_logger("admin init called");
+		$this->set_target_language();
+	    $this->edit_mode = false;
+    }
 
 	/**
 	 * Setup a buffer that will contain the contents of the html page.
@@ -611,23 +618,7 @@ class transposh_plugin {
 	public function on_parse_request( WP $wp ): void {
 		tp_logger( 'on_parse_req' );
 		tp_logger( $wp->query_vars );
-
-		// fix for custom-permalink (and others that might be double parsing?)
-		if ( isset( $this->target_language ) ) {
-			return;
-		}
-
-		// first we get the target language
-		/*        $this->target_language = (isset($wp->query_vars[LANG_PARAM])) ? $wp->query_vars[LANG_PARAM] : '';
-          if (!$this->target_language)
-          $this->target_language = $this->options->default_language;
-          tp_logger("requested language: {$this->target_language}"); */
-		// TODO TOCHECK!!!!!!!!!!!!!!!!!!!!!!!!!!1
-		$this->target_language = $this->tgl;
-		if ( ! $this->target_language ) {
-			$this->target_language = $this->options->default_language;
-		}
-		tp_logger( "requested language: {$this->target_language}" );
+		$this->set_target_language();
 
 		if ( $this->tried_buffer ) {
 			tp_logger( "we will retrigger the output buffering" );
@@ -878,7 +869,7 @@ class transposh_plugin {
 	public function add_transposh_js(): void {
 		//not in any translation mode - no need for any js.
 		// TODO: need to include if allowing of setting default language - but smaller!
-		if ( ! ( $this->edit_mode || $this->is_auto_translate_permitted() || is_admin() || $this->options->widget_allow_set_deflang ) ) {
+		if ( ! ( is_admin() || $this->edit_mode || $this->is_auto_translate_permitted() || $this->options->widget_allow_set_deflang ) ) {
 			return;
 		}
 		// TODO, check just for settings page admin and pages with our translate
@@ -923,15 +914,13 @@ class transposh_plugin {
 			$script_params['noauto'] = 1;
 		}
 
-		// load translations needed for edit interface
 		if ( $this->edit_mode ) {
+			// load translations needed for edit interface
 			$script_params['edit'] = 1;
 			if ( file_exists( $this->transposh_plugin_dir . TRANSPOSH_DIR_JS . '/l/' . $this->target_language . '.js' ) ) {
 				$script_params['locale'] = 1;
 			}
-		}
-		// set theme when it is needed
-		if ( $this->edit_mode ) {
+			// set theme when it is needed
 			$script_params['theme'] = $this->options->widget_theme;
 			if ( $this->options->jqueryui_override ) {
 				$script_params['jQueryUI'] = '//ajax.googleapis.com/ajax/libs/jqueryui/' . $this->options->jqueryui_override . '/';
@@ -2244,6 +2233,25 @@ class transposh_plugin {
 		}
 
 		return $res;
+	}
+
+	private function set_target_language(): void {
+		// fix for custom-permalink (and others that might be double parsing?)
+		if ( isset( $this->target_language ) ) {
+			return;
+		}
+
+		// first we get the target language
+		/*        $this->target_language = (isset($wp->query_vars[LANG_PARAM])) ? $wp->query_vars[LANG_PARAM] : '';
+          if (!$this->target_language)
+          $this->target_language = $this->options->default_language;
+          tp_logger("requested language: {$this->target_language}"); */
+		// TODO TOCHECK!!!!!!!!!!!!!!!!!!!!!!!!!!1
+		$this->target_language = $this->tgl;
+		if ( ! $this->target_language ) {
+			$this->target_language = $this->options->default_language;
+		}
+		tp_logger( "requested language: {$this->target_language}" );
 	}
 
 }
