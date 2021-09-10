@@ -102,10 +102,10 @@ class transposh_plugin {
 	private string $search_s;
 
 	/** @var bool variable to make sure we only attempt to fix the url once, could have used remove_filter */
-	private $got_request = false;
+	private bool $got_request = false;
 
 	/** @var bool might be that page is json... */
-	private $attempt_json = false;
+	private bool $attempt_json = false;
 
 	/** @var boolean Is the wp_redirect being called by transposh? */
 	private bool $transposh_redirect = false;

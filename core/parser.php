@@ -136,7 +136,7 @@ class tp_parser {
 	private bool $inbody = false;
 
 	/** @var bool fact that we are in select or other similar elements */
-	private $inselect = false;
+	private bool $inselect = false;
 	public $is_edit_mode;
 	public $is_auto_translate;
 	public $feed_fix;

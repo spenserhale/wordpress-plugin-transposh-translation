@@ -754,12 +754,12 @@ class transposh_database {
 	 * @return array|object|null
 	 */
 	public function get_filtered_translations(
-		$source = '0',
-		$date = 'null',
-		$limit = '',
-		$orderby = 'timestamp',
-		$order = 'DESC',
-		$filter = ''
+		string $source = '0',
+		string $date = 'null',
+		string $limit = '',
+		string $orderby = 'timestamp',
+		string $order = 'DESC',
+		string $filter = ''
 	) {
 		$limitterm = '';
 		$dateterm  = '';
@@ -799,7 +799,7 @@ class transposh_database {
 	 *
 	 * @return string|null
 	 */
-	public function get_filtered_translations_count( $source = '0', $date = 'null', $filter = '' ): ?string {
+	public function get_filtered_translations_count( string $source = '0', string $date = 'null', string $filter = '' ): ?string {
 		$dateterm = '';
 		if ( $source != '' ) {
 			$sourceterm = "source=$source";

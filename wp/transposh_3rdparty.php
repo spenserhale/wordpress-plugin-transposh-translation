@@ -148,7 +148,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  string  $url
 	 */
-	public function bbp_get_search_results_url( string $url ) {
+	public function bbp_get_search_results_url( string $url ): string {
 		$lang = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'], $this->home_url );
 
 		return transposh_utils::rewrite_url_lang_param( $url, $this->transposh->home_url,
@@ -333,7 +333,7 @@ class transposh_3rdparty {
 		return $urls;
 	}
 
-	public function woo_uri_filter( $url ) {
+	public function woo_uri_filter( $url ): string {
 		$lang = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'], $this->transposh->home_url );
 		tp_logger( 'altering woo url to:' . transposh_utils::rewrite_url_lang_param( $url, $this->transposh->home_url,
 				$this->transposh->enable_permalinks_rewrite, $lang, $this->transposh->edit_mode ) );

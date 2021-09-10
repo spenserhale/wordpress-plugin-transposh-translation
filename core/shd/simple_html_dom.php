@@ -114,9 +114,9 @@ if ( ! function_exists( "file_get_html" ) ) {
 		// clean up memory due to php5 circular references memory leak...
 		public function clear(): void {
 			$this->dom      = null;
-			$this->nodes    = null;
+			$this->nodes    = array();
 			$this->parent   = null;
-			$this->children = null;
+			$this->children = array();
 		}
 
 		// dump node's tree
