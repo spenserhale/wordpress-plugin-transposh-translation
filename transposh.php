@@ -1049,15 +1049,15 @@ class transposh_plugin {
 	}
 
 	/**
-	 * Callback from parser allowing to overide the global setting of url rewriting using permalinks.
+	 * Callback from parser allowing to override the global setting of url rewriting using permalinks.
 	 * Some urls should be modified only by adding parameters and should be identified by this
 	 * function.
 	 *
-	 * @param $href Original href
+	 * @param $href string href
 	 *
-	 * @return boolean Modified href
+	 * @return string Modified href
 	 */
-	public function rewrite_url( $href ): bool {
+	public function rewrite_url( string $href ): string {
 		tp_logger( "got: $href", 5 );
 		////$href = str_replace('&#038;', '&', $href);
 		// fix what might be messed up -- TODO
