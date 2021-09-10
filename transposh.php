@@ -457,6 +457,8 @@ class transposh_plugin {
 		if ( is_object( $GLOBALS['wp_rewrite'] ) && $GLOBALS['wp_rewrite']->using_permalinks() && $this->options->enable_permalinks ) {
 			tp_logger( "enabling permalinks" );
 			$this->enable_permalinks_rewrite = true;
+		} else {
+			$this->enable_permalinks_rewrite = false;
 		}
 
 		// this is an ajax special case, currently crafted and tested on buddy press, lets hope this won't make hell break loose.
@@ -611,7 +613,7 @@ class transposh_plugin {
 		tp_logger( $wp->query_vars );
 
 		// fix for custom-permalink (and others that might be double parsing?)
-		if ( $this->target_language ) {
+		if ( isset( $this->target_language ) ) {
 			return;
 		}
 
@@ -694,6 +696,7 @@ class transposh_plugin {
 				tp_logger( 'session was already redirected', 2 );
 			}
 		}
+
 		// this method allows posts from the search box to maintain the language,
 		// TODO - it has a bug of returning to original language following search, which can be resolved by removing search from widget urls, but maybe later...
 		if ( isset( $wp->query_vars['s'] ) ) {
@@ -874,10 +877,11 @@ class transposh_plugin {
 	 */
 	public function add_transposh_js(): void {
 		//not in any translation mode - no need for any js.
-		if ( ! ( $this->edit_mode || $this->is_auto_translate_permitted() || is_admin() || $this->options->widget_allow_set_deflang ) ) // TODO: need to include if allowing of setting default language - but smaller!
-		{
+		// TODO: need to include if allowing of setting default language - but smaller!
+		if ( ! ( $this->edit_mode || $this->is_auto_translate_permitted() || is_admin() || $this->options->widget_allow_set_deflang ) ) {
 			return;
-		} // TODO, check just for settings page admin and pages with our translate
+		}
+		// TODO, check just for settings page admin and pages with our translate
 		wp_register_script( 'transposh', $this->transposh_plugin_url . '/' . TRANSPOSH_DIR_JS . '/transposh.js',
 			array( 'jquery' ), TRANSPOSH_PLUGIN_VER, $this->options->enable_footer_scripts );
 		// true -> 1, false -> nothing

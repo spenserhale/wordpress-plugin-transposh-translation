@@ -79,9 +79,8 @@ class transposh_plugin_widget extends WP_Widget {
 	/** @staticvar int Counts call to the widget do to generate unique IDs */
 	public static string $draw_calls = '';
 
-	public function __construct() {
-		// We get the transposh details from the global variable
-		$this->transposh = &$GLOBALS['my_transposh_plugin'];
+	public function __construct(transposh_plugin $transposh) {
+		$this->transposh = $transposh;
 
 		// Widget control defenitions
 		$widget_ops  = array(
@@ -93,7 +92,7 @@ class transposh_plugin_widget extends WP_Widget {
 
 		// PHP 5.3 and up...
 		add_action( 'widgets_init', function () {
-			register_widget( "transposh_plugin_widget" );
+			register_widget( $this );
 		} );
 //        add_action('widgets_init', create_function('', 'register_widget("transposh_plugin_widget");'));
 
@@ -265,10 +264,13 @@ class transposh_plugin_widget extends WP_Widget {
 				} else {
 					$page_url = $clean_page_url;
 				}
-				// clean $code in default lanaguge
-				$page_url      = transposh_utils::rewrite_url_lang_param( $page_url, $this->transposh->home_url,
+				// clean $code in default language
+				$page_url      = transposh_utils::rewrite_url_lang_param(
+					$page_url,
+					$this->transposh->home_url,
 					$this->transposh->enable_permalinks_rewrite,
-					$this->transposh->options->is_default_language( $code ) ? '' : $code, $this->transposh->edit_mode );
+					$this->transposh->options->is_default_language( $code ) ? '' : $code, $this->transposh->edit_mode
+				);
 				$widget_args[] = array(
 					'lang'     => $langname,
 					'langorig' => $language,
