@@ -1061,7 +1061,8 @@ class tp_parser {
 					}
 					if ( ! $translated_text && $this->is_auto_translate && ! $this->is_edit_mode ) {
 						tp_logger( 'untranslated meta for ' . $ep->phrase . ' ' . $this->lang );
-						if ( $this->is_edit_mode || $this->is_auto_translate ) { // FIX
+						if ( $this->is_edit_mode || $this->is_auto_translate ) {
+							// TODO FIX this edgecase
 						}
 					}
 				}
