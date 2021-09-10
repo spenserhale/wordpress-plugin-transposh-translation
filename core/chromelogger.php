@@ -158,7 +158,7 @@ class ChromePhp_tp {
 	public static function log(): void {
 		$args = func_get_args();
 
-		return self::_log( '', $args );
+		self::_log( '', $args );
 	}
 
 	/**
@@ -171,7 +171,7 @@ class ChromePhp_tp {
 	public static function warn(): void {
 		$args = func_get_args();
 
-		return self::_log( self::WARN, $args );
+		self::_log( self::WARN, $args );
 	}
 
 	/**
@@ -184,7 +184,7 @@ class ChromePhp_tp {
 	public static function error(): void {
 		$args = func_get_args();
 
-		return self::_log( self::ERROR, $args );
+		self::_log( self::ERROR, $args );
 	}
 
 	/**
@@ -195,7 +195,7 @@ class ChromePhp_tp {
 	public static function group(): void {
 		$args = func_get_args();
 
-		return self::_log( self::GROUP, $args );
+		self::_log( self::GROUP, $args );
 	}
 
 	/**
@@ -208,7 +208,7 @@ class ChromePhp_tp {
 	public static function info(): void {
 		$args = func_get_args();
 
-		return self::_log( self::INFO, $args );
+		self::_log( self::INFO, $args );
 	}
 
 	/**
@@ -219,7 +219,7 @@ class ChromePhp_tp {
 	public static function groupCollapsed(): void {
 		$args = func_get_args();
 
-		return self::_log( self::GROUP_COLLAPSED, $args );
+		self::_log( self::GROUP_COLLAPSED, $args );
 	}
 
 	/**
@@ -230,7 +230,7 @@ class ChromePhp_tp {
 	public static function groupEnd(): void {
 		$args = func_get_args();
 
-		return self::_log( self::GROUP_END, $args );
+		self::_log( self::GROUP_END, $args );
 	}
 
 	/**
@@ -241,7 +241,7 @@ class ChromePhp_tp {
 	public static function table(): void {
 		$args = func_get_args();
 
-		return self::_log( self::TABLE, $args );
+		self::_log( self::TABLE, $args );
 	}
 
 	/**
