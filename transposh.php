@@ -71,8 +71,8 @@ class transposh_plugin {
 	/** @var string The site url */
 	public $home_url;
 
-	/** @var a url of the request, assuming there was no language */
-	private a $clean_url;
+	/** @var string url of the request, assuming there was no language */
+	private string $clean_url;
 
 	/** @var string The url to the plugin directory */
 	public $transposh_plugin_url;
@@ -101,10 +101,10 @@ class transposh_plugin {
 	/** @var string Saved search variables */
 	private string $search_s;
 
-	/** @var variable to make sure we only attempt to fix the url once, could have used remove_filter */
+	/** @var bool variable to make sure we only attempt to fix the url once, could have used remove_filter */
 	private $got_request = false;
 
-	/** @var might be that page is json... */
+	/** @var bool might be that page is json... */
 	private $attempt_json = false;
 
 	/** @var boolean Is the wp_redirect being called by transposh? */

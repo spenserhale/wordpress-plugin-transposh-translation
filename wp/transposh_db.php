@@ -363,7 +363,7 @@ class transposh_database {
 	 * This has changed since we now accept multiple translations at once
 	 * This function accepts a new more "versatile" format
 	 * TODO - return some info?
-	 * @global <type> $user_ID - TODO
+	 * @global $user_ID - TODO
 	 */
 	public function update_translation( $by = "" ): void {
 		$ref    = getenv( 'HTTP_REFERER' );
@@ -744,14 +744,14 @@ class transposh_database {
 
 	/**
 	 *
-	 * @param  type  $source
-	 * @param  type  $date
-	 * @param  type  $limit
-	 * @param  type  $orderby
-	 * @param  type  $order
-	 * @param  type  $filter
+	 * @param  string  $source
+	 * @param  string  $date
+	 * @param  string  $limit
+	 * @param  string  $orderby
+	 * @param  string  $order
+	 * @param  string  $filter
 	 *
-	 * @return type
+	 * @return array|object|null
 	 */
 	public function get_filtered_translations(
 		$source = '0',
@@ -760,7 +760,7 @@ class transposh_database {
 		$orderby = 'timestamp',
 		$order = 'DESC',
 		$filter = ''
-	): \type {
+	) {
 		$limitterm = '';
 		$dateterm  = '';
 		if ( $source != '' ) {
@@ -790,16 +790,16 @@ class transposh_database {
 
 	/**
 	 *
-	 * @param  type  $source
-	 * @param  type  $date
-	 * @param  type  $limit
-	 * @param  type  $by
-	 * @param  type  $order
-	 * @param  type  $filter
+	 * @param  string  $source
+	 * @param  string  $date
+	 * @param  string  $limit
+	 * @param  string  $by
+	 * @param  string  $order
+	 * @param  string  $filter
 	 *
-	 * @return type
+	 * @return string|null
 	 */
-	public function get_filtered_translations_count( $source = '0', $date = 'null', $filter = '' ): \type {
+	public function get_filtered_translations_count( $source = '0', $date = 'null', $filter = '' ): ?string {
 		$dateterm = '';
 		if ( $source != '' ) {
 			$sourceterm = "source=$source";

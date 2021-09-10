@@ -458,8 +458,8 @@ class transposh_utils {
 	/**
 	 * Checks that we may perform a rewrite on said url
 	 *
-	 * @param  url to be checked $url
-	 * @param  the base url of the site $home_url
+	 * @param  string url to be checked $url
+	 * @param  string the base url of the site $home_url
 	 *
 	 * @return boolean if this is rewritable
 	 */

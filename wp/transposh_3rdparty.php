@@ -146,9 +146,9 @@ class transposh_3rdparty {
 	/**
 	 * For search form in current buddypress
 	 *
-	 * @param  type  $url
+	 * @param  string  $url
 	 */
-	public function bbp_get_search_results_url( type $url ) {
+	public function bbp_get_search_results_url( string $url ) {
 		$lang = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'], $this->home_url );
 
 		return transposh_utils::rewrite_url_lang_param( $url, $this->transposh->home_url,
@@ -306,9 +306,9 @@ class transposh_3rdparty {
 	 * }
 	 * -------------------------------------------------------------------------
 	 *
-	 * @param  yoast_url array $yoast_url Object containing the page information
+	 * @param array $yoast_url Object containing the page information
 	 */
-	public function add_yoast_transposh_urls( $yoast_url ): array {
+	public function add_yoast_transposh_urls( array $yoast_url ): array {
 		tp_logger( "in sitemap add url: " . $yoast_url['loc'] . " " . $yoast_url['pri'], 2 );
 		$urls = array();
 

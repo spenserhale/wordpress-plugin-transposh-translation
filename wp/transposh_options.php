@@ -157,7 +157,7 @@ class transposh_option {
  * @property transposh_option $debug_loglevel_o
  * @property string $debug_logfile Option holding a filename to store debugging into
  * @property transposh_option $debug_logfile_o
- * @property ip $debug_remoteip Option that limits remote firePhp debug to a certain IP
+ * @property string $debug_remoteip Option that limits remote firePhp debug to a certain IP
  * @property transposh_option $debug_remoteip_o
  *
  * Hidden

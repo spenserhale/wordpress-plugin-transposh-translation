@@ -1074,7 +1074,7 @@ class transposh_plugin_admin {
 
 	/**
 	 * this function will remove any notices that are not ours from our administration pages
-	 * @global type $wp_filter
+	 * @global $wp_filter
 	 */
 	public function remove_other_admin_notices(): void {
 		if ( $this->page ) {
