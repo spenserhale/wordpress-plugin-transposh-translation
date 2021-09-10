@@ -500,7 +500,9 @@ class Services_JSON {
 					return ( (float) $str == (integer) $str )
 						? (integer) $str
 						: (float) $str;
-				} elseif ( preg_match( '/^("|\').*(\1)$/s', $str, $m ) && $m[1] == $m[2] ) {
+				}
+
+				if ( preg_match( '/^("|\').*(\1)$/s', $str, $m ) && $m[1] == $m[2] ) {
 					// STRINGS RETURNED IN UTF-8 FORMAT
 					$delim       = $str[0];
 					$chrs        = substr( $str, 1, - 1 );
@@ -593,7 +595,9 @@ class Services_JSON {
 					}
 
 					return $utf8;
-				} elseif ( preg_match( '/^\[.*\]$/s', $str ) || preg_match( '/^\{.*\}$/s', $str ) ) {
+				}
+
+				if ( preg_match( '/^\[.*\]$/s', $str ) || preg_match( '/^\{.*\}$/s', $str ) ) {
 					// array, or object notation
 
 					if ( $str[0] === '[' ) {
@@ -619,11 +623,7 @@ class Services_JSON {
 					$chrs = $this->reduce_string( $chrs );
 
 					if ( $chrs == '' ) {
-						if ( reset( $stk ) == SERVICES_JSON_IN_ARR ) {
-							return $arr;
-						} else {
-							return $obj;
-						}
+						return reset( $stk ) == SERVICES_JSON_IN_ARR ? $arr : $obj;
 					}
 
 					//print("\nparsing {$chrs}\n");
@@ -735,7 +735,9 @@ class Services_JSON {
 
 					if ( reset( $stk ) == SERVICES_JSON_IN_ARR ) {
 						return $arr;
-					} elseif ( reset( $stk ) == SERVICES_JSON_IN_OBJ ) {
+					}
+
+					if ( reset( $stk ) == SERVICES_JSON_IN_OBJ ) {
 						return $obj;
 					}
 				}

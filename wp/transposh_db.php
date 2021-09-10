@@ -668,9 +668,9 @@ class transposh_database {
 			}
 
 			return true;
-		} else {
-			return false;
 		}
+
+		return false;
 	}
 
 	/**

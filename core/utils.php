@@ -483,11 +483,7 @@ class transposh_utils {
 	 * @return string Html with flag
 	 */
 	public static function display_flag( $path, $flag, $language, $css = false ) {
-		if ( ! $css ) {
-			return "<img src=\"$path/$flag.png\" title=\"$language\" alt=\"$language\"/>";
-		} else {
-			return "<span title=\"$language\" class=\"trf trf-{$flag}\"></span>";
-		}
+		return ! $css ? "<img src=\"$path/$flag.png\" title=\"$language\" alt=\"$language\"/>" : "<span title=\"$language\" class=\"trf trf-{$flag}\"></span>";
 	}
 
 	/**

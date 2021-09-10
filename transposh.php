@@ -1506,9 +1506,9 @@ class transposh_plugin {
 			$newcontent = str_replace( '</p>', '</span></p>', $newcontent );
 
 			return '<span' . $only_class . $nt_class . $lang . '>' . $newcontent . '</span>';
-		} else {
-			return do_shortcode( $content );
 		}
+
+		return do_shortcode( $content );
 	}
 
 	// Super Proxy

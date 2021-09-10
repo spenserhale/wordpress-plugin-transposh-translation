@@ -368,7 +368,9 @@ if ( ! function_exists( "file_get_html" ) ) {
 			// return nth-element or array
 			if ( is_null( $idx ) ) {
 				return $found;
-			} elseif ( $idx < 0 ) {
+			}
+
+			if ( $idx < 0 ) {
 				$idx = count( $found ) + $idx;
 			}
 
