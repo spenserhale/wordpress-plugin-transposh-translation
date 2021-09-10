@@ -630,7 +630,7 @@ class tp_parser {
 		} // for iframes we will rewrite urls if we can
 		elseif ( $node->tag === 'iframe' ) {
 			if ( $this->url_rewrite_func ) {
-				$node->src = call_user_func_array( $this->url_rewrite_func, array( $node->src ) );
+				$node->src = call_user_func( $this->url_rewrite_func, $node->src );
 				tp_logger( 'iframe: ' . $node->src, 4 );
 			}
 		}
@@ -814,8 +814,7 @@ class tp_parser {
 			tp_logger( 'fixing rss feed', 3 );
 			foreach ( array( 'link', 'wfw:commentrss', 'comments' ) as $tag ) {
 				foreach ( $this->html->find( $tag ) as $e ) {
-					$e->innertext = htmlspecialchars( call_user_func_array( $this->url_rewrite_func,
-						array( $e->innertext ) ) );
+					$e->innertext = htmlspecialchars( call_user_func( $this->url_rewrite_func, $e->innertext ) );
 					// no need to translate anything here
 					unset( $e->nodes );
 				}
@@ -833,7 +832,7 @@ class tp_parser {
 			foreach ( $this->html->find( 'link' ) as $e ) {
 				if ( strcasecmp( $e->rel, 'alternate' ) == 0 || strcasecmp( $e->rel, 'canonical' ) == 0 ) {
 					if ( ! $e->hreflang ) {
-						$e->href = call_user_func_array( $this->url_rewrite_func, array( $e->href ) );
+						$e->href = call_user_func( $this->url_rewrite_func, $e->href );
 					}
 				}
 			}
@@ -863,17 +862,17 @@ class tp_parser {
 			// if we should split, we will split some urls for translation prefetching
 			if ( $this->split_url_func != null ) {
 				foreach ( $this->atags as $e ) {
-					foreach ( call_user_func_array( $this->split_url_func, array( $e->href ) ) as $part ) {
+					foreach ( call_user_func( $this->split_url_func, $e->href ) as $part ) {
 						$this->prefetch_phrases[ $part ] = true;
 					}
 				}
 				foreach ( $this->otags as $e ) {
-					foreach ( call_user_func_array( $this->split_url_func, array( $e->value ) ) as $part ) {
+					foreach ( call_user_func( $this->split_url_func, $e->value ) as $part ) {
 						$this->prefetch_phrases[ $part ] = true;
 					}
 				}
 			}
-			call_user_func_array( $this->prefetch_translate_func, array( $this->prefetch_phrases, $this->lang ) );
+			call_user_func( $this->prefetch_translate_func, $this->prefetch_phrases, $this->lang );
 		}
 
 		//fix urls more
@@ -892,23 +891,23 @@ class tp_parser {
 		// fix src for items
 		if ( $this->fix_src_tag_func !== null ) {
 			foreach ( $this->html->find( '[src]' ) as $e ) {
-				$e->src = call_user_func_array( $this->fix_src_tag_func, array( $e->src ) );
+				$e->src = call_user_func( $this->fix_src_tag_func, $e->src );
 			}
 
 			foreach ( $this->html->find( 'link' ) as $e ) {
-				$e->href = call_user_func_array( $this->fix_src_tag_func, array( $e->href ) );
+				$e->href = call_user_func( $this->fix_src_tag_func, $e->href );
 			}
 		}
 
 		// fix urls...
 		foreach ( $this->atags as $e ) {
 			if ( $e->href ) {
-				$e->href = call_user_func_array( $this->url_rewrite_func, array( $e->href ) );
+				$e->href = call_user_func( $this->url_rewrite_func, $e->href );
 			}
 		}
 		foreach ( $this->otags as $e ) {
 			if ( $e->value ) {
-				$e->value = call_user_func_array( $this->url_rewrite_func, array( $e->value ) );
+				$e->value = call_user_func( $this->url_rewrite_func, $e->value );
 			}
 		}
 
@@ -921,8 +920,7 @@ class tp_parser {
 		foreach ( $this->html->find( 'text' ) as $e ) {
 			$replace = array();
 			foreach ( $e->nodes as $ep ) {
-				[ $source, $translated_text ] = call_user_func_array( $this->fetch_translate_func,
-					array( $ep->phrase, $this->lang ) );
+				[ $source, $translated_text ] = call_user_func( $this->fetch_translate_func, $ep->phrase, $this->lang );
 				//stats
 				$this->stats->total_phrases ++;
 				if ( $translated_text ) {
@@ -975,8 +973,8 @@ class tp_parser {
 				if ( isset( $e->nodes ) ) {
 					foreach ( $e->nodes as $ep ) {
 						if ( $ep->tag === 'phrase' ) {
-							[ $source, $translated_text ] = call_user_func_array( $this->fetch_translate_func,
-								array( $ep->phrase, $this->lang ) );
+							[ $source, $translated_text ] = call_user_func( $this->fetch_translate_func, $ep->phrase,
+								$this->lang );
 							// more stats
 							$this->stats->total_phrases ++;
 							if ( $ep->inbody ) {
@@ -1043,8 +1041,8 @@ class tp_parser {
 					// even more stats
 					$this->stats->total_phrases ++;
 					$this->stats->meta_phrases ++;
-					[ $source, $translated_text ] = call_user_func_array( $this->fetch_translate_func,
-						array( $ep->phrase, $this->lang ) );
+					[ $source, $translated_text ] = call_user_func( $this->fetch_translate_func, $ep->phrase,
+						$this->lang );
 					if ( $translated_text ) {
 						$this->stats->translated_phrases ++;
 						$this->stats->meta_translated_phrases ++;
