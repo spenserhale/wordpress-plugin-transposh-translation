@@ -100,19 +100,19 @@ class tp_parser {
 	private bool $ent_breaks = true;
 	// functions that need to be defined... //
 	/** @var callable */
-	public $url_rewrite_func = null;
+	public $url_rewrite_func;
 
 	/** @var callable */
-	public $fetch_translate_func = null;
+	public $fetch_translate_func;
 
 	/** @var callable */
-	public $prefetch_translate_func = null;
+	public $prefetch_translate_func;
 
 	/** @var callable */
-	public $split_url_func = null;
+	public $split_url_func;
 
 	/** @var callable */
-	public $fix_src_tag_func = null;
+	public $fix_src_tag_func;
 
 	/** @var int stores the number of the last used span_id */
 	private int $span_id = 0;

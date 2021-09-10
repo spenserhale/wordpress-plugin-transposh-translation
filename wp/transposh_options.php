@@ -168,7 +168,7 @@ class transposh_option {
 class transposh_plugin_options {
 
 	/** @var array storing all our options */
-	private $options = array();
+	private $options;
 
 	/** @var boolean set to true if any option was changed */
 	private bool $changed = false;

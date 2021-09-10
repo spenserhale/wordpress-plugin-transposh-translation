@@ -94,9 +94,9 @@ if ( ! function_exists( "file_get_html" ) ) {
 		public array $attr = array();
 		public array $children = array();
 		public array $nodes = array();
-		public $parent = null;
+		public $parent;
 		public array $_ = array();
-		private $dom = null;
+		private $dom;
 
 		public function __construct( $dom ) {
 			$this->dom    = $dom;
@@ -658,9 +658,9 @@ if ( ! function_exists( "file_get_html" ) ) {
 // simple html dom parser
 // -----------------------------------------------------------------------------
 	class simple_html_dom {
-		public $root = null;
+		public $root;
 		public array $nodes = array();
-		public $callback = null;
+		public $callback;
 		public bool $lowercase = false;
 		protected $pos;
 		protected $doc;
