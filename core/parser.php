@@ -182,7 +182,7 @@ class tp_parser {
 	 *
 	 * @return boolean true if current position marks a white space
 	 */
-	public function is_white_space( $char ) {
+	public function is_white_space( $char ): bool {
 		if ( ! $char ) {
 			return true;
 		}
@@ -195,16 +195,16 @@ class tp_parser {
 	 * range of a-z (case insensetive).
 	 * @return boolean true if a-z
 	 */
-	public function is_a_to_z_character( $char ) {
-		return ( ( $char >= 'a' && $char <= 'z' ) || ( $char >= 'A' && $char <= 'Z' ) ) ? true : false;
+	public function is_a_to_z_character( $char ): bool {
+		return ( $char >= 'a' && $char <= 'z' ) || ( $char >= 'A' && $char <= 'Z' );
 	}
 
 	/**
 	 * Determine if the current position is a digit.
 	 * @return boolean true if a digit
 	 */
-	public function is_digit( $char ) {
-		return ( ( $char >= '0' && $char <= '9' ) ) ? true : false;
+	public function is_digit( $char ): bool {
+		return $char >= '0' && $char <= '9';
 	}
 
 	/**
