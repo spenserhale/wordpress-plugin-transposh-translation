@@ -220,7 +220,7 @@ class transposh_plugin_admin {
 			'tp_about'    => array( __( 'About', TRANSPOSH_TEXT_DOMAIN ) ),
 			'tp_support'  => array( __( 'Support', TRANSPOSH_TEXT_DOMAIN ) ),
 		);
-		if ( isset( $_GET['page'] ) && isset( $this->pages[ $_GET['page'] ] ) ) {
+		if ( isset( $_GET['page'], $this->pages[ $_GET['page'] ] ) ) {
 			$this->page = $_GET['page'];
 		}
 

@@ -373,7 +373,7 @@ class transposh_database {
 		$source = $_POST['sr0'];
 		// check params
 		tp_logger( "Enter " . __FILE__ . " Params: $items, $lang, $ref", 5 );
-		if ( ! isset( $items ) || ! isset( $lang ) ) {
+		if ( ! isset( $items, $lang ) ) {
 			tp_logger( "Enter " . __FILE__ . " missing Params: $items, $lang, $ref", 1 );
 
 			return;
@@ -541,7 +541,7 @@ class transposh_database {
 
 		// check params
 		tp_logger( "Enter " . __FILE__ . " Params:  $token, $lang, $ref", 3 );
-		if ( ! isset( $token ) || ! isset( $lang ) ) {
+		if ( ! isset( $token, $lang ) ) {
 			tp_logger( "Enter " . __FILE__ . " missing params: $token, $lang," . $ref, 1 );
 
 			return;

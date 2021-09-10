@@ -270,7 +270,7 @@ class ChromePhp_tp {
 		$level     = $logger->getSetting( self::BACKTRACE_LEVEL );
 
 		$backtrace_message = 'unknown';
-		if ( isset( $backtrace[ $level ]['file'] ) && isset( $backtrace[ $level ]['line'] ) ) {
+		if ( isset( $backtrace[ $level ]['file'], $backtrace[ $level ]['line'] ) ) {
 			$backtrace_message = $backtrace[ $level ]['file'] . ' : ' . $backtrace[ $level ]['line'];
 		}
 

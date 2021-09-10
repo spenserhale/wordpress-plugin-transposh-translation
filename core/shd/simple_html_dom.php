@@ -860,7 +860,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 				$tag_lower    = strtolower( $tag );
 
 				if ( $parent_lower !== $tag_lower ) {
-					if ( isset( $this->optional_closing_tags[ $parent_lower ] ) && isset( $this->block_tags[ $tag_lower ] ) ) {
+					if ( isset( $this->optional_closing_tags[ $parent_lower ], $this->block_tags[ $tag_lower ] ) ) {
 						$this->parent->_[ HDOM_INFO_END ] = 0;
 						$org_parent                       = $this->parent;
 
