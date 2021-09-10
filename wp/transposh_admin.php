@@ -258,9 +258,8 @@ class transposh_plugin_admin {
 	 * @return void
 	 */
 	public function admin_print_styles() {
-		switch ( $this->page ) {
-			case 'tp_editor':
-				$this->editor_table->print_style();
+		if ( $this->page === 'tp_editor' ) {
+			$this->editor_table->print_style();
 		}
 	}
 
