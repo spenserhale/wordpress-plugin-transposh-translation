@@ -36,7 +36,7 @@ class transposh_plugin_admin {
 	// TODO - memory cache clear button
 	//
 	// constructor of class, PHP4 compatible construction for backward compatibility
-	function __construct( &$transposh ) {
+	public function __construct( &$transposh ) {
 		$this->transposh = &$transposh;
 		// add our notices
 		add_action( 'admin_notices', array( &$this, 'tp_notices' ) );
@@ -61,7 +61,7 @@ class transposh_plugin_admin {
 		add_filter( 'set-screen-option', array( &$this, 'on_screen_option' ), 10, 3 );
 	}
 
-	function on_screen_option( $status, $option, $value ) {
+	public function on_screen_option( $status, $option, $value ) {
 		tp_logger( "($status, $option, $value)" );
 
 		return $value;
@@ -71,7 +71,7 @@ class transposh_plugin_admin {
 	 * Indicates whether the given role can translate.
 	 * Return either "checked" or ""
 	 */
-	function can_translate( $role_name ) {
+	public function can_translate( $role_name ) {
 		if ( $role_name != 'anonymous' ) {
 			$role = $GLOBALS['wp_roles']->get_role( $role_name );
 			if ( isset( $role ) && $role->has_cap( TRANSLATOR ) ) {
@@ -85,7 +85,7 @@ class transposh_plugin_admin {
 	/**
 	 * Handle newly posted admin options.
 	 */
-	function update_admin_options() {
+	public function update_admin_options() {
 		tp_logger( 'Enter', 1 );
 		tp_logger( $_POST );
 
@@ -206,7 +206,7 @@ class transposh_plugin_admin {
 		$this->transposh->options->update_options();
 	}
 
-	function admin_menu() {
+	public function admin_menu() {
 		// key is page name, first is description, second is side menu description, third is if this contains settings
 		$this->pages = array(
 			'tp_main'     => array( __( 'Dashboard', TRANSPOSH_TEXT_DOMAIN ) ),
@@ -257,7 +257,7 @@ class transposh_plugin_admin {
 	 *
 	 * @return void
 	 */
-	function admin_print_styles() {
+	public function admin_print_styles() {
 		switch ( $this->page ) {
 			case 'tp_editor':
 				$this->editor_table->print_style();
@@ -269,7 +269,7 @@ class transposh_plugin_admin {
 	 *
 	 * @return void
 	 */
-	function admin_print_scripts() {
+	public function admin_print_scripts() {
 		switch ( $this->page ) {
 			case 'tp_main':
 				wp_enqueue_script( 'common' );
@@ -327,7 +327,7 @@ class transposh_plugin_admin {
 			$this->transposh->transposh_plugin_url . '/' . TRANSPOSH_DIR_CSS . '/admin.css' ); ///, array('transposh'), TRANSPOSH_PLUGIN_VER, true)
 	}
 
-	function load() {
+	public function load() {
 		// figure out page and other stuff...
 		//echo 'loaded!?';
 		global $wp_locale;
@@ -389,7 +389,7 @@ class transposh_plugin_admin {
 		}
 	}
 
-	function options() {
+	public function options() {
 		echo '<div class="wrap">';
 		//screen_icon('transposh-logo'); --depracated?
 
@@ -428,14 +428,14 @@ class transposh_plugin_admin {
 	}
 
 	// not sure if this is the best place for this function, but heck
-	function on_load_comments_page() {
+	public function on_load_comments_page() {
 		wp_enqueue_script( 'transposhcomments',
 			$this->transposh->transposh_plugin_url . '/' . TRANSPOSH_DIR_JS . '/admin/commentslang.js',
 			array( 'jquery' ), TRANSPOSH_PLUGIN_VER );
 	}
 
 	//executed to show the plugins complete admin page
-	function tp_main() {
+	public function tp_main() {
 		echo '<div id="dashboard-widgets-wrap">';
 
 		/** Load WordPress dashboard API */
@@ -455,7 +455,7 @@ class transposh_plugin_admin {
 	 *
 	 * @param  string  $data
 	 */
-	function tp_langs() {
+	public function tp_langs() {
 		// we need some styles
 		global $wp_locale;
 		if ( $wp_locale->text_direction == 'rtl' ) {
@@ -545,7 +545,7 @@ class transposh_plugin_admin {
 	  } */
 
 	// Show normal settings
-	function tp_settings() {
+	public function tp_settings() {
 		$this->section( __( 'Upgrade to full version', TRANSPOSH_TEXT_DOMAIN ) );
 		$this->checkbox( $this->transposh->options->allow_full_version_upgrade_o
 			, __( 'Allow upgrading to full version', TRANSPOSH_TEXT_DOMAIN )
@@ -667,7 +667,7 @@ class transposh_plugin_admin {
 		$this->sectionstop();
 	}
 
-	function tp_engines() {
+	public function tp_engines() {
 		// we need some styles
 		global $wp_locale;
 		if ( $wp_locale->text_direction == 'rtl' ) {
@@ -745,7 +745,7 @@ class transposh_plugin_admin {
 		$this->sectionstop();
 	}
 
-	function tp_widget() {
+	public function tp_widget() {
 		//       $this->checkbox($this->transposh->options->widget_progressbar_o, __('Show progress bar', TRANSPOSH_TEXT_DOMAIN)
 		//               , __('Show progress bar when a client triggers automatic translation', TRANSPOSH_TEXT_DOMAIN));
 		$this->section( __( 'Widget settings', TRANSPOSH_TEXT_DOMAIN ) );
@@ -759,7 +759,7 @@ class transposh_plugin_admin {
 		$this->sectionstop();
 	}
 
-	function tp_advanced() {
+	public function tp_advanced() {
 		$this->checkbox( $this->transposh->options->enable_url_translate_o,
 			__( 'Enable url translation', TRANSPOSH_TEXT_DOMAIN ) . ' (' . __( 'experimental',
 				TRANSPOSH_TEXT_DOMAIN ) . ')',
@@ -809,12 +809,12 @@ class transposh_plugin_admin {
 		$this->sectionstop();
 	}
 
-	function tp_editor() {
+	public function tp_editor() {
 		$this->editor_table->render_table();
 	}
 
 	//
-	function tp_utils() {
+	public function tp_utils() {
 		echo '<div id="backup_result"></div>';
 		echo '<div style="margin:10px 0"><a id="transposh-backup" href="#" class="button">' . __( 'Do Backup Now',
 				TRANSPOSH_TEXT_DOMAIN ) . '</a></div>';
@@ -843,7 +843,7 @@ class transposh_plugin_admin {
 		//get_posts
 	}
 
-	function tp_about() {
+	public function tp_about() {
 		$this->section( __( 'About Transposh', TRANSPOSH_TEXT_DOMAIN ) );
 		echo __( 'Transposh was started at 2008 and is dedicated to provide tools to ease website translation.',
 			TRANSPOSH_TEXT_DOMAIN );
@@ -876,7 +876,7 @@ class transposh_plugin_admin {
 		  'clear_working' => false)); */
 	}
 
-	function tp_support() {
+	public function tp_support() {
 		echo '<p>';
 		$this->section( __( 'Transposh support', TRANSPOSH_TEXT_DOMAIN )
 			, __( 'Have you encountered any problem with our plugin and need our help?',
@@ -945,7 +945,7 @@ class transposh_plugin_admin {
 	}
 
 	// executed if the post arrives initiated by pressing the submit button of form
-	function on_save_changes() {
+	public function on_save_changes() {
 		//user permission check
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( __( 'Problems?', TRANSPOSH_TEXT_DOMAIN ) );
@@ -963,13 +963,13 @@ class transposh_plugin_admin {
 	// below you will find for each registered metabox the callback method, that produces the content inside the boxes
 	// i did not describe each callback dedicated, what they do can be easily inspected and compare with the admin page displayed
 
-	function on_sidebox_news_content() {
+	public function on_sidebox_news_content() {
 		echo '<div style="margin:6px">';
 		wp_widget_rss_output( 'http://feeds2.feedburner.com/transposh', array( 'items' => 5 ) );
 		echo '</div>';
 	}
 
-	function on_sidebox_stats_content() {
+	public function on_sidebox_stats_content() {
 		$this->transposh->database->db_stats();
 	}
 
@@ -1049,7 +1049,7 @@ class transposh_plugin_admin {
 	}
 
 	/** UTILITY FUNCTIONS  END * */
-	function tp_notices() {
+	public function tp_notices() {
 		if ( (int) ini_get( 'memory_limit' ) < 64 ) {
 			$this->add_warning( 'tp_mem_warning',
 				sprintf( __( 'Your current PHP memory limit of %s is quite low, if you experience blank pages please consider increasing it.',
@@ -1075,7 +1075,7 @@ class transposh_plugin_admin {
 	 * this function will remove any notices that are not ours from our administration pages
 	 * @global type $wp_filter
 	 */
-	function remove_other_admin_notices() {
+	public function remove_other_admin_notices() {
 		if ( $this->page ) {
 			global $wp_filter;
 			$actions = $wp_filter;
@@ -1096,7 +1096,7 @@ class transposh_plugin_admin {
 		}
 	}
 
-	function add_warning( $id, $message, $level = 'error' ) {
+	public function add_warning( $id, $message, $level = 'error' ) {
 		if ( ! $this->transposh->options->get_transposh_admin_hide_warning( $id ) ) {
 			//$this->add_warning_script();
 			wp_enqueue_script( 'transposh_warningclose',
@@ -1110,7 +1110,7 @@ class transposh_plugin_admin {
 		}
 	}
 
-	function comment_row_actions( $actions, $comment ) {
+	public function comment_row_actions( $actions, $comment ) {
 		$comment_lang = get_comment_meta( $comment->comment_ID, 'tp_language', true );
 		if ( ! $comment_lang ) {
 			$text = __( 'Unset', TRANSPOSH_TEXT_DOMAIN );
@@ -1124,36 +1124,36 @@ class transposh_plugin_admin {
 	}
 
 	// ajax stuff!
-	function on_ajax_tp_close_warning() {
+	public function on_ajax_tp_close_warning() {
 		$this->transposh->options->set_transposh_admin_hide_warning( $_POST['id'] );
 		$this->transposh->options->update_options();
 		die(); // this is required to return a proper result
 	}
 
-	function on_ajax_tp_reset() {
+	public function on_ajax_tp_reset() {
 		$this->transposh->options->reset_options();
 		die();
 	}
 
-	function on_ajax_tp_backup() {
+	public function on_ajax_tp_backup() {
 		$this->transposh->run_backup();
 		die();
 	}
 
 	// Start restore on demand
-	function on_ajax_tp_restore() {
+	public function on_ajax_tp_restore() {
 		$this->transposh->run_restore();
 		die();
 	}
 
 	// Start cleanup on demand
-	function on_ajax_tp_cleanup() {
+	public function on_ajax_tp_cleanup() {
 		$this->transposh->database->cleanup( $_POST['days'] );
 		die();
 	}
 
 	// Start maint
-	function on_ajax_tp_maint() {
+	public function on_ajax_tp_maint() {
 		$this->transposh->database->setup_db( true );
 		die();
 	}
@@ -1202,7 +1202,7 @@ class transposh_plugin_admin {
 //        die();
 //    }
 	// Start full translation
-	function on_ajax_tp_translate_all() {
+	public function on_ajax_tp_translate_all() {
 		// get all ids in need of translation
 		global $wpdb;
 		$page_ids = $wpdb->get_col( "SELECT ID FROM $wpdb->posts WHERE (post_type='page' OR post_type='post') AND (post_status='publish' OR post_status='private') ORDER BY ID DESC" );
@@ -1217,13 +1217,13 @@ class transposh_plugin_admin {
 	}
 
 	// getting phrases of a post (if we are in admin)
-	function on_ajax_tp_post_phrases() {
+	public function on_ajax_tp_post_phrases() {
 		$this->transposh->postpublish->get_post_phrases( $_GET['post'] );
 		die();
 	}
 
 	// Handle comments language change on the admin side
-	function on_ajax_tp_comment_lang() {
+	public function on_ajax_tp_comment_lang() {
 		delete_comment_meta( $_GET['cid'], 'tp_language' );
 		if ( $_GET['lang'] ) {
 			add_comment_meta( $_GET['cid'], 'tp_language', $_GET['lang'], true );

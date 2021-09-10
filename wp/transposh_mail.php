@@ -25,7 +25,7 @@ class transposh_mail {
 	 *
 	 * @param  transposh_plugin  $transposh
 	 */
-	function __construct( &$transposh ) {
+	public function __construct( &$transposh ) {
 		$this->transposh = &$transposh;
 
 		add_action( 'transposh_human_translation', array( &$this, 'transposh_mail_humantranslation' ), 10, 4 );
@@ -36,7 +36,7 @@ class transposh_mail {
 	 * Whom should we mail?
 	 * @return string email address
 	 */
-	function get_mail_to() {
+	public function get_mail_to() {
 		if ( $this->transposh->options->mail_to ) {
 			$to = $this->transposh->options->mail_to;
 		} else {
@@ -54,7 +54,7 @@ class transposh_mail {
 	 * @param  string  $lang
 	 * @param  string  $translated_by
 	 */
-	function transposh_mail_humantranslation( $translation, $original, $lang, $translated_by ) {
+	public function transposh_mail_humantranslation( $translation, $original, $lang, $translated_by ) {
 		// if this option is off, no mail should be sent on translation
 		if ( ! $this->transposh->options->mail_ontranslate ) {
 			return;
@@ -83,7 +83,7 @@ class transposh_mail {
 	 *
 	 * @return type
 	 */
-	function transposh_mail_filter( $args ) {
+	public function transposh_mail_filter( $args ) {
 		$new_mail = array(
 			'to'          => $args['to'],
 			'subject'     => transposh_utils::clean_breakers( $args['subject'] ),

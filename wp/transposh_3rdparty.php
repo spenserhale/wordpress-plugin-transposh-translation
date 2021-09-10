@@ -25,7 +25,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  transposh_plugin  $transposh
 	 */
-	function __construct( &$transposh ) {
+	public function __construct( &$transposh ) {
 		$this->transposh = &$transposh;
 
 		// supercache invalidation of pages - first lets find if supercache is here
@@ -66,14 +66,14 @@ class transposh_3rdparty {
 		add_filter( 'woocommerce_get_cart_url', array( &$this, 'woo_uri_filter' ) );
 	}
 
-	function add_analyticator_tracking() {
+	public function add_analyticator_tracking() {
 		echo "	_gaq.push(['_setAccount', 'UA-4663695-5']);\n";
 		echo "	_gaq.push(['_setDomainName', 'none']);\n";
 		echo "	_gaq.push(['_setAllowLinker', true]);\n";
 		echo "	_gaq.push(['_trackPageview']);\n";
 	}
 
-	function super_cache_invalidate() {
+	public function super_cache_invalidate() {
 		//Now, we are actually using the referrer and not the request, with some precautions
 		$GLOBALS['wp_cache_request_uri'] = substr( $_SERVER['HTTP_REFERER'], stripos( $_SERVER['HTTP_REFERER'],
 				$_SERVER['HTTP_HOST'] ) + strlen( $_SERVER[''] . $_SERVER['HTTP_HOST'] ) );
@@ -113,7 +113,7 @@ class transposh_3rdparty {
 		@unlink( $meta_pathname );
 	}
 
-	function w3tc_invalidate() {
+	public function w3tc_invalidate() {
 		tp_logger( "W3TC invalidate:" . $_SERVER['HTTP_REFERER'] );
 		$id = url_to_postid( $_SERVER['HTTP_REFERER'] );
 		if ( is_numeric( $id ) ) {
@@ -131,7 +131,7 @@ class transposh_3rdparty {
 	 *
 	 * @return string The url that buddypress should see
 	 */
-	function bp_uri_filter( $uri ) {
+	public function bp_uri_filter( $uri ) {
 		$lang = transposh_utils::get_language_from_url( $uri, $this->transposh->home_url );
 		//TODO - check using get_clean_url
 		$uri = transposh_utils::cleanup_url( $uri, $this->transposh->home_url );
@@ -148,7 +148,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  type  $url
 	 */
-	function bbp_get_search_results_url( $url ) {
+	public function bbp_get_search_results_url( $url ) {
 		$lang = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'], $this->home_url );
 		$href = transposh_utils::rewrite_url_lang_param( $url, $this->transposh->home_url,
 			$this->transposh->enable_permalinks_rewrite, $lang, false );
@@ -161,7 +161,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  BP_Activity_Activity  $params
 	 */
-	function bp_activity_after_save( $params ) {
+	public function bp_activity_after_save( $params ) {
 		// we don't need to modify our own activity stream
 		if ( $params->type == 'new_translation' ) {
 			return;
@@ -180,7 +180,7 @@ class transposh_3rdparty {
 	 *
 	 * @return string modified content
 	 */
-	function bp_get_activity_content_body( $content, $activity = "" ) { //XXX
+	public function bp_get_activity_content_body( $content, $activity = "" ) { //XXX
 		$activity_lang = bp_activity_get_meta( $activity->id, 'tp_language' );
 		if ( $activity_lang ) {
 			$content = "<span lang =\"$activity_lang\">" . $content . "</span>";
@@ -198,7 +198,7 @@ class transposh_3rdparty {
 	 *
 	 * @global object $bp the global buddypress
 	 */
-	function transposh_buddypress_stream( $translation, $original, $lang ) {
+	public function transposh_buddypress_stream( $translation, $original, $lang ) {
 		global $bp;
 
 		// we must have buddypress...
@@ -244,7 +244,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  GoogleSitemapGeneratorPage  $sm_page  Object containing the page information
 	 */
-	function add_sm_transposh_urls( $sm_page ) {
+	public function add_sm_transposh_urls( $sm_page ) {
 		tp_logger( "in sitemap add url: " . $sm_page->GetUrl() . " " . $sm_page->GetPriority(), 4 );
 		$sm_page = clone $sm_page;
 		// we need the generator object (we know it must exist...)
@@ -309,7 +309,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  yoast_url array $yoast_url Object containing the page information
 	 */
-	function add_yoast_transposh_urls( $yoast_url ) {
+	public function add_yoast_transposh_urls( $yoast_url ) {
 		tp_logger( "in sitemap add url: " . $yoast_url['loc'] . " " . $yoast_url['pri'], 2 );
 		$urls = array();
 
@@ -334,7 +334,7 @@ class transposh_3rdparty {
 		return $urls;
 	}
 
-	function woo_uri_filter( $url ) {
+	public function woo_uri_filter( $url ) {
 		$lang = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'], $this->transposh->home_url );
 		tp_logger( 'altering woo url to:' . transposh_utils::rewrite_url_lang_param( $url, $this->transposh->home_url,
 				$this->transposh->enable_permalinks_rewrite, $lang, $this->transposh->edit_mode ) );
@@ -354,7 +354,7 @@ class transposh_3rdparty {
 	  $html .= sprintf('<input type="hidden" name="lang" value="%s" />', transposh_get_current_language());
 	 */
 
-	function fix_wpbdp_cat_links( $url ) {
+	public function fix_wpbdp_cat_links( $url ) {
 		tp_logger( $url, 1 );
 
 		return $url;
@@ -369,7 +369,7 @@ class transposh_3rdparty {
 			$this->transposh->edit_mode );
 	}
 
-	function fix_wpbdp_links( $url ) {
+	public function fix_wpbdp_links( $url ) {
 		tp_logger( $url, 1 );
 		$url = preg_replace( '#/.lang=[a-z]*/#', '/', $url );
 		if ( $this->transposh->options->is_default_language( $this->transposh->target_language ) ) {
@@ -382,7 +382,7 @@ class transposh_3rdparty {
 			$this->transposh->edit_mode );
 	}
 
-	function fix_wpbdp_links_base( $url ) {
+	public function fix_wpbdp_links_base( $url ) {
 		if ( $this->transposh->options->is_default_language( $this->transposh->target_language ) ) {
 			return $url;
 		}

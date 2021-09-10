@@ -98,21 +98,21 @@ if ( ! function_exists( "file_get_html" ) ) {
 		public $_ = array();
 		private $dom = null;
 
-		function __construct( $dom ) {
+		public function __construct( $dom ) {
 			$this->dom    = $dom;
 			$dom->nodes[] = $this;
 		}
 
-		function __destruct() {
+		public function __destruct() {
 			$this->clear();
 		}
 
-		function __toString() {
+		public function __toString() {
 			return $this->outertext();
 		}
 
 		// clean up memory due to php5 circular references memory leak...
-		function clear() {
+		public function clear() {
 			$this->dom      = null;
 			$this->nodes    = null;
 			$this->parent   = null;
@@ -120,17 +120,17 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// dump node's tree
-		function dump( $show_attr = true ) {
+		public function dump( $show_attr = true ) {
 			dump_html_tree( $this, $show_attr );
 		}
 
 		// returns the parent of node
-		function parent() {
+		public function parent() {
 			return $this->parent;
 		}
 
 		// returns children of node
-		function children( $idx = - 1 ) {
+		public function children( $idx = - 1 ) {
 			if ( $idx === - 1 ) {
 				return $this->children;
 			}
@@ -142,7 +142,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// returns the first child of node
-		function first_child() {
+		public function first_child() {
 			if ( count( $this->children ) > 0 ) {
 				return $this->children[0];
 			}
@@ -151,7 +151,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// returns the last child of node
-		function last_child() {
+		public function last_child() {
 			if ( ( $count = count( $this->children ) ) > 0 ) {
 				return $this->children[ $count - 1 ];
 			}
@@ -160,7 +160,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// returns the next sibling of node
-		function next_sibling() {
+		public function next_sibling() {
 			if ( $this->parent === null ) {
 				return null;
 			}
@@ -177,7 +177,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// returns the previous sibling of node
-		function prev_sibling() {
+		public function prev_sibling() {
 			if ( $this->parent === null ) {
 				return null;
 			}
@@ -194,7 +194,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// get dom node's inner html
-		function innertext() {
+		public function innertext() {
 			if ( isset( $this->_[ HDOM_INFO_INNER ] ) ) {
 				return $this->_[ HDOM_INFO_INNER ];
 			}
@@ -211,7 +211,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// get dom node's outer text (with tag)
-		function outertext() {
+		public function outertext() {
 			if ( $this->tag === 'root' ) {
 				return $this->innertext();
 			}
@@ -249,7 +249,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// get dom node's plain text
-		function text() {
+		public function text() {
 			if ( isset( $this->_[ HDOM_INFO_INNER ] ) ) {
 				return $this->_[ HDOM_INFO_INNER ];
 			}
@@ -276,7 +276,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 			return $ret;
 		}
 
-		function xmltext() {
+		public function xmltext() {
 			$ret = $this->innertext();
 			$ret = str_ireplace( '<![CDATA[', '', $ret );
 			$ret = str_replace( ']]>', '', $ret );
@@ -285,7 +285,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// build node's text with tag
-		function makeup() {
+		public function makeup() {
 			// text, comment, unknown
 			if ( isset( $this->_[ HDOM_INFO_TEXT ] ) ) {
 				return $this->dom->restore_noise( $this->_[ HDOM_INFO_TEXT ] );
@@ -326,7 +326,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// find elements by css selector
-		function find( $selector, $idx = null ) {
+		public function find( $selector, $idx = null ) {
 			$selectors = $this->parse_selector( $selector );
 			if ( ( $count = count( $selectors ) ) === 0 ) {
 				return array();
@@ -539,7 +539,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 			return $selectors;
 		}
 
-		function __get( $name ) {
+		public function __get( $name ) {
 			if ( isset( $this->attr[ $name ] ) ) {
 				return $this->attr[ $name ];
 			}
@@ -557,7 +557,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 			}
 		}
 
-		function __set( $name, $value ) {
+		public function __set( $name, $value ) {
 			switch ( $name ) {
 				case 'outertext':
 					return $this->_[ HDOM_INFO_OUTER ] = $value;
@@ -575,7 +575,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 			$this->attr[ $name ] = $value;
 		}
 
-		function __isset( $name ) {
+		public function __isset( $name ) {
 			switch ( $name ) {
 				case 'outertext':
 					return true;
@@ -589,70 +589,70 @@ if ( ! function_exists( "file_get_html" ) ) {
 			return ( array_key_exists( $name, $this->attr ) ) ? true : isset( $this->attr[ $name ] );
 		}
 
-		function __unset( $name ) {
+		public function __unset( $name ) {
 			if ( isset( $this->attr[ $name ] ) ) {
 				unset( $this->attr[ $name ] );
 			}
 		}
 
 		// camel naming conventions
-		function getAllAttributes() {
+		public function getAllAttributes() {
 			return $this->attr;
 		}
 
-		function getAttribute( $name ) {
+		public function getAttribute( $name ) {
 			return $this->__get( $name );
 		}
 
-		function setAttribute( $name, $value ) {
+		public function setAttribute( $name, $value ) {
 			$this->__set( $name, $value );
 		}
 
-		function hasAttribute( $name ) {
+		public function hasAttribute( $name ) {
 			return $this->__isset( $name );
 		}
 
-		function removeAttribute( $name ) {
+		public function removeAttribute( $name ) {
 			$this->__set( $name, null );
 		}
 
-		function getElementById( $id ) {
+		public function getElementById( $id ) {
 			return $this->find( "#$id", 0 );
 		}
 
-		function getElementsById( $id, $idx = null ) {
+		public function getElementsById( $id, $idx = null ) {
 			return $this->find( "#$id", $idx );
 		}
 
-		function getElementByTagName( $name ) {
+		public function getElementByTagName( $name ) {
 			return $this->find( $name, 0 );
 		}
 
-		function getElementsByTagName( $name, $idx = null ) {
+		public function getElementsByTagName( $name, $idx = null ) {
 			return $this->find( $name, $idx );
 		}
 
-		function parentNode() {
+		public function parentNode() {
 			return $this->parent();
 		}
 
-		function childNodes( $idx = - 1 ) {
+		public function childNodes( $idx = - 1 ) {
 			return $this->children( $idx );
 		}
 
-		function firstChild() {
+		public function firstChild() {
 			return $this->first_child();
 		}
 
-		function lastChild() {
+		public function lastChild() {
 			return $this->last_child();
 		}
 
-		function nextSibling() {
+		public function nextSibling() {
 			return $this->next_sibling();
 		}
 
-		function previousSibling() {
+		public function previousSibling() {
 			return $this->prev_sibling();
 		}
 	}
@@ -699,7 +699,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 			'link' => array( 'link' => 1 ),
 		);
 
-		function __construct( $str = null ) {
+		public function __construct( $str = null ) {
 			if ( $str ) {
 				if ( preg_match( "/^http:\/\//i", $str ) || is_file( $str ) ) {
 					$this->load_file( $str );
@@ -709,12 +709,12 @@ if ( ! function_exists( "file_get_html" ) ) {
 			}
 		}
 
-		function __destruct() {
+		public function __destruct() {
 			$this->clear();
 		}
 
 		// load html from string
-		function load( $str, $lowercase = true ) {
+		public function load( $str, $lowercase = true ) {
 			// prepare
 			$this->prepare( $str, $lowercase );
 			// strip out comments
@@ -744,23 +744,23 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// load html from file
-		function load_file() {
+		public function load_file() {
 			$args = func_get_args();
 			$this->load( call_user_func_array( 'file_get_contents', $args ), true );
 		}
 
 		// set callback function
-		function set_callback( $function_name ) {
+		public function set_callback( $function_name ) {
 			$this->callback = $function_name;
 		}
 
 		// remove callback function
-		function remove_callback() {
+		public function remove_callback() {
 			$this->callback = null;
 		}
 
 		// save dom as string
-		function save( $filepath = '' ) {
+		public function save( $filepath = '' ) {
 			$ret = $this->root->innertext();
 			if ( $filepath !== '' ) {
 				file_put_contents( $filepath, $ret );
@@ -770,12 +770,12 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// find dom node by css selector
-		function find( $selector, $idx = null ) {
+		public function find( $selector, $idx = null ) {
 			return $this->root->find( $selector, $idx );
 		}
 
 		// clean up memory due to php5 circular references memory leak...
-		function clear() {
+		public function clear() {
 			foreach ( $this->nodes as $n ) {
 				$n->clear();
 				$n = null;
@@ -799,7 +799,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 			unset( $this->noise );
 		}
 
-		function dump( $show_attr = true ) {
+		public function dump( $show_attr = true ) {
 			$this->root->dump( $show_attr );
 		}
 
@@ -1206,7 +1206,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// restore noise to html content
-		function restore_noise( $text ) {
+		public function restore_noise( $text ) {
 //        logger ("noise:".$text);
 			while ( ( $pos = strpos( $text, '___noise___' ) ) !== false ) {
 				$key = '___noise___' . $text[ $pos + 11 ] . $text[ $pos + 12 ] . $text[ $pos + 13 ];
@@ -1218,11 +1218,11 @@ if ( ! function_exists( "file_get_html" ) ) {
 			return $text;
 		}
 
-		function __toString() {
+		public function __toString() {
 			return $this->root->innertext();
 		}
 
-		function __get( $name ) {
+		public function __get( $name ) {
 			switch ( $name ) {
 				case 'outertext':
 					return $this->root->innertext();
@@ -1234,35 +1234,35 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// camel naming conventions
-		function childNodes( $idx = - 1 ) {
+		public function childNodes( $idx = - 1 ) {
 			return $this->root->childNodes( $idx );
 		}
 
-		function firstChild() {
+		public function firstChild() {
 			return $this->root->first_child();
 		}
 
-		function lastChild() {
+		public function lastChild() {
 			return $this->root->last_child();
 		}
 
-		function getElementById( $id ) {
+		public function getElementById( $id ) {
 			return $this->find( "#$id", 0 );
 		}
 
-		function getElementsById( $id, $idx = null ) {
+		public function getElementsById( $id, $idx = null ) {
 			return $this->find( "#$id", $idx );
 		}
 
-		function getElementByTagName( $name ) {
+		public function getElementByTagName( $name ) {
 			return $this->find( $name, 0 );
 		}
 
-		function getElementsByTagName( $name, $idx = - 1 ) {
+		public function getElementsByTagName( $name, $idx = - 1 ) {
 			return $this->find( $name, $idx );
 		}
 
-		function loadFile() {
+		public function loadFile() {
 			$args = func_get_args();
 			$this->load( call_user_func_array( 'file_get_contents', $args ), true );
 		}

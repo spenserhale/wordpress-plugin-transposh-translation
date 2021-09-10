@@ -22,11 +22,11 @@ class transposh_backup {
 	private $transposh;
 
 //constructor of class, PHP4 compatible construction for backward compatibility
-	function __construct( &$transposh ) {
+	public function __construct( &$transposh ) {
 		$this->transposh = &$transposh;
 	}
 
-	function init_body() {
+	public function init_body() {
 		$body             = array();
 		$body['home_url'] = $this->transposh->home_url;
 		$body['key']      = $this->transposh->options->transposh_key;
@@ -36,7 +36,7 @@ class transposh_backup {
 		return $body;
 	}
 
-	function do_backup() {
+	public function do_backup() {
 		$body = $this->init_body();
 		//Check if there are thing to backup, before even accessing the service
 		$rowstosend = $this->transposh->database->get_all_human_translation_history( 'null', 1 );
@@ -119,7 +119,7 @@ class transposh_backup {
 		echo '200 - backup in sync';
 	}
 
-	function do_restore() {
+	public function do_restore() {
 		$body['to']       = time(); //TODO: fix this to get from DB
 		$body['home_url'] = $this->transposh->home_url;
 		$body['key']      = $this->transposh->options->transposh_key;

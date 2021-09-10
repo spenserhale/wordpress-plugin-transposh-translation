@@ -34,31 +34,31 @@ class transposh_option {
 		$this->type  = $type;
 	}
 
-	function __toString() {
+	public function __toString() {
 		return (string) $this->value;
 	}
 
-	function set_value( $value ) {
+	public function set_value( $value ) {
 		$this->value = $value;
 	}
 
-	function from_post() {
+	public function from_post() {
 		$this->value = $_POST[ $this->name ];
 	}
 
-	function get_name() {
+	public function get_name() {
 		return $this->name;
 	}
 
-	function get_value() {
+	public function get_value() {
 		return $this->value;
 	}
 
-	function get_type() {
+	public function get_type() {
 		return $this->type;
 	}
 
-	function post_value_id_name() {
+	public function post_value_id_name() {
 		return 'value="' . $this->value . '" id="' . $this->name . '" name="' . $this->name . '"';
 	}
 
@@ -174,7 +174,7 @@ class transposh_plugin_options {
 	private $changed = false;
 	private $vars = array();
 
-	function set_default_option_value( $option, $value = '' ) {
+	public function set_default_option_value( $option, $value = '' ) {
 		if ( ! isset( $this->options[ $option ] ) ) {
 			$this->options[ $option ] = $value;
 		}
@@ -182,7 +182,7 @@ class transposh_plugin_options {
 
 	// private $vars array() = (1,2,3);
 
-	function register_option( $name, $type, $default_value = '' ) {
+	public function register_option( $name, $type, $default_value = '' ) {
 		if ( ! isset( $this->options[ $name ] ) ) {
 			$this->options[ $name ] = $default_value;
 		}
@@ -190,7 +190,7 @@ class transposh_plugin_options {
 		$this->vars[ $name ] = new transposh_option( $name, $this->options[ $name ], $type );
 	}
 
-	function __get( $name ) {
+	public function __get( $name ) {
 		if ( substr( $name, - 2 ) === "_o" ) {
 			return $this->vars[ substr( $name, 0, - 2 ) ];
 		}
@@ -199,7 +199,7 @@ class transposh_plugin_options {
 		return $this->vars[ $name ]->get_value();
 	}
 
-	function __set( $name, $value ) {
+	public function __set( $name, $value ) {
 		if ( $value == TP_FROM_POST ) {
 			if ( isset( $_POST[ $name ] ) ) {
 				$value = $_POST[ $name ];
@@ -219,7 +219,7 @@ class transposh_plugin_options {
 		}
 	}
 
-	function __construct() {
+	public function __construct() {
 		// can't      tp_logger("creating options");
 		// load them here
 		$this->options = get_option( TRANSPOSH_OPTIONS );
@@ -295,7 +295,7 @@ class transposh_plugin_options {
 	 * @return array sorted list of languages, pointing to names and flags
 	 * @since 0.3.9
 	 */
-	function get_sorted_langs() {
+	public function get_sorted_langs() {
 		if ( $this->sorted_languages ) {
 			tp_logger( $this->sorted_languages, 5 );
 
@@ -310,7 +310,7 @@ class transposh_plugin_options {
 	 * @return array sorted list of translation engines
 	 * @since 0.9.8
 	 */
-	function get_sorted_engines() {
+	public function get_sorted_engines() {
 		if ( $this->preferred_translators ) {
 			tp_logger( $this->preferred_translators, 3 );
 
@@ -321,11 +321,11 @@ class transposh_plugin_options {
 		return transposh_consts::$engines;
 	}
 
-	function get_transposh_admin_hide_warning( $id ) {
+	public function get_transposh_admin_hide_warning( $id ) {
 		return strpos( $this->transposh_admin_hide_warnings, $id . ',' ) !== false;
 	}
 
-	function set_transposh_admin_hide_warning( $id ) {
+	public function set_transposh_admin_hide_warning( $id ) {
 		if ( ! $this->get_transposh_admin_hide_warning( $id ) ) {
 			$this->transposh_admin_hide_warnings .= $id . ',';
 		}
@@ -334,7 +334,7 @@ class transposh_plugin_options {
 	/**
 	 * Updates options at the wordpress options table if there was a change
 	 */
-	function update_options() {
+	public function update_options() {
 		if ( $this->changed ) {
 			foreach ( $this->vars as $name => $var ) {
 				$this->options[ $name ] = $var->get_value();
@@ -349,7 +349,7 @@ class transposh_plugin_options {
 	/**
 	 * Resets all options except keys
 	 */
-	function reset_options() {
+	public function reset_options() {
 		$this->options = array();
 		foreach ( array( 'msn_key', 'google_key', 'oht_id', 'oht_key', 'transposh_key' ) as $key ) {
 			$this->options[ $key ] = $this->vars[ $key ]->get_value();
@@ -364,7 +364,7 @@ class transposh_plugin_options {
 	 *
 	 * @return boolean Is this the default language?
 	 */
-	function is_default_language( $language ) { // XXXX
+	public function is_default_language( $language ) { // XXXX
 		return ( $this->default_language == $language || '' == $language );
 	}
 
@@ -372,7 +372,7 @@ class transposh_plugin_options {
 	 * Determine if the given language in on the list of active languages
 	 * @return boolean Is this language viewable?
 	 */
-	function is_active_language( $language ) {
+	public function is_active_language( $language ) {
 		if ( $this->is_default_language( $language ) ) {
 			return true;
 		}

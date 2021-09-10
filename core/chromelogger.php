@@ -26,57 +26,57 @@ class ChromePhp_tp {
 	/**
 	 * @var string
 	 */
-	const VERSION = '4.1.0';
+	public const VERSION = '4.1.0';
 
 	/**
 	 * @var string
 	 */
-	const HEADER_NAME = 'X-ChromeLogger-Data';
+	public const HEADER_NAME = 'X-ChromeLogger-Data';
 
 	/**
 	 * @var string
 	 */
-	const BACKTRACE_LEVEL = 'backtrace_level';
+	public const BACKTRACE_LEVEL = 'backtrace_level';
 
 	/**
 	 * @var string
 	 */
-	const LOG = 'log';
+	public const LOG = 'log';
 
 	/**
 	 * @var string
 	 */
-	const WARN = 'warn';
+	public const WARN = 'warn';
 
 	/**
 	 * @var string
 	 */
-	const ERROR = 'error';
+	public const ERROR = 'error';
 
 	/**
 	 * @var string
 	 */
-	const GROUP = 'group';
+	public const GROUP = 'group';
 
 	/**
 	 * @var string
 	 */
-	const INFO = 'info';
+	public const INFO = 'info';
 
 	/**
 	 * @var string
 	 */
-	const GROUP_END = 'groupEnd';
+	public const GROUP_END = 'groupEnd';
 
 	/**
 	 * @var string
 	 */
-	const GROUP_COLLAPSED = 'groupCollapsed';
+	public const GROUP_COLLAPSED = 'groupCollapsed';
 
 	/**
 	 * @var string
 	 */
-	const TABLE = 'table';
+	public const TABLE = 'table';
 
 	/**
 	 * @var string

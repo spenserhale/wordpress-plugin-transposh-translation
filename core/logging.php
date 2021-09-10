@@ -42,7 +42,7 @@ class tp_logger {
 	/** @var logger Singelton instance of our logger */
 	protected static $instance = null;
 
-	function __construct() {
+	public function __construct() {
 		// If not outputting to stdout, we should buffer so firephp will work
 		if ( ! $this->printout ) {
 			ob_start();
@@ -55,7 +55,7 @@ class tp_logger {
 	 * @param  mixed  $msg
 	 * @param  int  $severity
 	 */
-	function do_log( $msg, $severity = 3, $do_backtrace = false, $nest = 0 ) {
+	public function do_log( $msg, $severity = 3, $do_backtrace = false, $nest = 0 ) {
 		if ( $severity <= $this->debug_level ) {
 			if ( $this->show_caller ) {
 				$trace = debug_backtrace();

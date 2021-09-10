@@ -53,7 +53,7 @@ class transposh_database {
 	/**
 	 * PHP5+ only
 	 */
-	function __construct( &$transposh ) {
+	public function __construct( &$transposh ) {
 		$this->transposh             = &$transposh;
 		$this->translation_table     = $GLOBALS['wpdb']->prefix . TRANSLATIONS_TABLE;
 		$this->translation_log_table = $GLOBALS['wpdb']->prefix . TRANSLATIONS_LOG;
@@ -90,7 +90,7 @@ class transposh_database {
 	 *
 	 * @return mixed array with translation or false on cache miss
 	 */
-	function cache_fetch( $original, $lang ) {
+	public function cache_fetch( $original, $lang ) {
 		if ( ! TP_ENABLE_CACHE ) {
 			return false;
 		}
@@ -144,7 +144,7 @@ class transposh_database {
 	 *
 	 * @return boolean true if stored successfully
 	 */
-	function cache_store( $original, $lang, $translated, $ttl ) {
+	public function cache_store( $original, $lang, $translated, $ttl ) {
 		if ( ! TP_ENABLE_CACHE ) {
 			return false;
 		}
@@ -180,7 +180,7 @@ class transposh_database {
 	 * @param  string  $original
 	 * @param  string  $lang
 	 */
-	function cache_delete( $original, $lang ) {
+	public function cache_delete( $original, $lang ) {
 		if ( ! TP_ENABLE_CACHE ) {
 			return;
 		}
@@ -201,7 +201,7 @@ class transposh_database {
 	/**
 	 * Clean the memory cache
 	 */
-	function cache_clean() {
+	public function cache_clean() {
 		if ( ! TP_ENABLE_CACHE ) {
 			return;
 		}
@@ -223,7 +223,7 @@ class transposh_database {
 	 * @param  array  $originals  keys hold the strings...
 	 * @param  string  $lang
 	 */
-	function prefetch_translations( $originals, $lang ) {
+	public function prefetch_translations( $originals, $lang ) {
 		if ( ! $originals ) {
 			return;
 		}
@@ -275,7 +275,7 @@ class transposh_database {
 	 *
 	 * @return array list(source,translation)
 	 */
-	function fetch_translation( $orig, $lang ) {
+	public function fetch_translation( $orig, $lang ) {
 		$translated = null;
 		tp_logger( "Fetching for: $orig-$lang", 4 );
 		//The original is saved in db in its escaped form
@@ -322,7 +322,7 @@ class transposh_database {
 	 *
 	 * @return string $original
 	 */
-	function fetch_original( $trans, $lang ) {
+	public function fetch_original( $trans, $lang ) {
 		$original = null;
 		tp_logger( "Enter: $trans", 4 );
 
@@ -366,7 +366,7 @@ class transposh_database {
 	 * TODO - return some info?
 	 * @global <type> $user_ID - TODO
 	 */
-	function update_translation( $by = "" ) {
+	public function update_translation( $by = "" ) {
 		$ref    = getenv( 'HTTP_REFERER' );
 		$items  = $_POST['items'];
 		$lang   = $_POST['ln0'];
@@ -534,7 +534,7 @@ class transposh_database {
 	 * Get translation history for some translation.
 	 */
 
-	function get_translation_history( $token, $lang ) {
+	public function get_translation_history( $token, $lang ) {
 		$ref = getenv( 'HTTP_REFERER' );
 		//$original = transposh_utils::base64_url_decode($token);
 		tp_logger( "Inside history for ($token)", 4 );
@@ -596,7 +596,7 @@ class transposh_database {
 	 * @param  string  $timestamp
 	 */
 	//TODO: post this action to backup
-	function del_translation_history( $token, $langp, $timestampp ) {
+	public function del_translation_history( $token, $langp, $timestampp ) {
 		// $original = transposh_utils::base64_url_decode($token);
 		$original  = esc_sql( html_entity_decode( $token, ENT_NOQUOTES, 'UTF-8' ) );
 		$lang      = esc_sql( $langp );
@@ -678,7 +678,7 @@ class transposh_database {
 	 *
 	 * @param  string  $token
 	 */
-	function get_translation_alt( $token ) {
+	public function get_translation_alt( $token ) {
 		//$ref = getenv('HTTP_REFERER');
 		//  $original = transposh_utils::base64_url_decode($token);
 		$original = $token;
@@ -723,7 +723,7 @@ class transposh_database {
 	 *
 	 * @return array List of rows
 	 */
-	function get_all_human_translation_history( $date = "null", $limit = "" ) {
+	public function get_all_human_translation_history( $date = "null", $limit = "" ) {
 		$limitterm = '';
 		$dateterm  = '';
 		if ( $date != "null" ) {
@@ -758,7 +758,7 @@ class transposh_database {
 	 *
 	 * @return type
 	 */
-	function get_filtered_translations(
+	public function get_filtered_translations(
 		$source = '0',
 		$date = 'null',
 		$limit = '',
@@ -806,7 +806,7 @@ class transposh_database {
 	 *
 	 * @return type
 	 */
-	function get_filtered_translations_count( $source = '0', $date = 'null', $filter = '' ) {
+	public function get_filtered_translations_count( $source = '0', $date = 'null', $filter = '' ) {
 		$dateterm = '';
 		if ( $source != '' ) {
 			$sourceterm = "source=$source";
@@ -835,7 +835,7 @@ class transposh_database {
 	 * Setup the translation database.
 	 */
 
-	function setup_db( $force = false ) {
+	public function setup_db( $force = false ) {
 		tp_logger( "Enter" );
 		tp_logger( "charset: " . $GLOBALS['wpdb']->charset );
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -913,7 +913,7 @@ class transposh_database {
 	/**
 	 * Provides some stats about our database
 	 */
-	function db_stats() {
+	public function db_stats() {
 		echo '<h4>' . __( 'Database stats', TRANSPOSH_TEXT_DOMAIN ) . '</h4>';
 		$query = "SELECT count(*) as count FROM `{$this->translation_table}`";
 		$rows  = $GLOBALS['wpdb']->get_results( $query );
@@ -952,7 +952,7 @@ class transposh_database {
 	 *
 	 * @return array Original phrases in which $term appears
 	 */
-	function get_orignal_phrases_for_search_term( $term, $language ) {
+	public function get_orignal_phrases_for_search_term( $term, $language ) {
 		$n        = '%';
 		$term     = esc_sql( html_entity_decode( $term, ENT_NOQUOTES, 'UTF-8' ) );
 		$language = esc_sql( $language );
@@ -996,7 +996,7 @@ class transposh_database {
 	 *
 	 * @param  int  $days
 	 */
-	function cleanup( $days = 0 ) {
+	public function cleanup( $days = 0 ) {
 		$days = intval( $days ); // some security
 		if ( $days == 999 ) {
 			$cleanup = 'DELETE ' .
@@ -1027,7 +1027,7 @@ class transposh_database {
 		exit;
 	}
 
-	function db_maint() {
+	public function db_maint() {
 		// clean duplicate log entries
 		$dedup = 'SELECT * , count( * )' .
 		         ' FROM ' . $this->translation_log_table .
@@ -1142,7 +1142,7 @@ class transposh_database {
 		//   exit;
 	}
 
-	function restore_translation( $original, $lang, $translation, $by, $timestamp ) {
+	public function restore_translation( $original, $lang, $translation, $by, $timestamp ) {
 		// TODO in future
 		// if there is a newer human translation, just ignore this
 		// if there is a newer auto translation, remove it

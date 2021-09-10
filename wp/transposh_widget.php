@@ -27,7 +27,7 @@ class transposh_base_widget {
 	/**
 	 * Function that performs the actual subwidget rendering
 	 */
-	static function tp_widget_do( $args ) {
+	public static function tp_widget_do( $args ) {
 		echo "you should override this function in your widget";
 	}
 
@@ -38,7 +38,7 @@ class transposh_base_widget {
 	 * @param  string  $plugin_dir
 	 * @param  string  $plugin_url
 	 */
-	static function tp_widget_css( $file, $plugin_dir, $plugin_url ) {
+	public static function tp_widget_css( $file, $plugin_dir, $plugin_url ) {
 		tp_logger( 'looking for css:' . $file, 4 );
 		$basefile   = substr( $file, 0, - 4 );
 		$widget_css = TRANSPOSH_DIR_WIDGETS . '/' . $basefile . ".css";
@@ -55,7 +55,7 @@ class transposh_base_widget {
 	 * @param  string  $plugin_dir
 	 * @param  string  $plugin_url
 	 */
-	static function tp_widget_js( $file, $plugin_dir, $plugin_url ) {
+	public static function tp_widget_js( $file, $plugin_dir, $plugin_url ) {
 		tp_logger( 'looking for js:' . $file, 4 );
 		$basefile  = substr( $file, 0, - 4 );
 		$widget_js = TRANSPOSH_DIR_WIDGETS . '/' . $basefile . ".js";
@@ -74,12 +74,12 @@ class transposh_plugin_widget extends WP_Widget {
 	private $transposh;
 
 	/** @staticvar boolean Contains the fact that this is our first run */
-	static $first_init = true;
+	public static $first_init = true;
 
 	/** @staticvar int Counts call to the widget do to generate unique IDs */
-	static $draw_calls = '';
+	public static $draw_calls = '';
 
-	function __construct() {
+	public function __construct() {
 		// We get the transposh details from the global variable
 		$this->transposh = &$GLOBALS['my_transposh_plugin'];
 
@@ -110,7 +110,7 @@ class transposh_plugin_widget extends WP_Widget {
 	/**
 	 * Saves the widgets settings. (override of wp_widget)
 	 */
-	function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		tp_logger( $instance );
 		tp_logger( $new_instance );
@@ -124,7 +124,7 @@ class transposh_plugin_widget extends WP_Widget {
 	 * Creates the edit form for the widget. (override of wp_widget)
 	 *
 	 */
-	function form( $instance ) {
+	public function form( $instance ) {
 		// Defaults
 		/* TRANSLATORS: this will be the default widget title */
 		$instance = wp_parse_args( (array) $instance, array( 'title' => __( 'Translation', TRANSPOSH_TEXT_DOMAIN ) ) );
@@ -152,7 +152,7 @@ class transposh_plugin_widget extends WP_Widget {
 	/**
 	 * Loads the subwidget class code
 	 */
-	function load_widget( $file ) {
+	public function load_widget( $file ) {
 		tp_logger( "widget loaded: $file", 4 );
 		if ( $file[0] == '*' ) {
 			$upload     = wp_upload_dir();
@@ -174,7 +174,7 @@ class transposh_plugin_widget extends WP_Widget {
 	/**
 	 * Add custom css, i.e. transposh_widget.css, flags now override widget
 	 */
-	function add_transposh_widget_css() {
+	public function add_transposh_widget_css() {
 		// first we discover all active widgets of ours, and aggregate the files
 		$activewidgets = array();
 		$settings      = $this->get_settings();
@@ -205,7 +205,7 @@ class transposh_plugin_widget extends WP_Widget {
 	/**
 	 * Add custom js, i.e. transposh_widget.js
 	 */
-	function add_transposh_widget_js() {
+	public function add_transposh_widget_js() {
 		$activewidgets = array();
 		$settings      = $this->get_settings();
 		foreach ( $settings as $key => $value ) {
@@ -239,7 +239,7 @@ class transposh_plugin_widget extends WP_Widget {
 	 *
 	 * @return array
 	 */
-	function create_widget_args( $clean_page_url ) {
+	public function create_widget_args( $clean_page_url ) {
 		// only calculate urls once even for multiple instances
 		static $widget_args;
 		if ( is_array( $widget_args ) ) {
@@ -288,7 +288,7 @@ class transposh_plugin_widget extends WP_Widget {
 	 *
 	 * @param  array  $args  Contains such as $before_widget, $after_widget, $before_title, $after_title, etc
 	 */
-	function widget( $args, $instance, $extcall = false ) {
+	public function widget( $args, $instance, $extcall = false ) {
 		// extract args given by wordpress
 		extract( $args );
 		tp_logger( $args, 4 );
@@ -377,7 +377,7 @@ class transposh_plugin_widget extends WP_Widget {
 	/**
 	 * Inspired (and used code) from the get_plugins function of wordpress
 	 */
-	function get_widgets( $widget_folder = '' ) {
+	public function get_widgets( $widget_folder = '' ) {
 		get_plugins();
 
 		$tp_widgets  = array();

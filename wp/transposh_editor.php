@@ -8,7 +8,7 @@ class transposh_editor_table extends WP_List_Table {
 
 	private $filter = "";
 
-	function __construct() {
+	public function __construct() {
 		global $status, $page;
 		parent::__construct( array(
 			'singular' => __( 'translation', TRANSPOSH_TEXT_DOMAIN ), //singular name of the listed records
@@ -17,14 +17,14 @@ class transposh_editor_table extends WP_List_Table {
 		) );
 	}
 
-	function print_style() {
+	public function print_style() {
 		echo '<style type="text/css">';
 		echo '.wp-list-table .column-lang { width: 5%; }';
 		echo '.wp-list-table .column-source { width: 5%; }';
 		echo '</style>';
 	}
 
-	function add_screen_options() {
+	public function add_screen_options() {
 		$option = 'per_page';
 		$args   = array(
 			'label'   => __( 'Translations', TRANSPOSH_TEXT_DOMAIN ),
@@ -34,15 +34,15 @@ class transposh_editor_table extends WP_List_Table {
 		add_screen_option( $option, $args );
 	}
 
-	function no_items() {
+	public function no_items() {
 		_e( 'No translations found.', TRANSPOSH_TEXT_DOMAIN );
 	}
 
-	function item_key( $item ) {
+	public function item_key( $item ) {
 		return base64_encode( $item['timestamp'] . ',' . $item['lang'] . ',' . $item['original'] );
 	}
 
-	function column_default( $item, $column_name ) {
+	public function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
 			case 'original':
 			case 'lang':
@@ -56,7 +56,7 @@ class transposh_editor_table extends WP_List_Table {
 		}
 	}
 
-	function get_sortable_columns() {
+	public function get_sortable_columns() {
 		$sortable_columns = array(
 			'original'      => array( 'original', false ),
 			'lang'          => array( 'lang', false ),
@@ -68,7 +68,7 @@ class transposh_editor_table extends WP_List_Table {
 		return $sortable_columns;
 	}
 
-	function get_columns() {
+	public function get_columns() {
 		$columns = array(
 			'cb'            => '<input type="checkbox" />',
 			'lang'          => __( 'Language', TRANSPOSH_TEXT_DOMAIN ),
@@ -82,13 +82,13 @@ class transposh_editor_table extends WP_List_Table {
 		return $columns;
 	}
 
-	function column_cb( $item ) {
+	public function column_cb( $item ) {
 		return sprintf(
 			'<input type="checkbox" name="keys[]" value="%s" />', $this->item_key( $item )
 		);
 	}
 
-	function column_lang( $item ) {
+	public function column_lang( $item ) {
 		$actions = array(
 			// 'edit' => sprintf('<a href="?page=%s&action=%s&book=%s">Edit</a>', $_REQUEST['page'], 'edit', 1/*$item['ID']*/),
 			'filter' => sprintf( '<a href="?page=%s&action=%s&fl=%s">Filter</a>', $_REQUEST['page'], 'filter-lang',
@@ -99,7 +99,7 @@ class transposh_editor_table extends WP_List_Table {
 			$this->row_actions( $actions ) );
 	}
 
-	function column_original( $item ) {
+	public function column_original( $item ) {
 		$actions = array(
 			// 'edit' => sprintf('<a href="?page=%s&action=%s&book=%s">Edit</a>', $_REQUEST['page'], 'edit', 1/*$item['ID']*/),
 			'delete' => sprintf( '<a href="?page=%s&action=%s&key=%s">' . __( 'Delete' ) . '</a>', $_REQUEST['page'],
@@ -109,7 +109,7 @@ class transposh_editor_table extends WP_List_Table {
 		return sprintf( '%1$s %2$s', $item['original'], $this->row_actions( $actions ) );
 	}
 
-	function column_translated( $item ) {
+	public function column_translated( $item ) {
 		if ( ( in_array( $item['lang'], transposh_consts::$rtl_languages ) ) ) {
 			return sprintf( '<span dir="rtl" style="float:right">%1$s</span>', $item['translated'] );
 		}
@@ -117,7 +117,7 @@ class transposh_editor_table extends WP_List_Table {
 		return $item['translated'];
 	}
 
-	function column_translated_by( $item ) {
+	public function column_translated_by( $item ) {
 		// check if its a user and try to grab his login
 		$by      = transposh_utils::wordpress_user_by_by( $item['translated_by'] );
 		$actions = array(
@@ -129,7 +129,7 @@ class transposh_editor_table extends WP_List_Table {
 		return sprintf( '%1$s %2$s', $by, $this->row_actions( $actions ) );
 	}
 
-	function extra_tablenav( $which ) {
+	public function extra_tablenav( $which ) {
 		//echo "Filter me this!";
 		/* 	echo "<label for='bulk-action-selector-" . esc_attr( $which ) . "' class='screen-reader-text'>" . __( 'Select bulk action' ) . "</label>";
 		  echo "<select name='filter' id='bulk-action-selector-" . esc_attr( $which ) . "'>\n";
@@ -147,7 +147,7 @@ class transposh_editor_table extends WP_List_Table {
 		  echo "\n"; */
 	}
 
-	function get_bulk_actions() {
+	public function get_bulk_actions() {
 		$actions = array(
 			'delete' => 'Delete'
 		);
@@ -155,7 +155,7 @@ class transposh_editor_table extends WP_List_Table {
 		return $actions;
 	}
 
-	function prepare_items() {
+	public function prepare_items() {
 		global $my_transposh_plugin;
 		$columns               = $this->get_columns();
 		$hidden                = array();
@@ -192,7 +192,7 @@ class transposh_editor_table extends WP_List_Table {
 			$orderby, $order, $this->filter );
 	}
 
-	function render_table() {
+	public function render_table() {
 		echo '</pre><div class="wrap"><h2>' . __( 'Translations', TRANSPOSH_TEXT_DOMAIN ) . '</h2>';
 		$this->prepare_items();
 		if ( $this->filter ) {
@@ -214,7 +214,7 @@ class transposh_editor_table extends WP_List_Table {
 	 *
 	 * @global transposh_plugin $my_transposh_plugin
 	 */
-	function perform_actions() {
+	public function perform_actions() {
 		global $my_transposh_plugin;
 		// echo "Actioning";
 		// echo $this->current_action();

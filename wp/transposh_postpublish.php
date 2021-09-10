@@ -32,7 +32,7 @@ class transposh_postpublish {
 	 *
 	 * @param  transposh_plugin  $transposh
 	 */
-	function __construct( &$transposh ) {
+	public function __construct( &$transposh ) {
 		$this->transposh = &$transposh;
 		// we need this anyway because of the change language selection
 		add_action( 'edit_post', array( &$this, 'on_edit' ) );
@@ -42,7 +42,7 @@ class transposh_postpublish {
 	/**
 	 * Admin menu created action, where we create our metaboxes
 	 */
-	function on_admin_menu() {
+	public function on_admin_menu() {
 		//add our metaboxs to the post and publish pages
 		tp_logger( 'adding metaboxes for admin pages/post/custom', 4 );
 		$post_types = get_post_types();
@@ -96,7 +96,7 @@ class transposh_postpublish {
 	 * Function to allow mass translate of tags
 	 * @return array list of tags
 	 */
-	function get_tags() {
+	public function get_tags() {
 		$tags    = get_terms( 'post_tag' ); // Always query top tags
 		$phrases = array();
 		foreach ( $tags as $tag ) {
@@ -111,7 +111,7 @@ class transposh_postpublish {
 	 *
 	 * @param  int  $postID
 	 */
-	function get_post_phrases( $postID ) {
+	public function get_post_phrases( $postID ) {
 		// Some security, to avoid others from seeing private posts
 		// fake post for tags
 		if ( $postID == - 555 ) {
@@ -203,7 +203,7 @@ class transposh_postpublish {
 	/**
 	 * This is the box that appears on the side
 	 */
-	function transposh_postpublish_box() {
+	public function transposh_postpublish_box() {
 		if ( isset( $_GET['post'] ) && get_post_meta( $_GET['post'], 'transposh_can_translate', true ) ) {
 			$this->just_published = true;
 		}
@@ -218,7 +218,7 @@ class transposh_postpublish {
 	/**
 	 * This is a selection of language box which should hopefully appear below the post edit
 	 */
-	function transposh_setlanguage_box() {
+	public function transposh_setlanguage_box() {
 		$lang = get_post_meta( $_GET['post'], 'tp_language', true );
 		echo '<select name="transposh_tp_language">';
 		echo '<option value="">' . __( 'Default' ) . '</option>';
@@ -235,7 +235,7 @@ class transposh_postpublish {
 	 *
 	 * @param  int  $postID
 	 */
-	function on_edit( $postID ) {
+	public function on_edit( $postID ) {
 		// This should prevent the meta from being added when not needed
 		if ( ! isset( $_POST['transposh_tp_language'] ) ) {
 			return;
