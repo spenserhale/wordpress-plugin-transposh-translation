@@ -791,28 +791,28 @@ class transposh_consts {
 	);
 
 	public static function get_language_name( $lang ) {
-		list ( $langname ) = explode( ",", transposh_consts::$languages[ $lang ] );
+		list ( $langname ) = explode( ",", self::$languages[ $lang ] );
 		$langname_r = apply_filters( "tp_language_name", $langname );
 
 		return $langname_r;
 	}
 
 	public static function get_language_orig_name( $lang ) {
-		list ( , $langorigname ) = explode( ",", transposh_consts::$languages[ $lang ] );
+		list ( , $langorigname ) = explode( ",", self::$languages[ $lang ] );
 		$langorigname_r = apply_filters( "tp_language_origname", $langorigname );
 
 		return $langorigname_r;
 	}
 
 	public static function get_language_flag( $lang ) {
-		list ( , , $flag ) = explode( ",", transposh_consts::$languages[ $lang ] );
+		list ( , , $flag ) = explode( ",", self::$languages[ $lang ] );
 		$flag_r = apply_filters( "tp_language_flag", $flag );
 
 		return $flag_r;
 	}
 
 	public static function get_language_locale( $lang ) {
-		@list ( , , , $locale ) = explode( ",", transposh_consts::$languages[ $lang ] );
+		@list ( , , , $locale ) = explode( ",", self::$languages[ $lang ] );
 		$locale_r = apply_filters( "tp_language_locale", $locale );
 		if ( $locale_r ) {
 			return $locale_r;

@@ -128,12 +128,12 @@ class transposh_utils {
 			unset( $parsedurl['scheme'] );
 			unset( $parsedurl['host'] );
 		}
-		$url = transposh_utils::glue_url( $parsedurl );
+		$url = self::glue_url( $parsedurl );
 		if ( ! $url ) {
 			return '/';
 		}
 
-		return transposh_utils::urlencode( $url );
+		return self::urlencode( $url );
 	}
 
 	/**
@@ -238,7 +238,7 @@ class transposh_utils {
 		//$url = preg_replace("/&$/", "", $url);
 		//$url = preg_replace("/\?$/", "", $url);
 		//    $url = htmlentities($url, ENT_NOQUOTES);
-		$url = transposh_utils::glue_url( $parsedurl );
+		$url = self::glue_url( $parsedurl );
 		tp_logger( "new url: $url", 5 );
 
 		return $url;
