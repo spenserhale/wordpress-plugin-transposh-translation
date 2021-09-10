@@ -282,6 +282,7 @@ class transposh_plugin_admin {
 				wp_enqueue_script( 'transposh_admin_languages',
 					$this->transposh->transposh_plugin_url . '/' . TRANSPOSH_DIR_JS . '/admin/languages.js',
 					array( 'transposh' ), TRANSPOSH_PLUGIN_VER, true );
+				break;
 			case 'tp_engines': // engines riding on languages
 				wp_enqueue_script( 'jquery-ui-droppable' );
 				wp_enqueue_script( 'jquery-ui-sortable' );
@@ -314,6 +315,7 @@ class transposh_plugin_admin {
 						't_be.y_langs = ' . json_encode( transposh_consts::$engines['y']['langs'] ) . ';'
 				);
 				wp_localize_script( "transposh_backend", "t_be", $script_params );
+				break;
 			case 'tp_editor':
 				wp_enqueue_script( 'transposh_backend',
 					$this->transposh->transposh_plugin_url . '/' . TRANSPOSH_DIR_JS . '/admin/backendeditor.js',
