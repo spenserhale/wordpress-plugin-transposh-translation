@@ -454,11 +454,9 @@ class transposh_plugin {
 		tp_logger( 'init ' . $_SERVER['REQUEST_URI'], 4 );
 
 		// the wp_rewrite is not available earlier so we can only set the enable_permalinks here
-		if ( is_object( $GLOBALS['wp_rewrite'] ) ) {
-			if ( $GLOBALS['wp_rewrite']->using_permalinks() && $this->options->enable_permalinks ) {
-				tp_logger( "enabling permalinks" );
-				$this->enable_permalinks_rewrite = true;
-			}
+		if ( is_object( $GLOBALS['wp_rewrite'] ) && $GLOBALS['wp_rewrite']->using_permalinks() && $this->options->enable_permalinks ) {
+			tp_logger( "enabling permalinks" );
+			$this->enable_permalinks_rewrite = true;
 		}
 
 		// this is an ajax special case, currently crafted and tested on buddy press, lets hope this won't make hell break loose.
@@ -1448,11 +1446,10 @@ class transposh_plugin {
 		tp_logger( $atts );
 		tp_logger( $content );
 
-		if ( isset( $atts['not_in'] ) && $this->target_language ) {
-			if ( stripos( $atts['not_in'], $this->target_language ) !== false ) {
-				return;
-			}
-		}
+		if ( isset( $atts['not_in'] ) && $this->target_language && stripos( $atts['not_in'],
+				$this->target_language ) !== false ) {
+					return;
+				}
 
 		if ( isset( $atts['locale'] ) || in_array( 'locale', $atts ) ) {
 			if ( isset( $atts['lang'] ) && stripos( $atts['lang'], $this->target_language ) === false ) {
@@ -1711,33 +1708,31 @@ class transposh_plugin {
 		if ( get_option( TRANSPOSH_OPTIONS_YANDEXPROXY, array() ) ) {
 			[ $sid, $timestamp ] = get_option( TRANSPOSH_OPTIONS_YANDEXPROXY, array() );
 		}
-		if ( $sid == '' ) {
-			if ( ( time() - TRANSPOSH_YANDEXPROXY_DELAY > $timestamp ) ) {
-				// attempt key refresh on error
-				$url = 'https://translate.yandex.com/';
-				tp_logger( $url, 3 );
-				$ch = curl_init();
-				// yandex wants a referer someimes
-				curl_setopt( $ch, CURLOPT_REFERER, "https://translate.yandex.com/" );
-				curl_setopt( $ch, CURLOPT_URL, $url );
-				curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-				//must set agent for google to respond with utf-8
-				curl_setopt( $ch, CURLOPT_USERAGENT, 'Mozilla/5.0' );
-				$output = curl_exec( $ch );
-				$sidpos = strpos( $output, "SID: '" ) + 6;
-				$sid    = substr( $output, $sidpos, strpos( $output, "',", $sidpos ) - $sidpos );
-				tp_logger( $sid );
-				$sid = strrev( substr( $sid, 0, 8 ) ) . '.' . strrev( substr( $sid, 9,
-						8 ) ) . '.' . strrev( substr( $sid, 18, 8 ) );
-				tp_logger( $sid );
-				if ( $output === false ) {
-					tp_logger( 'Curl error: ' . curl_error( $ch ) );
+		if ( ( $sid == '' ) && ( time() - TRANSPOSH_YANDEXPROXY_DELAY > $timestamp ) ) {
+			// attempt key refresh on error
+			$url = 'https://translate.yandex.com/';
+			tp_logger( $url, 3 );
+			$ch = curl_init();
+			// yandex wants a referer someimes
+			curl_setopt( $ch, CURLOPT_REFERER, "https://translate.yandex.com/" );
+			curl_setopt( $ch, CURLOPT_URL, $url );
+			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+			//must set agent for google to respond with utf-8
+			curl_setopt( $ch, CURLOPT_USERAGENT, 'Mozilla/5.0' );
+			$output = curl_exec( $ch );
+			$sidpos = strpos( $output, "SID: '" ) + 6;
+			$sid    = substr( $output, $sidpos, strpos( $output, "',", $sidpos ) - $sidpos );
+			tp_logger( $sid );
+			$sid = strrev( substr( $sid, 0, 8 ) ) . '.' . strrev( substr( $sid, 9,
+					8 ) ) . '.' . strrev( substr( $sid, 18, 8 ) );
+			tp_logger( $sid );
+			if ( $output === false ) {
+				tp_logger( 'Curl error: ' . curl_error( $ch ) );
 
-					return false;
-				}
-				update_option( TRANSPOSH_OPTIONS_YANDEXPROXY, array( $sid, time() ) );
-				curl_close( $ch );
+				return false;
 			}
+			update_option( TRANSPOSH_OPTIONS_YANDEXPROXY, array( $sid, time() ) );
+			curl_close( $ch );
 		}
 
 		if ( ! $sid ) {

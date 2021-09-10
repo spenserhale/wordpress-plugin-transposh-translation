@@ -431,11 +431,9 @@ class tp_parser {
 		$pos = 0;
 		//	$pos = skip_white_space($string, $pos);
 		// skip CDATA in feed_fix mode
-		if ( $this->feed_fix ) {
-			if ( strpos( $string, '<![CDATA[' ) === 0 ) {
-				$pos    = 9; // CDATA length
-				$string = substr( $string, 0, - 3 ); // chop the last ]]>;
-			}
+		if ( $this->feed_fix && strpos( $string, '<![CDATA[' ) === 0 ) {
+			$pos    = 9; // CDATA length
+			$string = substr( $string, 0, - 3 ); // chop the last ]]>;
 		}
 
 		$start = $pos;
@@ -739,33 +737,31 @@ class tp_parser {
 		// ready our stats
 		$this->stats = new tp_parserstats();
 		// handler for possible json (buddypress)
-		if ( $this->might_json ) {
-			if ( $string[0] === '{' ) {
-				$jsoner = json_decode( $string );
-				if ( $jsoner != null ) {
-					tp_logger( "json detected (buddypress?)", 4 );
-					// currently we only handle contents (which buddypress heavily use)
-					if ( $jsoner->contents ) {
-						$jsoner->contents = $this->fix_html( $jsoner->contents );
-					}
-					if ( $jsoner->fragments->{'div.widget_shopping_cart_content'} ) {
-						$jsoner->fragments->{'div.widget_shopping_cart_content'} = $this->fix_html( $jsoner->fragments->{'div.widget_shopping_cart_content'} );
-					}
-					if ( $jsoner->fragments->{'div.kt-header-mini-cart-refreash'} ) {
-						$jsoner->fragments->{'div.kt-header-mini-cart-refreash'} = $this->fix_html( $jsoner->fragments->{'div.kt-header-mini-cart-refreash'} );
-					}
-					if ( $jsoner->fragments->{'a.cart-contents'} ) {
-						$jsoner->fragments->{'a.cart-contents'} = $this->fix_html( $jsoner->fragments->{'a.cart-contents'} );
-					}
-					if ( $jsoner->fragments->{'.woocommerce-checkout-review-order-table'} ) {
-						$jsoner->fragments->{'.woocommerce-checkout-review-order-table'} = $this->fix_html( $jsoner->fragments->{'.woocommerce-checkout-review-order-table'} );
-					}
-					if ( $jsoner->fragments->{'.woocommerce-checkout-payment'} ) {
-						$jsoner->fragments->{'.woocommerce-checkout-payment'} = $this->fix_html( $jsoner->fragments->{'.woocommerce-checkout-payment'} );
-					}
-
-					return json_encode( $jsoner ); // now any attempted json will actually return a json
+		if ( $this->might_json && $string[0] === '{' ) {
+			$jsoner = json_decode( $string );
+			if ( $jsoner != null ) {
+				tp_logger( "json detected (buddypress?)", 4 );
+				// currently we only handle contents (which buddypress heavily use)
+				if ( $jsoner->contents ) {
+					$jsoner->contents = $this->fix_html( $jsoner->contents );
 				}
+				if ( $jsoner->fragments->{'div.widget_shopping_cart_content'} ) {
+					$jsoner->fragments->{'div.widget_shopping_cart_content'} = $this->fix_html( $jsoner->fragments->{'div.widget_shopping_cart_content'} );
+				}
+				if ( $jsoner->fragments->{'div.kt-header-mini-cart-refreash'} ) {
+					$jsoner->fragments->{'div.kt-header-mini-cart-refreash'} = $this->fix_html( $jsoner->fragments->{'div.kt-header-mini-cart-refreash'} );
+				}
+				if ( $jsoner->fragments->{'a.cart-contents'} ) {
+					$jsoner->fragments->{'a.cart-contents'} = $this->fix_html( $jsoner->fragments->{'a.cart-contents'} );
+				}
+				if ( $jsoner->fragments->{'.woocommerce-checkout-review-order-table'} ) {
+					$jsoner->fragments->{'.woocommerce-checkout-review-order-table'} = $this->fix_html( $jsoner->fragments->{'.woocommerce-checkout-review-order-table'} );
+				}
+				if ( $jsoner->fragments->{'.woocommerce-checkout-payment'} ) {
+					$jsoner->fragments->{'.woocommerce-checkout-payment'} = $this->fix_html( $jsoner->fragments->{'.woocommerce-checkout-payment'} );
+				}
+
+				return json_encode( $jsoner ); // now any attempted json will actually return a json
 			}
 		}
 
@@ -993,20 +989,19 @@ class tp_parser {
 									$this->stats->human_translated_phrases ++;
 								}
 							}
-							if ( ( $this->is_edit_mode || ( $this->is_auto_translate && $translated_text == null ) ) && $ep->inbody ) {
+							if ( ( $this->is_edit_mode || ( $this->is_auto_translate && $translated_text == null ) ) &&
+							     $ep->inbody && ( strpos( $e->innertext, $ep->phrase ) === false ) &&
+							     ! in_array( $ep->phrase, $hidden_phrases )
+							) {
+								// used to call /* Transposh_utils::base64_url_encode($ep->phrase) */
 								// prevent duplicate translation (title = text)
-								if ( strpos( $e->innertext,
-										$ep->phrase /* Transposh_utils::base64_url_encode($ep->phrase) */ ) === false ) {
-//                                if (strpos($e->innertext, transposh_utils::base64_url_encode($ep->phrase)) === false) {
-									//no need to translate span the same hidden phrase more than once
-									if ( ! in_array( $ep->phrase, $hidden_phrases ) ) {
-										$this->stats->hidden_translateable_phrases ++;
-										$span .= $this->create_edit_span( $ep->phrase, $translated_text, $source, true,
-											$ep->srclang );
-										//    logger ($span);
-										$hidden_phrases[] = $ep->phrase;
-									}
-								}
+								// if (strpos($e->innertext, transposh_utils::base64_url_encode($ep->phrase)) === false) {
+								// no need to translate span the same hidden phrase more than once
+								$this->stats->hidden_translateable_phrases ++;
+								$span .= $this->create_edit_span( $ep->phrase, $translated_text, $source, true,
+									$ep->srclang );
+								//    logger ($span);
+								$hidden_phrases[] = $ep->phrase;
 							}
 							// if we need to replace, we store this
 							if ( $translated_text ) {
@@ -1084,10 +1079,8 @@ class tp_parser {
 //        Log::info("Stats Done:" . $this->stats->time);
 
 		$head = $this->html->find( 'head', 0 );
-		if ( $this->edit_span_created ) {
-			if ( $head != null ) {
-				$head->lastChild()->outertext .= $this->added_header;
-			}
+		if ( $this->edit_span_created && $head != null ) {
+			$head->lastChild()->outertext .= $this->added_header;
 		}
 		//exit;
 		if ( $head != null ) {

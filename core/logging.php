@@ -104,12 +104,10 @@ class tp_logger {
 					ChromePhp_tp::groupCollapsed( "$log_prefix: object/array" );
 					ChromePhp_tp::log( $msg );
 					ChromePhp_tp::groupEnd();
+				} elseif ( is_array( $msg ) || is_object( $msg ) ) {
+					ChromePhp_tp::log( $msg );
 				} else {
-					if ( is_array( $msg ) || is_object( $msg ) ) {
-						ChromePhp_tp::log( $msg );
-					} else {
-						ChromePhp_tp::log( "$log_prefix:$msg" );
-					}
+					ChromePhp_tp::log( "$log_prefix:$msg" );
 				}
 			}
 		}

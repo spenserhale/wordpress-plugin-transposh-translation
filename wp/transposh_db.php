@@ -384,11 +384,9 @@ class transposh_database {
 		// we must check that all sent languages are editable
 		$all_editable = true;
 		for ( $i = 0; $i < $items; $i ++ ) {
-			if ( isset( $_POST["ln$i"] ) ) {
-				if ( ! $this->transposh->options->is_active_language( $_POST["ln$i"] ) ) {
-					$all_editable = false;
-					break;
-				}
+			if ( isset( $_POST["ln$i"] ) && ! $this->transposh->options->is_active_language( $_POST["ln$i"] ) ) {
+				$all_editable = false;
+				break;
 			}
 		}
 		if ( ! $by && ! ( $all_editable &&

@@ -603,14 +603,12 @@ class Services_JSON {
 					if ( $str[0] === '[' ) {
 						$stk = array( SERVICES_JSON_IN_ARR );
 						$arr = array();
+					} elseif ( $this->use & SERVICES_JSON_LOOSE_TYPE ) {
+						$stk = array( SERVICES_JSON_IN_OBJ );
+						$obj = array();
 					} else {
-						if ( $this->use & SERVICES_JSON_LOOSE_TYPE ) {
-							$stk = array( SERVICES_JSON_IN_OBJ );
-							$obj = array();
-						} else {
-							$stk = array( SERVICES_JSON_IN_OBJ );
-							$obj = new stdClass();
-						}
+						$stk = array( SERVICES_JSON_IN_OBJ );
+						$obj = new stdClass();
 					}
 
 					$stk[] = array(
