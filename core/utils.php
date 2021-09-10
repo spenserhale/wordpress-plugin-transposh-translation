@@ -336,11 +336,11 @@ class transposh_utils {
 	 * @param  string  $href
 	 * @param  string  $home_url
 	 * @param  string  $target_language
-	 * @param  function  $fetch_translation_func
+	 * @param  callable  $fetch_translation_func
 	 *
 	 * @return string translated url permalink
 	 */
-	public static function translate_url( $href, $home_url, $target_language, $fetch_translation_func ): string {
+	public static function translate_url( $href, $home_url, $target_language, callable $fetch_translation_func ): string {
 		$url       = '';
 		$querypart = '';
 		$fragment  = '';
@@ -362,8 +362,7 @@ class transposh_utils {
 			if ( is_numeric( $part ) ) {
 				$translated_text = $part;
 			} else {
-				[ $source, $translated_text ] = call_user_func_array( $fetch_translation_func,
-					array( $part, $target_language ) );
+				[ $source, $translated_text ] = $fetch_translation_func( $part, $target_language );
 			}
 			if ( $translated_text ) {
 				$ttext = str_replace( '-', '--', $translated_text );
@@ -372,8 +371,8 @@ class transposh_utils {
 				$url   .= '/' . $ttext;
 			} else {
 				// now the same attempt with '-' replaced to ' '
-				[ $source, $translated_text ] = call_user_func_array( $fetch_translation_func,
-					array( str_replace( '-', ' ', $part ), $target_language ) );
+				[ $source, $translated_text ] = $fetch_translation_func( str_replace( '-', ' ', $part ),
+					$target_language );
 				//logger ($part. ' '.str_replace('-', ' ', $part).' '.$translated_text);
 				if ( $translated_text ) {
 					$ttext = str_replace( '-', '--', $translated_text );
@@ -398,11 +397,11 @@ class transposh_utils {
 	 * @param  string  $href
 	 * @param  string  $home_url
 	 * @param  string  $target_language
-	 * @param  function  $fetch_translation_func
+	 * @param  callable  $fetch_translation_func
 	 *
 	 * @return string
 	 */
-	public static function get_original_url( $href, $home_url, $target_language, $fetch_translation_func ): string {
+	public static function get_original_url( $href, $home_url, $target_language, callable $fetch_translation_func ): string {
 		$href   = substr( $href, strlen( $home_url ) );
 		$url    = stripslashes( urldecode( $href ) );
 		$params = ( $pos = strpos( $url, '?' ) ) ? substr( $url, $pos ) : '';
@@ -420,7 +419,7 @@ class transposh_utils {
 			}
 
 			// we attempt to find an original text
-			$original_text = call_user_func_array( $fetch_translation_func, array( $part, $target_language ) );
+			$original_text = $fetch_translation_func( $part, $target_language );
 			if ( ! $original_text ) {
 				// if the part has dashes we attempt to resolve original without them
 				$part2 = str_replace( '--', 'tmptmptmp', $part );
@@ -428,7 +427,7 @@ class transposh_utils {
 				$part2 = str_replace( '(qm)', '?', $part2 );
 				$part2 = str_replace( 'tmptmptmp', '-', $part2 );
 				if ( $part != $part2 ) {
-					$original_text = call_user_func_array( $fetch_translation_func, array( $part2, $target_language ) );
+					$original_text = $fetch_translation_func( $part2, $target_language );
 				}
 			}
 			// we'll add it if we have it

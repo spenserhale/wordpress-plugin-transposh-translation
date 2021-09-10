@@ -215,7 +215,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 
 			// trigger callback
 			if ( $this->dom->callback !== null ) {
-				call_user_func_array( $this->dom->callback, array( $this ) );
+				call_user_func( $this->dom->callback, $this );
 			}
 
 			if ( isset( $this->_[ HDOM_INFO_OUTER ] ) ) {

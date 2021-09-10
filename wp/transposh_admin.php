@@ -411,7 +411,7 @@ class transposh_plugin_admin {
 
 		// the page content
 		if ( $this->page ) {
-			call_user_func( array( &$this, $this->page ) );
+			$this->{$this->page}();
 		}
 
 		// Add submission for pages that can be modified
