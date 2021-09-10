@@ -403,7 +403,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 			if ( $end == 0 ) {
 				$parent = $this->parent;
 				while ( ! isset( $parent->_[ HDOM_INFO_END ] ) && $parent !== null ) {
-					$end    -= 1;
+					-- $end;
 					$parent = $parent->parent;
 				}
 				$end += $parent->_[ HDOM_INFO_END ];

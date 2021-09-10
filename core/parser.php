@@ -469,7 +469,7 @@ class tp_parser {
 //                $closers = ($string[$pos] == TP_GTXT_BRK) ? '': 'closer';
 //                tp_logger(" $closers TEXT breaker $logstr start:$start pos:$pos gt:" . $this->in_get_text, 3);
 				$this->tag_phrase( $string, $start, $pos );
-				( $string[ $pos ] == TP_GTXT_BRK ) ? $this->in_get_text += 1 : $this->in_get_text -= 1;
+				( $string[ $pos ] == TP_GTXT_BRK ) ? ++ $this->in_get_text : -- $this->in_get_text;
 				$pos ++;
 				$start = $pos;
 				// reset state based on string start, no need to flip
@@ -482,7 +482,7 @@ class tp_parser {
 				//tp_logger("inner text breaker $start $pos $string " . (($this->in_get_text_inner) ? 'true' : 'false'), 5);
 				$this->tag_phrase( $string, $start, $pos );
 				if ( $this->in_get_text ) {
-					( $string[ $pos ] == TP_GTXT_IBRK ) ? $this->in_get_text_inner += 1 : $this->in_get_text_inner -= 1;
+					( $string[ $pos ] == TP_GTXT_IBRK ) ? ++ $this->in_get_text_inner : -- $this->in_get_text_inner;
 				}
 				$pos ++;
 				$start = $pos;
