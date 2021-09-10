@@ -99,20 +99,20 @@ class tp_parser {
 	private bool $num_breaks = true;
 	private bool $ent_breaks = true;
 	// functions that need to be defined... //
-	/** @var function */
-	public ? $url_rewrite_func = null;
+	/** @var callable */
+	public $url_rewrite_func = null;
 
-	/** @var function */
-	public ? $fetch_translate_func = null;
+	/** @var callable */
+	public $fetch_translate_func = null;
 
-	/** @var function */
-	public ? $prefetch_translate_func = null;
+	/** @var callable */
+	public $prefetch_translate_func = null;
 
-	/** @var function */
-	public ? $split_url_func = null;
+	/** @var callable */
+	public $split_url_func = null;
 
-	/** @var function */
-	public ? $fix_src_tag_func = null;
+	/** @var callable */
+	public $fix_src_tag_func = null;
 
 	/** @var int stores the number of the last used span_id */
 	private int $span_id = 0;
@@ -135,7 +135,7 @@ class tp_parser {
 	public string $srclang;
 	private bool $inbody = false;
 
-	/** @var hold fact that we are in select or other similar elements */
+	/** @var bool fact that we are in select or other similar elements */
 	private $inselect = false;
 	public $is_edit_mode;
 	public $is_auto_translate;
@@ -153,8 +153,8 @@ class tp_parser {
 		'guid'           => 1
 	);
 
-	/** @var parserstats Contains parsing statistics */
-	private parserstats $stats;
+	/** @var tp_parserstats Contains parsing statistics */
+	private tp_parserstats $stats;
 
 	/** @var boolean Are we inside a translated gettext */
 	private bool $in_get_text = false;
@@ -178,11 +178,11 @@ class tp_parser {
 	/**
 	 * Determine if the current position in buffer is a white space.
 	 *
-	 * @param  char  $char
+	 * @param  string  $char
 	 *
 	 * @return boolean true if current position marks a white space
 	 */
-	public function is_white_space( char $char ): bool {
+	public function is_white_space( string $char ): bool {
 		if ( ! $char ) {
 			return true;
 		}
@@ -335,12 +335,12 @@ class tp_parser {
 	 * Determine if the current position in buffer is a sentence breaker, e.g. '.' or ',' .
 	 * Note html markups are not considered sentence breaker within the scope of this function.
 	 *
-	 * @param  char  $char  charcter checked if breaker
-	 * @param  char  $nextchar  needed for checking if . or - breaks
+	 * @param  string  $char  charcter checked if breaker
+	 * @param  string  $nextchar  needed for checking if . or - breaks
 	 *
 	 * @return int length of breaker if current position marks a break in sentence
 	 */
-	public function is_sentence_breaker( char $char, char $nextchar, $nextnextchar ): int {
+	public function is_sentence_breaker( string $char, string $nextchar, $nextnextchar ): int {
 		if ( ( $char == '.' || $char == '-' ) && ( $this->is_white_space( $nextchar ) ) ) {
 			return 1;
 		}
@@ -716,11 +716,11 @@ class tp_parser {
 	/**
 	 * Allow changing of parsing rules, yeah, I caved
 	 *
-	 * @param  type  $puncts
-	 * @param  type  $numbers
-	 * @param  type  $entities
+	 * @param  bool  $puncts
+	 * @param  bool  $numbers
+	 * @param  bool  $entities
 	 */
-	public function change_parsing_rules( type $puncts, type $numbers, type $entities ): void {
+	public function change_parsing_rules( bool $puncts, bool $numbers, bool $entities ): void {
 		$this->punct_breaks = $puncts;
 		$this->num_breaks   = $numbers;
 		$this->ent_breaks   = $entities;
