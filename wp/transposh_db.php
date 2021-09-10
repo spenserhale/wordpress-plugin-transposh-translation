@@ -273,7 +273,7 @@ class transposh_database {
 	 * @param  string  $orig
 	 * @param  string  $lang
 	 *
-	 * @return array list(source,translation)
+	 * @return null|array list(source,translation)
 	 */
 	public function fetch_translation( $orig, $lang ): ?array {
 		$translated = null;
@@ -295,7 +295,7 @@ class transposh_database {
 		} else {
 			// make sure $lang is reasonable, unless someone is messing with us, it will be ok
 			if ( ! ( $this->transposh->options->is_active_language( $lang ) ) ) {
-				return;
+				return null;
 			}
 			$query = "SELECT translated, source FROM {$this->translation_table} WHERE original = '$original' and lang = '$lang' ";
 			$row   = $GLOBALS['wpdb']->get_row( $query );
