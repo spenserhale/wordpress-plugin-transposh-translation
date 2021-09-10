@@ -22,25 +22,25 @@ require_once( 'chromelogger.php' );
 class tp_logger {
 
 	/** @var string Name of file to log into */
-	private $logfile;
+	private string $logfile;
 
 	/** @var int Tracing level, 0 is disabled (almost) and higher numbers show more debug info */
-	private $debug_level = 3;
+	private int $debug_level = 3;
 
 	/** @var boolean should logging be outputted to stdout */
-	public $printout = false;
+	public bool $printout = false;
 
 	/** @var boolean should logging outputted to stdout include an EOL */
-	public $eolprint = false;
+	public bool $eolprint = false;
 
 	/** @var boolean shell we show which function called the logger */
-	public $show_caller = true;
+	public bool $show_caller = true;
 
 	/** @var string for remote firephp debugging */
-	private $remoteip;
+	private string $remoteip;
 
 	/** @var tp_logger Singelton instance of our logger */
-	protected static $instance = null;
+	protected static ?tp_logger $instance = null;
 
 	public function __construct() {
 		// If not outputting to stdout, we should buffer so firephp will work
@@ -55,7 +55,7 @@ class tp_logger {
 	 * @param  mixed  $msg
 	 * @param  int  $severity
 	 */
-	public function do_log( $msg, $severity = 3, $do_backtrace = false, $nest = 0 ): void {
+	public function do_log( $msg, int $severity = 3, $do_backtrace = false, $nest = 0 ): void {
 		if ( $severity <= $this->debug_level ) {
 			if ( $this->show_caller ) {
 				$trace = debug_backtrace();

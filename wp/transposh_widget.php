@@ -38,7 +38,7 @@ class transposh_base_widget {
 	 * @param  string  $plugin_dir
 	 * @param  string  $plugin_url
 	 */
-	public static function tp_widget_css( $file, $plugin_dir, $plugin_url ): void {
+	public static function tp_widget_css( string $file, string $plugin_dir, string $plugin_url ): void {
 		tp_logger( 'looking for css:' . $file, 4 );
 		$basefile   = substr( $file, 0, - 4 );
 		$widget_css = TRANSPOSH_DIR_WIDGETS . '/' . $basefile . ".css";
@@ -55,7 +55,7 @@ class transposh_base_widget {
 	 * @param  string  $plugin_dir
 	 * @param  string  $plugin_url
 	 */
-	public static function tp_widget_js( $file, $plugin_dir, $plugin_url ): void {
+	public static function tp_widget_js( string $file, string $plugin_dir, string $plugin_url ): void {
 		tp_logger( 'looking for js:' . $file, 4 );
 		$basefile  = substr( $file, 0, - 4 );
 		$widget_js = TRANSPOSH_DIR_WIDGETS . '/' . $basefile . ".js";
@@ -71,13 +71,13 @@ class transposh_base_widget {
 class transposh_plugin_widget extends WP_Widget {
 
 	/** @var transposh_plugin Container class */
-	private $transposh;
+	private transposh_plugin $transposh;
 
 	/** @staticvar boolean Contains the fact that this is our first run */
-	public static $first_init = true;
+	public static bool $first_init = true;
 
 	/** @staticvar int Counts call to the widget do to generate unique IDs */
-	public static $draw_calls = '';
+	public static string $draw_calls = '';
 
 	public function __construct() {
 		// We get the transposh details from the global variable
@@ -110,7 +110,7 @@ class transposh_plugin_widget extends WP_Widget {
 	/**
 	 * Saves the widgets settings. (override of wp_widget)
 	 */
-	public function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ): array {
 		$instance = $old_instance;
 		tp_logger( $instance );
 		tp_logger( $new_instance );
@@ -239,7 +239,7 @@ class transposh_plugin_widget extends WP_Widget {
 	 *
 	 * @return array
 	 */
-	public function create_widget_args( $clean_page_url ): array {
+	public function create_widget_args( string $clean_page_url ): array {
 		// only calculate urls once even for multiple instances
 		static $widget_args;
 		if ( is_array( $widget_args ) ) {

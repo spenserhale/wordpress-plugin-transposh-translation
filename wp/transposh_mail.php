@@ -18,14 +18,14 @@
 class transposh_mail {
 
 	/** @var transposh_plugin Container class */
-	private $transposh;
+	private transposh_plugin $transposh;
 
 	/**
 	 * Construct our class
 	 *
 	 * @param  transposh_plugin  $transposh
 	 */
-	public function __construct( &$transposh ) {
+	public function __construct( transposh_plugin &$transposh ) {
 		$this->transposh = &$transposh;
 
 		add_action( 'transposh_human_translation', array( &$this, 'transposh_mail_humantranslation' ), 10, 4 );
@@ -54,7 +54,7 @@ class transposh_mail {
 	 * @param  string  $lang
 	 * @param  string  $translated_by
 	 */
-	public function transposh_mail_humantranslation( $translation, $original, $lang, $translated_by ): void {
+	public function transposh_mail_humantranslation( string $translation, string $original, string $lang, string $translated_by ): void {
 		// if this option is off, no mail should be sent on translation
 		if ( ! $this->transposh->options->mail_ontranslate ) {
 			return;

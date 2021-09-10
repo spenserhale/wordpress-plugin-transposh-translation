@@ -21,10 +21,10 @@
 class transposh_postpublish {
 
 	/** @var transposh_plugin Container class */
-	private $transposh;
+	private transposh_plugin $transposh;
 
 	/** @var boolean Did we just edited/saved? */
-	private $just_published = false;
+	private bool $just_published = false;
 
 	/**
 	 *
@@ -32,7 +32,7 @@ class transposh_postpublish {
 	 *
 	 * @param  transposh_plugin  $transposh
 	 */
-	public function __construct( &$transposh ) {
+	public function __construct( transposh_plugin &$transposh ) {
 		$this->transposh = &$transposh;
 		// we need this anyway because of the change language selection
 		add_action( 'edit_post', array( &$this, 'on_edit' ) );
@@ -111,7 +111,7 @@ class transposh_postpublish {
 	 *
 	 * @param  int  $postID
 	 */
-	public function get_post_phrases( $postID ): void {
+	public function get_post_phrases( int $postID ): void {
 		// Some security, to avoid others from seeing private posts
 		// fake post for tags
 		if ( $postID == - 555 ) {
@@ -235,7 +235,7 @@ class transposh_postpublish {
 	 *
 	 * @param  int  $postID
 	 */
-	public function on_edit( $postID ): void {
+	public function on_edit( int $postID ): void {
 		// This should prevent the meta from being added when not needed
 		if ( ! isset( $_POST['transposh_tp_language'] ) ) {
 			return;

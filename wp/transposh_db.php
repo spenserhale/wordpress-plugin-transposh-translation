@@ -33,22 +33,22 @@ const TRANSPOSH_OPTIONS_DBSETUP = 'transposh_inside_dbupgrade';
 class transposh_database {
 
 	/** @var transposh_plugin father class */
-	private $transposh;
+	private transposh_plugin $transposh;
 
 	/** @var array holds prefetched translations */
-	private $translations;
+	private array $translations;
 
 	/** @var string translation table name */
-	private $translation_table;
+	private string $translation_table;
 
 	/** @var string translation log table name */
-	private $translation_log_table;
+	private string $translation_log_table;
 
 	/** @var boolean is memcached working */
-	private $memcache_working = false;
+	private bool $memcache_working = false;
 
 	/** @var Memcache the memcached connection object */
-	private $memcache;
+	private Memcache $memcache;
 
 	/**
 	 * PHP5+ only
@@ -90,7 +90,7 @@ class transposh_database {
 	 *
 	 * @return mixed array with translation or false on cache miss
 	 */
-	public function cache_fetch( $original, $lang ) {
+	public function cache_fetch( string $original, string $lang ) {
 		if ( ! TP_ENABLE_CACHE ) {
 			return false;
 		}
@@ -144,7 +144,7 @@ class transposh_database {
 	 *
 	 * @return boolean true if stored successfully
 	 */
-	public function cache_store( $original, $lang, $translated, $ttl ): bool {
+	public function cache_store( string $original, string $lang, array $translated, int $ttl ): bool {
 		if ( ! TP_ENABLE_CACHE ) {
 			return false;
 		}
@@ -180,7 +180,7 @@ class transposh_database {
 	 * @param  string  $original
 	 * @param  string  $lang
 	 */
-	public function cache_delete( $original, $lang ): void {
+	public function cache_delete( string $original, string $lang ): void {
 		if ( ! TP_ENABLE_CACHE ) {
 			return;
 		}
@@ -223,7 +223,7 @@ class transposh_database {
 	 * @param  array  $originals  keys hold the strings...
 	 * @param  string  $lang
 	 */
-	public function prefetch_translations( $originals, $lang ): void {
+	public function prefetch_translations( array $originals, string $lang ): void {
 		if ( ! $originals ) {
 			return;
 		}
@@ -275,7 +275,7 @@ class transposh_database {
 	 *
 	 * @return null|array list(source,translation)
 	 */
-	public function fetch_translation( $orig, $lang ): ?array {
+	public function fetch_translation( string $orig, string $lang ): ?array {
 		$translated = null;
 		tp_logger( "Fetching for: $orig-$lang", 4 );
 		//The original is saved in db in its escaped form
@@ -322,7 +322,7 @@ class transposh_database {
 	 *
 	 * @return string $original
 	 */
-	public function fetch_original( $trans, $lang ): ?string {
+	public function fetch_original( string $trans, string $lang ): ?string {
 		$original = null;
 		tp_logger( "Enter: $trans", 4 );
 
@@ -593,7 +593,7 @@ class transposh_database {
 	 * @param  string  $timestamp
 	 */
 	//TODO: post this action to backup
-	public function del_translation_history( $token, $langp, $timestampp ): bool {
+	public function del_translation_history( string $token, $langp, $timestampp ): bool {
 		// $original = transposh_utils::base64_url_decode($token);
 		$original  = esc_sql( html_entity_decode( $token, ENT_NOQUOTES, 'UTF-8' ) );
 		$lang      = esc_sql( $langp );
@@ -675,7 +675,7 @@ class transposh_database {
 	 *
 	 * @param  string  $token
 	 */
-	public function get_translation_alt( $token ): void {
+	public function get_translation_alt( string $token ): void {
 		//$ref = getenv('HTTP_REFERER');
 		//  $original = transposh_utils::base64_url_decode($token);
 		$original = $token;
@@ -720,7 +720,7 @@ class transposh_database {
 	 *
 	 * @return array List of rows
 	 */
-	public function get_all_human_translation_history( $date = "null", $limit = "" ): array {
+	public function get_all_human_translation_history( string $date = "null", $limit = "" ): array {
 		$limitterm = '';
 		$dateterm  = '';
 		if ( $date !== "null" ) {
@@ -943,7 +943,7 @@ class transposh_database {
 	 *
 	 * @return array Original phrases in which $term appears
 	 */
-	public function get_orignal_phrases_for_search_term( $term, $language ): array {
+	public function get_orignal_phrases_for_search_term( string $term, string $language ): array {
 		$n        = '%';
 		$term     = esc_sql( html_entity_decode( $term, ENT_NOQUOTES, 'UTF-8' ) );
 		$language = esc_sql( $language );
@@ -987,7 +987,7 @@ class transposh_database {
 	 *
 	 * @param  int  $days
 	 */
-	public function cleanup( $days = 0 ): void {
+	public function cleanup( int $days = 0 ): void {
 		$days = intval( $days ); // some security
 		if ( $days == 999 ) {
 			$cleanup = 'DELETE ' .

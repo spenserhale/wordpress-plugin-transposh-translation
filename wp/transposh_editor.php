@@ -6,7 +6,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 
 class transposh_editor_table extends WP_List_Table {
 
-	private $filter = "";
+	private string $filter = "";
 
 	public function __construct() {
 		global $status, $page;
@@ -56,7 +56,7 @@ class transposh_editor_table extends WP_List_Table {
 		}
 	}
 
-	public function get_sortable_columns() {
+	public function get_sortable_columns(): array {
 		return array(
 			'original'      => array( 'original', false ),
 			'lang'          => array( 'lang', false ),
@@ -66,7 +66,7 @@ class transposh_editor_table extends WP_List_Table {
 		);
 	}
 
-	public function get_columns() {
+	public function get_columns(): array {
 		return array(
 			'cb'            => '<input type="checkbox" />',
 			'lang'          => __( 'Language', TRANSPOSH_TEXT_DOMAIN ),
@@ -143,7 +143,7 @@ class transposh_editor_table extends WP_List_Table {
 		  echo "\n"; */
 	}
 
-	public function get_bulk_actions() {
+	public function get_bulk_actions(): array {
 		return array(
 			'delete' => 'Delete'
 		);

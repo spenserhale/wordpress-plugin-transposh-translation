@@ -24,14 +24,14 @@ const TR_NONCE = "transposh_nonce";
 class transposh_plugin_admin {
 
 	/** @var transposh_plugin $transposh father class */
-	private $transposh;
-	private $localeright = 'right';
-	private $localeleft = 'left';
-	private $pages = array();
-	private $page = '';
+	private transposh_plugin $transposh;
+	private string $localeright = 'right';
+	private string $localeleft = 'left';
+	private array $pages = array();
+	private string $page = '';
 
 	/** @var transposh_editor_table $editor_table the wp table */
-	private $editor_table;
+	private transposh_editor_table $editor_table;
 
 	// TODO - memory cache clear button
 	//
@@ -1016,7 +1016,7 @@ class transposh_plugin_admin {
 	 * @param  string  $head
 	 * @param  string  $text
 	 */
-	private function checkbox( $tpo, $head, $text ): void {
+	private function checkbox( transposh_option $tpo, string $head, string $text ): void {
 		$this->header( $head );
 		echo '<input type="checkbox" value="1" name="' . $tpo->get_name() . '" ' . checked( $tpo->get_value(), true,
 				false ) . '/> ' . $text;
@@ -1030,7 +1030,7 @@ class transposh_plugin_admin {
 	 * @param  array  $options
 	 * @param  boolean  $use_key
 	 */
-	private function select( $tpo, $head, $label, $options, $use_key = true ): void {
+	private function select( transposh_option $tpo, $head, string $label, array $options, bool $use_key = true ): void {
 		$this->header( $head );
 		echo '<label for="' . $tpo->get_name() . '">' . $label .
 		     '<select name="' . $tpo->get_name() . '">';

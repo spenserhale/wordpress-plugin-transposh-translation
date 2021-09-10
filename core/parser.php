@@ -22,31 +22,31 @@ require_once( "utils.php" );
 class tp_parserstats {
 
 	/** @var int Holds the total phrases the parser encountered */
-	public $total_phrases;
+	public int $total_phrases;
 
 	/** @var int Holds the number of phrases that had translation */
-	public $translated_phrases;
+	public int $translated_phrases;
 
 	/** @var int Holds the number of phrases that had human translation */
-	public $human_translated_phrases;
+	public int $human_translated_phrases;
 
 	/** @var int Holds the number of phrases that are hidden - yet still somewhat viewable (such as the title attribure) */
-	public $hidden_phrases;
+	public int $hidden_phrases;
 
 	/** @var int Holds the number of phrases that are hidden and translated */
-	public $hidden_translated_phrases;
+	public int $hidden_translated_phrases;
 
 	/** @var int Holds the amounts of hidden spans created for translation */
-	public $hidden_translateable_phrases;
+	public int $hidden_translateable_phrases;
 
 	/** @var int Holds the number of phrases that are hidden and probably won't be viewed - such as meta keys */
-	public $meta_phrases;
+	public int $meta_phrases;
 
 	/** @var int Holds the number of translated phrases that are hidden and probably won't be viewed - such as meta keys */
-	public $meta_translated_phrases;
+	public int $meta_translated_phrases;
 
 	/** @var float Holds the time translation took */
-	public $time;
+	public float $time;
 
 	/** @var int Holds the time translation started */
 	private $start_time;
@@ -95,45 +95,45 @@ class tp_parserstats {
  */
 class tp_parser {
 
-	private $punct_breaks = true;
-	private $num_breaks = true;
-	private $ent_breaks = true;
+	private bool $punct_breaks = true;
+	private bool $num_breaks = true;
+	private bool $ent_breaks = true;
 	// functions that need to be defined... //
 	/** @var function */
-	public $url_rewrite_func = null;
+	public ? $url_rewrite_func = null;
 
 	/** @var function */
-	public $fetch_translate_func = null;
+	public ? $fetch_translate_func = null;
 
 	/** @var function */
-	public $prefetch_translate_func = null;
+	public ? $prefetch_translate_func = null;
 
 	/** @var function */
-	public $split_url_func = null;
+	public ? $split_url_func = null;
 
 	/** @var function */
-	public $fix_src_tag_func = null;
+	public ? $fix_src_tag_func = null;
 
 	/** @var int stores the number of the last used span_id */
-	private $span_id = 0;
+	private int $span_id = 0;
 
 	/** @var simple_html_dom_node Contains the current node */
-	private $currentnode;
+	private simple_html_dom_node $currentnode;
 
 	/** @var simple_html_dom Contains the document dom model */
-	private $html;
+	private simple_html_dom $html;
 	// the document
 	public $dir_rtl;
 
 	/** @var string Contains the iso of the target language */
-	public $lang;
+	public string $lang;
 
 	/** @var boolean Contains the fact that this language is the default one (only parse other lanaguage spans) */
-	public $default_lang = false;
+	public bool $default_lang = false;
 
 	/** @var string Contains the iso of the source language - if a lang attribute is found, assumed to be en by default */
-	public $srclang;
-	private $inbody = false;
+	public string $srclang;
+	private bool $inbody = false;
 
 	/** @var hold fact that we are in select or other similar elements */
 	private $inselect = false;
@@ -142,9 +142,9 @@ class tp_parser {
 	public $feed_fix;
 
 	/** @var boolean should we attempt to handle page as json */
-	public $might_json = false;
+	public bool $might_json = false;
 	//first three are html, later 3 come from feeds xml (link is problematic...)
-	protected $ignore_tags = array(
+	protected array $ignore_tags = array(
 		'script'         => 1,
 		'style'          => 1,
 		'code'           => 1,
@@ -154,26 +154,26 @@ class tp_parser {
 	);
 
 	/** @var parserstats Contains parsing statistics */
-	private $stats;
+	private parserstats $stats;
 
 	/** @var boolean Are we inside a translated gettext */
-	private $in_get_text = false;
+	private bool $in_get_text = false;
 
 	/** @var boolean Are we inside an inner text %s in gettext */
-	private $in_get_text_inner = false;
+	private bool $in_get_text_inner = false;
 
 	/** @var string Additional header information */
-	public $added_header;
+	public string $added_header;
 
 	/** @var array Contains reference to changable a tags */
-	private $atags = array();
+	private array $atags = array();
 
 	/** @var array Contains reference to changable option values */
-	private $otags = array();
-	public $edit_span_created = false;
+	private array $otags = array();
+	public bool $edit_span_created = false;
 
 	/** @var array store all values that may be prefetched */
-	private $prefetch_phrases = array();
+	private array $prefetch_phrases = array();
 
 	/**
 	 * Determine if the current position in buffer is a white space.
@@ -182,7 +182,7 @@ class tp_parser {
 	 *
 	 * @return boolean true if current position marks a white space
 	 */
-	public function is_white_space( $char ): bool {
+	public function is_white_space( char $char ): bool {
 		if ( ! $char ) {
 			return true;
 		}
@@ -215,7 +215,7 @@ class tp_parser {
 	 *
 	 * @return int length of entity
 	 */
-	public function is_html_entity( $string, $position ): int {
+	public function is_html_entity( string $string, int $position ): int {
 		if ( $string[ $position ] === '&' ) {
 			$end_pos = $position + 1;
 			while ( $string[ $end_pos ] === '#' || $this->is_digit( $string[ $end_pos ] ) || $this->is_a_to_z_character( $string[ $end_pos ] ) ) {
@@ -239,7 +239,7 @@ class tp_parser {
 	 *
 	 * @return boolean true if not a breaker (apostrophy)
 	 */
-	public function is_entity_breaker( $entity ): bool { // &#8216;&#8217;??
+	public function is_entity_breaker( string $entity ): bool { // &#8216;&#8217;??
 		return ! ( stripos( '&#8216;&#8217;&apos;&quot;&#039;&#39;&rsquo;&lsquo;&rdquo;&ldquo;', $entity ) !== false );
 	}
 
@@ -340,7 +340,7 @@ class tp_parser {
 	 *
 	 * @return int length of breaker if current position marks a break in sentence
 	 */
-	public function is_sentence_breaker( $char, $nextchar, $nextnextchar ): int {
+	public function is_sentence_breaker( char $char, char $nextchar, $nextnextchar ): int {
 		if ( ( $char == '.' || $char == '-' ) && ( $this->is_white_space( $nextchar ) ) ) {
 			return 1;
 		}
@@ -389,7 +389,7 @@ class tp_parser {
 	 * @param  int  $start  - beginning of phrase in element
 	 * @param  int  $end  - end of phrase in element
 	 */
-	public function tag_phrase( $string, $start, $end ): void {
+	public function tag_phrase( $string, int $start, int $end ): void {
 		$phrase      = trim( substr( $string, $start, $end - $start ) );
 		$phrasefixed = trim( str_replace( '&nbsp;', ' ', $phrase ) );
 //        $logstr = str_replace(array(chr(1),chr(2),chr(3),chr(4)), array('[1]','[2]','[3]','[4]'), $string);
@@ -427,7 +427,7 @@ class tp_parser {
 	 *
 	 * @param  string  $string  - the string which is "broken" into smaller strings
 	 */
-	public function parsetext( $string ): void {
+	public function parsetext( string $string ): void {
 		$pos = 0;
 		//	$pos = skip_white_space($string, $pos);
 		// skip CDATA in feed_fix mode
@@ -543,7 +543,7 @@ class tp_parser {
 	 *
 	 * @param  simple_html_dom_node  $node
 	 */
-	public function translate_tagging( $node, $level = 0 ): void {
+	public function translate_tagging( simple_html_dom_node $node, $level = 0 ): void {
 		$this->currentnode = $node;
 		// we don't want to translate non-translatable classes
 		if ( stripos( $node->class, NO_TRANSLATE_CLASS ) !== false || stripos( $node->class,
@@ -673,11 +673,11 @@ class tp_parser {
 	 * @return string
 	 */
 	public function create_edit_span(
-		$original_text,
-		$translated_text,
-		$source,
-		$for_hidden_element = false,
-		$src_lang = ''
+		string $original_text,
+		string $translated_text,
+		int $source,
+		bool $for_hidden_element,
+		string $src_lang = ''
 	): string {
 		// Use base64 encoding to make that when the page is translated (i.e. update_translation) we
 		// get back exactlly the same string without having the client decode/encode it in anyway.
@@ -720,7 +720,7 @@ class tp_parser {
 	 * @param  type  $numbers
 	 * @param  type  $entities
 	 */
-	public function change_parsing_rules( $puncts, $numbers, $entities ): void {
+	public function change_parsing_rules( type $puncts, type $numbers, type $entities ): void {
 		$this->punct_breaks = $puncts;
 		$this->num_breaks   = $numbers;
 		$this->ent_breaks   = $entities;
@@ -733,7 +733,7 @@ class tp_parser {
 	 *
 	 * @return string Translated content is here
 	 */
-	public function fix_html( $string ) {
+	public function fix_html( string $string ) {
 		// ready our stats
 		$this->stats = new tp_parserstats();
 		// handler for possible json (buddypress)
@@ -1103,7 +1103,7 @@ class tp_parser {
 	 * @return array List of phrases (or an empty one)
 	 * @since 0.3.5
 	 */
-	public function get_phrases_list( $string ): array {
+	public function get_phrases_list( string $string ): array {
 		$result = array();
 		// create our dom
 		$this->html = str_get_html( '<span lang="xx">' . $string . '</span>' );

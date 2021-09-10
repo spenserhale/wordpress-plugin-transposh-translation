@@ -81,7 +81,7 @@ class ChromePhp_tp {
 	/**
 	 * @var string
 	 */
-	protected $_php_version;
+	protected string $_php_version;
 
 	/**
 	 * @var int
@@ -91,7 +91,7 @@ class ChromePhp_tp {
 	/**
 	 * @var array
 	 */
-	protected $_json = array(
+	protected array $_json = array(
 		'version' => self::VERSION,
 		'columns' => array( 'log', 'backtrace', 'type' ),
 		'rows'    => array()
@@ -100,31 +100,31 @@ class ChromePhp_tp {
 	/**
 	 * @var array
 	 */
-	protected $_backtraces = array();
+	protected array $_backtraces = array();
 
 	/**
 	 * @var bool
 	 */
-	protected $_error_triggered = false;
+	protected bool $_error_triggered = false;
 
 	/**
 	 * @var array
 	 */
-	protected $_settings = array(
+	protected array $_settings = array(
 		self::BACKTRACE_LEVEL => 1
 	);
 
 	/**
 	 * @var ChromePhp
 	 */
-	protected static $_instance;
+	protected static ChromePhp $_instance;
 
 	/**
 	 * Prevent recursion when working with objects referring to each other
 	 *
 	 * @var array
 	 */
-	protected $_processed = array();
+	protected array $_processed = array();
 
 	/**
 	 * constructor
@@ -251,7 +251,7 @@ class ChromePhp_tp {
 	 *
 	 * @return void
 	 */
-	protected static function _log( $type, array $args ): void {
+	protected static function _log( string $type, array $args ): void {
 		// nothing passed in, don't do anything
 		if ( count( $args ) == 0 && $type != self::GROUP_END ) {
 			return;
@@ -401,7 +401,7 @@ class ChromePhp_tp {
 	 *
 	 * @return string
 	 */
-	protected function _encode( $data ): string {
+	protected function _encode( array $data ): string {
 		return base64_encode( utf8_encode( json_encode( $data ) ) );
 	}
 

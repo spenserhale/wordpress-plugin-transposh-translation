@@ -127,7 +127,7 @@ class Services_JSON {
 	 *                                   bubble up with an error, so all return values
 	 *                                   from encode() should be checked with isError()
 	 */
-	public function __construct( $use = 0 ) {
+	public function __construct( int $use = 0 ) {
 		$this->use = $use;
 	}
 
@@ -143,7 +143,7 @@ class Services_JSON {
 	 * @return   string  UTF-8 character
 	 * @access   private
 	 */
-	public function utf162utf8( $utf16 ): string {
+	public function utf162utf8( string $utf16 ): string {
 		// oh please oh please oh please oh please oh please
 		if ( function_exists( 'mb_convert_encoding' ) ) {
 			return mb_convert_encoding( $utf16, 'UTF-8', 'UTF-16' );
@@ -187,7 +187,7 @@ class Services_JSON {
 	 * @return   string  UTF-16 character
 	 * @access   private
 	 */
-	public function utf82utf16( $utf8 ): string {
+	public function utf82utf16( string $utf8 ): string {
 		// oh please oh please oh please oh please oh please
 		if ( function_exists( 'mb_convert_encoding' ) ) {
 			return mb_convert_encoding( $utf8, 'UTF-16', 'UTF-8' );
@@ -425,7 +425,7 @@ class Services_JSON {
 	 * @return   string  JSON-formatted name-value pair, like '"name":value'
 	 * @access   private
 	 */
-	public function name_value( $name, $value ) {
+	public function name_value( string $name, $value ) {
 		$encoded_value = $this->encode( $value );
 
 		if ( $this->isError( $encoded_value ) ) {
@@ -443,7 +443,7 @@ class Services_JSON {
 	 * @return   string  string value stripped of comments and whitespace
 	 * @access   private
 	 */
-	public function reduce_string( $str ): string {
+	public function reduce_string( string $str ): string {
 		$str = preg_replace( array(
 
 			// eliminate single line comments in '// ...' form
@@ -473,7 +473,7 @@ class Services_JSON {
 	 *                   in ASCII or UTF-8 format!
 	 * @access   public
 	 */
-	public function decode( $str ) {
+	public function decode( string $str ) {
 		$str = $this->reduce_string( $str );
 
 		switch ( strtolower( $str ) ) {

@@ -18,14 +18,14 @@
 class transposh_3rdparty {
 
 	/** @var transposh_plugin Container class */
-	private $transposh;
+	private transposh_plugin $transposh;
 
 	/**
 	 * Construct our class
 	 *
 	 * @param  transposh_plugin  $transposh
 	 */
-	public function __construct( &$transposh ) {
+	public function __construct( transposh_plugin &$transposh ) {
 		$this->transposh = &$transposh;
 
 		// supercache invalidation of pages - first lets find if supercache is here
@@ -131,7 +131,7 @@ class transposh_3rdparty {
 	 *
 	 * @return string The url that buddypress should see
 	 */
-	public function bp_uri_filter( $uri ): string {
+	public function bp_uri_filter( string $uri ): string {
 		$lang = transposh_utils::get_language_from_url( $uri, $this->transposh->home_url );
 		//TODO - check using get_clean_url
 		$uri = transposh_utils::cleanup_url( $uri, $this->transposh->home_url );
@@ -148,7 +148,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  type  $url
 	 */
-	public function bbp_get_search_results_url( $url ) {
+	public function bbp_get_search_results_url( type $url ) {
 		$lang = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'], $this->home_url );
 
 		return transposh_utils::rewrite_url_lang_param( $url, $this->transposh->home_url,
@@ -160,7 +160,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  BP_Activity_Activity  $params
 	 */
-	public function bp_activity_after_save( $params ): void {
+	public function bp_activity_after_save( BP_Activity_Activity $params ): void {
 		// we don't need to modify our own activity stream
 		if ( $params->type === 'new_translation' ) {
 			return;
@@ -179,7 +179,7 @@ class transposh_3rdparty {
 	 *
 	 * @return string modified content
 	 */
-	public function bp_get_activity_content_body( $content, $activity = "" ): string { //XXX
+	public function bp_get_activity_content_body( string $content, $activity = "" ): string { //XXX
 		$activity_lang = bp_activity_get_meta( $activity->id, 'tp_language' );
 		if ( $activity_lang ) {
 			$content = "<span lang =\"$activity_lang\">" . $content . "</span>";
@@ -197,7 +197,7 @@ class transposh_3rdparty {
 	 *
 	 * @global object $bp the global buddypress
 	 */
-	public function transposh_buddypress_stream( $translation, $original, $lang ) {
+	public function transposh_buddypress_stream( string $translation, string $original, string $lang ) {
 		global $bp;
 
 		// we must have buddypress...
@@ -243,7 +243,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  GoogleSitemapGeneratorPage  $sm_page  Object containing the page information
 	 */
-	public function add_sm_transposh_urls( $sm_page ): void {
+	public function add_sm_transposh_urls( GoogleSitemapGeneratorPage $sm_page ): void {
 		tp_logger( "in sitemap add url: " . $sm_page->GetUrl() . " " . $sm_page->GetPriority(), 4 );
 		$sm_page = clone $sm_page;
 		// we need the generator object (we know it must exist...)

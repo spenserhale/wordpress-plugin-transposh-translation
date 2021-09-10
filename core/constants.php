@@ -47,7 +47,7 @@ class transposh_consts {
 
 //Supported languages, new languages can be added here
 //the array directs from language code to - English Name, Native name, flag
-	public static $languages = array(
+	public static array $languages = array(
 		'en'    => 'English,English,us,en_US',
 		'af'    => 'Afrikaans,Afrikaans,za,',
 		'sq'    => 'Albanian,Shqip,al,',
@@ -170,7 +170,7 @@ class transposh_consts {
 	/*
 	 * Upstream source: https://wiki.openstreetmap.org/wiki/Nominatim/Country_Codes
 	 */
-	public static $countryToLanguageMapping = array(
+	public static array $countryToLanguageMapping = array(
 		'ad'    => 'ca',
 		'ae'    => 'ar',
 		'af'    => 'fa,ps',
@@ -418,7 +418,7 @@ class transposh_consts {
 		'zw'    => 'en,sn,nd',
 	);
 	// new var to hold translation engines information
-	public static $engines = array(
+	public static array $engines = array(
 		'a' => array(
 			'name'  => 'Apertium',
 			'icon'  => 'apertiumicon.png',
@@ -819,7 +819,7 @@ class transposh_consts {
 	}
 
 	// Language which are read from right to left (rtl)
-	public static $rtl_languages = array( 'ar', 'he', 'fa', 'ur', 'yi' );
+	public static array $rtl_languages = array( 'ar', 'he', 'fa', 'ur', 'yi' );
 	// todo - more languages in OHT
 	//Chinese Cantonese	zh-cn-yue -- check
 	//Chinese Mandarin-Simplified	zh-cn-cmn-s
@@ -828,7 +828,7 @@ class transposh_consts {
 	//Kazakh	kk-kz
 	//Pashto	ps
 	//Uzbek	uz-uz
-	public static $oht_languages = array(
+	public static array $oht_languages = array(
 		'en',
 		'sq',
 		'ar',
@@ -881,9 +881,9 @@ class transposh_consts {
 		'bs'
 	);
 	// Array for holding po domains we have problems with
-	public static $ignored_po_domains = array( 'MailPress' );
+	public static array $ignored_po_domains = array( 'MailPress' );
 	// Array holding list of jQueryUI themes
-	public static $jqueryui_themes = array(
+	public static array $jqueryui_themes = array(
 		'black-tie',
 		'blitzer',
 		'cupertino',

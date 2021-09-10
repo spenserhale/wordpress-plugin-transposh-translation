@@ -35,7 +35,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 // helper functions
 // -----------------------------------------------------------------------------
 // get html dom form file
-	function file_get_html() {
+	function file_get_html(): simple_html_dom {
 		$dom  = new simple_html_dom;
 		$args = func_get_args();
 		$dom->load( file_get_contents( ...$args ) );
@@ -44,7 +44,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 	}
 
 // get html dom form string
-	function str_get_html( $str, $lowercase = true ) {
+	function str_get_html( $str, $lowercase = true ): simple_html_dom {
 		$dom = new simple_html_dom;
 		$dom->load( $str, $lowercase );
 
@@ -70,7 +70,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 	}
 
 // get dom form file (deprecated)
-	function file_get_dom() {
+	function file_get_dom(): simple_html_dom {
 		$dom  = new simple_html_dom;
 		$args = func_get_args();
 		$dom->load( file_get_contents( ...$args ) );
@@ -79,7 +79,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 	}
 
 // get dom form string (deprecated)
-	function str_get_dom( $str, $lowercase = true ) {
+	function str_get_dom( $str, $lowercase = true ): simple_html_dom {
 		$dom = new simple_html_dom;
 		$dom->load( $str, $lowercase );
 
@@ -89,13 +89,13 @@ if ( ! function_exists( "file_get_html" ) ) {
 // simple html dom node
 // -----------------------------------------------------------------------------
 	class simple_html_dom_node {
-		public $nodetype = HDOM_TYPE_TEXT;
-		public $tag = 'text';
-		public $attr = array();
-		public $children = array();
-		public $nodes = array();
+		public int $nodetype = HDOM_TYPE_TEXT;
+		public string $tag = 'text';
+		public array $attr = array();
+		public array $children = array();
+		public array $nodes = array();
 		public $parent = null;
-		public $_ = array();
+		public array $_ = array();
 		private $dom = null;
 
 		public function __construct( $dom ) {
@@ -659,32 +659,32 @@ if ( ! function_exists( "file_get_html" ) ) {
 // -----------------------------------------------------------------------------
 	class simple_html_dom {
 		public $root = null;
-		public $nodes = array();
+		public array $nodes = array();
 		public $callback = null;
-		public $lowercase = false;
+		public bool $lowercase = false;
 		protected $pos;
 		protected $doc;
 		protected $char;
 		protected $size;
 		protected $cursor;
 		protected $parent;
-		public $noise = array();
-		protected $token_blank = " \t\r\n";
-		protected $token_equal = ' =/>';
-		protected $token_slash = " />\r\n\t";
-		protected $token_attr = ' >';
+		public array $noise = array();
+		protected string $token_blank = " \t\r\n";
+		protected string $token_equal = ' =/>';
+		protected string $token_slash = " />\r\n\t";
+		protected string $token_attr = ' >';
 		// use isset instead of in_array, performance boost about 30%...
-		protected $self_closing_tags = array( 'img'    => 1,
-		                                      'br'     => 1,
-		                                      'input'  => 1,
-		                                      'meta'   => 1,
-		                                      'hr'     => 1,
-		                                      'base'   => 1,
-		                                      'embed'  => 1,
-		                                      'spacer' => 1
+		protected array $self_closing_tags = array( 'img'    => 1,
+		                                            'br'     => 1,
+		                                            'input'  => 1,
+		                                            'meta'   => 1,
+		                                            'hr'     => 1,
+		                                            'base'   => 1,
+		                                            'embed'  => 1,
+		                                            'spacer' => 1
 		);
-		protected $block_tags = array( 'root' => 1, 'body' => 1, 'form' => 1, 'div' => 1, 'span' => 1, 'table' => 1 );
-		protected $optional_closing_tags = array(
+		protected array $block_tags = array( 'root' => 1, 'body' => 1, 'form' => 1, 'div' => 1, 'span' => 1, 'table' => 1 );
+		protected array $optional_closing_tags = array(
 			'tr'   => array( 'tr' => 1, 'td' => 1, 'th' => 1 ),
 			'th'   => array( 'th' => 1 ),
 			'td'   => array( 'td' => 1 ),

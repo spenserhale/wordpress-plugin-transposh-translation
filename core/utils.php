@@ -146,12 +146,12 @@ class transposh_utils {
 // Should send a transposh interface to here TODO - enable permalinks rewrite
 // TODO - Should be able to not write default language for url (done with empty lang?)
 	public static function rewrite_url_lang_param(
-		$url,
+		string $url,
 		$home_url,
 		$enable_permalinks_rewrite,
-		$lang,
-		$is_edit,
-		$use_params_only = false
+		string $lang,
+		bool $is_edit,
+		bool $use_params_only
 	) {
 		tp_logger( "rewrite old url: $url, permalinks: $enable_permalinks_rewrite, lang: $lang, is_edit: $is_edit, home_url: $home_url",
 			5 );
@@ -340,7 +340,7 @@ class transposh_utils {
 	 *
 	 * @return string translated url permalink
 	 */
-	public static function translate_url( $href, $home_url, $target_language, callable $fetch_translation_func ): string {
+	public static function translate_url( string $href, string $home_url, string $target_language, callable $fetch_translation_func ): string {
 		$url       = '';
 		$querypart = '';
 		$fragment  = '';
@@ -401,7 +401,7 @@ class transposh_utils {
 	 *
 	 * @return string
 	 */
-	public static function get_original_url( $href, $home_url, $target_language, callable $fetch_translation_func ): string {
+	public static function get_original_url( string $href, string $home_url, string $target_language, callable $fetch_translation_func ): string {
 		$href   = substr( $href, strlen( $home_url ) );
 		$url    = stripslashes( urldecode( $href ) );
 		$params = ( $pos = strpos( $url, '?' ) ) ? substr( $url, $pos ) : '';
@@ -481,7 +481,7 @@ class transposh_utils {
 	 *
 	 * @return string Html with flag
 	 */
-	public static function display_flag( $path, $flag, $language, $css = false ): string {
+	public static function display_flag( string $path, string $flag, string $language, bool $css ): string {
 		return ! $css ? "<img src=\"$path/$flag.png\" title=\"$language\" alt=\"$language\"/>" : "<span title=\"$language\" class=\"trf trf-{$flag}\"></span>";
 	}
 
@@ -496,9 +496,9 @@ class transposh_utils {
 	 * @return string
 	 */
 	public static function prefered_language(
-		$available_languages,
-		$default_lang = "auto",
-		$http_accept_language = "auto"
+		array $available_languages,
+		string $default_lang = "auto",
+		string $http_accept_language = "auto"
 	): string {
 		// if $http_accept_language was left out, read it from the HTTP-Header
 		if ( $http_accept_language === "auto" ) {
@@ -609,7 +609,7 @@ class transposh_utils {
 	 *
 	 * @return string
 	 */
-	public static function wordpress_user_by_by( $by ): string {
+	public static function wordpress_user_by_by( string $by ): string {
 		if ( strpos( $by, '.' ) === false && strpos( $by, ':' ) === false && is_numeric( $by ) ) {
 			$user_info = get_userdata( $by );
 			$by        = $user_info->user_login;

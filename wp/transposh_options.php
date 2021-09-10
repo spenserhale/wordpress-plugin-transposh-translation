@@ -171,8 +171,8 @@ class transposh_plugin_options {
 	private $options = array();
 
 	/** @var boolean set to true if any option was changed */
-	private $changed = false;
-	private $vars = array();
+	private bool $changed = false;
+	private array $vars = array();
 
 	public function set_default_option_value( $option, $value = '' ): void {
 		if ( ! isset( $this->options[ $option ] ) ) {
@@ -360,7 +360,7 @@ class transposh_plugin_options {
 	 *
 	 * @return boolean Is this the default language?
 	 */
-	public function is_default_language( $language ): bool { // XXXX
+	public function is_default_language( string $language ): bool { // XXXX
 		return ( $this->default_language == $language || '' == $language );
 	}
 
