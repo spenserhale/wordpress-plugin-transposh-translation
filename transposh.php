@@ -142,7 +142,7 @@ class transposh_plugin {
 		$this->home_url = get_option( 'home' );
 
 		// Handle windows ('C:\wordpress')
-		$local_dir = preg_replace( "/\\\\/", "/", dirname( __FILE__ ) );
+		$local_dir = preg_replace( "/\\\\/", "/", __DIR__ );
 		// Get last directory name
 		$local_dir                  = preg_replace( "/.*\//", "", $local_dir );
 		$this->transposh_plugin_url = preg_replace( '#^https?://#', '//', WP_PLUGIN_URL . '/' . $local_dir );
@@ -755,7 +755,7 @@ class transposh_plugin {
 	 * Plugin activation
 	 */
 	public function plugin_activate() {
-		tp_logger( "plugin_activate enter: " . dirname( __FILE__ ), 1 );
+		tp_logger( "plugin_activate enter: " . __DIR__, 1 );
 
 		$this->database->setup_db();
 		// this handles the permalink rewrite
@@ -766,7 +766,7 @@ class transposh_plugin {
 		@unlink( $this->transposh_plugin_dir . 'core/globals.php' );
 
 
-		tp_logger( "plugin_activate exit: " . dirname( __FILE__ ), 1 );
+		tp_logger( "plugin_activate exit: " . __DIR__, 1 );
 		tp_logger( "testing name:" . plugin_basename( __FILE__ ), 4 );
 		// tp_logger("testing name2:" . $this->get_plugin_name(), 4);
 		//activate_plugin($plugin);
@@ -776,12 +776,12 @@ class transposh_plugin {
 	 * Plugin deactivation
 	 */
 	public function plugin_deactivate() {
-		tp_logger( "plugin_deactivate enter: " . dirname( __FILE__ ), 2 );
+		tp_logger( "plugin_deactivate enter: " . __DIR__, 2 );
 
 		// this handles the permalink rewrite
 		$GLOBALS['wp_rewrite']->flush_rules();
 
-		tp_logger( "plugin_deactivate exit: " . dirname( __FILE__ ), 2 );
+		tp_logger( "plugin_deactivate exit: " . __DIR__, 2 );
 	}
 
 	/**
@@ -1429,7 +1429,7 @@ class transposh_plugin {
 		}
 		$locale = transposh_consts::get_language_locale( $lang );
 
-		return ( $locale ) ? $locale : $lang;
+		return ( $locale ) ?: $lang;
 	}
 
 	/**
