@@ -37,7 +37,7 @@ class tp_logger {
 	public bool $show_caller = true;
 
 	/** @var string for remote firephp debugging */
-	private string $remoteip;
+	private string $remoteip = '';
 
 	/** @var tp_logger Singelton instance of our logger */
 	protected static ?tp_logger $instance = null;
