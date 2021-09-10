@@ -673,7 +673,7 @@ class transposh_plugin {
 						$bestlang = transposh_utils::prefered_language( explode( ',',
 							$this->options->viewable_languages ), $this->options->default_language );
 						// we won't redirect if we should not, or this is a presumable bot
-					} elseif ( $this->options->enable_geoip_redirect ) {
+					} elseif ( $this->options->enable_geoip_redirect && function_exists('geoip_detect2_get_info_from_current_ip') ) {
 						$country  = geoip_detect2_get_info_from_current_ip()->country->isoCode;
 						$bestlang = transposh_utils::language_from_country( explode( ',',
 							$this->options->viewable_languages ), $country, $this->options->default_language );
@@ -2111,7 +2111,7 @@ class transposh_plugin {
 		$ohtp = get_option( TRANSPOSH_OPTIONS_OHT_PROJECTS, array() );
 		tp_logger( $ohtp );
 		if ( $ohtp[ $_POST['projectid'] ] ) {
-			Logger( $_POST['projectid'] . " was found and will be processed" );
+			tp_logger( $_POST['projectid'] . " was found and will be processed" );
 			do_action( 'transposh_oht_callback' );
 			tp_logger( $_POST );
 			$ohtp[ $_POST['projectid'] ] -= $_POST['items'];
