@@ -125,8 +125,7 @@ class transposh_utils {
 			$parsedurl['path'] = $home_path . $parsedurl['path'];
 		}
 		if ( $remove_host ) {
-			unset( $parsedurl['scheme'] );
-			unset( $parsedurl['host'] );
+			unset( $parsedurl['scheme'], $parsedurl['host'] );
 		}
 		$url = self::glue_url( $parsedurl );
 		if ( ! $url ) {

@@ -726,8 +726,7 @@ class transposh_plugin {
 			$this->edit_mode = false;
 		}
 		// We are removing our query vars since they are no longer needed and also make issues when a user select a static page as his home
-		unset( $wp->query_vars[ LANG_PARAM ] );
-		unset( $wp->query_vars[ EDIT_PARAM ] );
+		unset( $wp->query_vars[ LANG_PARAM ], $wp->query_vars[ EDIT_PARAM ] );
 		tp_logger( "edit mode: " . ( ( $this->edit_mode ) ? 'enabled' : 'disabled' ), 2 );
 	}
 
@@ -1547,8 +1546,7 @@ class transposh_plugin {
 		// Send the headers we got
 		$reqheaders = getallheaders();
 		//tp_logger($reqheaders);
-		unset( $reqheaders['Host'] );
-		unset( $reqheaders['Content-Length'] );
+		unset( $reqheaders['Host'], $reqheaders['Content-Length'] );
 		$headers = array();
 		foreach ( $reqheaders as $name => $value ) {
 			$headers[] = "$name: $value";

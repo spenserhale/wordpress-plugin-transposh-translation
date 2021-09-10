@@ -791,8 +791,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 				$this->root->clear();
 				unset( $this->root );
 			}
-			unset( $this->doc );
-			unset( $this->noise );
+			unset( $this->doc, $this->noise );
 		}
 
 		public function dump( $show_attr = true ) {
