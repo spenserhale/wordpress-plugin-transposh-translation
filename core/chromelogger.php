@@ -438,10 +438,6 @@ class ChromePhp_tp {
 	 * @return mixed
 	 */
 	public function getSetting( $key ) {
-		if ( ! isset( $this->_settings[ $key ] ) ) {
-			return null;
-		}
-
-		return $this->_settings[ $key ];
+		return $this->_settings[ $key ] ?? null;
 	}
 }

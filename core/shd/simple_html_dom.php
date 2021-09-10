@@ -134,11 +134,8 @@ if ( ! function_exists( "file_get_html" ) ) {
 			if ( $idx === - 1 ) {
 				return $this->children;
 			}
-			if ( isset( $this->children[ $idx ] ) ) {
-				return $this->children[ $idx ];
-			}
 
-			return null;
+			return $this->children[ $idx ] ?? null;
 		}
 
 		// returns the first child of node
@@ -376,7 +373,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 				$idx = count( $found ) + $idx;
 			}
 
-			return ( isset( $found[ $idx ] ) ) ? $found[ $idx ] : null;
+			return $found[ $idx ] ?? null;
 		}
 
 		// seek for given conditions

@@ -1601,11 +1601,7 @@ class transposh_plugin {
 		if ( ! $this->options->is_active_language( $tl ) ) {
 			return;
 		}
-		if ( isset( $_GET['sl'] ) ) {
-			$sl = $_GET['sl'];
-		} else {
-			$sl = '';
-		}
+		$sl          = $_GET['sl'] ?? '';
 		$suggestmode = false; // the suggest mode takes one string only, and does not save to the database
 		if ( isset( $_GET['m'] ) && $_GET['m'] == 's' ) {
 			$suggestmode = true;
@@ -1810,7 +1806,7 @@ class transposh_plugin {
 
 	// Proxied Baidu translate suggestions
 	public function get_baidu_translation( $tl, $sl, $q ) {
-		$qstr = 'to=' . ( ( isset( transposh_consts::$engines['u']['langconv'][ $tl ] ) ) ? transposh_consts::$engines['u']['langconv'][ $tl ] : $tl );
+		$qstr = 'to=' . ( transposh_consts::$engines['u']['langconv'][ $tl ] ?? $tl );
 		if ( $sl ) {
 			$qstr .= '&from=' . ( ( isset( transposh_consts::$engines['u']['langconv'][ $tl ] ) ) ? transposh_consts::$engines['u']['langconv'][ $sl ] : $sl );
 		}

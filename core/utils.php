@@ -301,7 +301,7 @@ class transposh_utils {
 
 		$uri = isset( $parsed['scheme'] ) ? $parsed['scheme'] . ':' . ( ( strtolower( $parsed['scheme'] ) == 'mailto' ) ? '' : '//' ) : '';
 		$uri .= isset( $parsed['user'] ) ? $parsed['user'] . ( isset( $parsed['pass'] ) ? ':' . $parsed['pass'] : '' ) . '@' : '';
-		$uri .= isset( $parsed['host'] ) ? $parsed['host'] : '';
+		$uri .= $parsed['host'] ?? '';
 		$uri .= isset( $parsed['port'] ) ? ':' . $parsed['port'] : '';
 
 		if ( isset( $parsed['path'] ) ) {

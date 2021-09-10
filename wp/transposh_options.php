@@ -201,11 +201,7 @@ class transposh_plugin_options {
 
 	public function __set( $name, $value ) {
 		if ( $value == TP_FROM_POST ) {
-			if ( isset( $_POST[ $name ] ) ) {
-				$value = $_POST[ $name ];
-			} else {
-				$value = '';
-			}
+			$value = $_POST[ $name ] ?? '';
 		}
 
 		if ( TP_OPT_BOOLEAN == $this->vars[ $name ]->get_type() ) {
