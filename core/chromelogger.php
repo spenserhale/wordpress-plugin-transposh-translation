@@ -360,6 +360,8 @@ class ChromePhp_tp {
 		if ( $property->isPrivate() ) {
 			return 'private' . $static . ' ' . $property->getName();
 		}
+
+		return null;
 	}
 
 	/**
