@@ -253,7 +253,7 @@ class transposh_plugin_widget extends WP_Widget {
 		}
 		// loop on the languages
 		foreach ( $this->transposh->options->get_sorted_langs() as $code => $langrecord ) {
-			list ( $langname, $language, $flag ) = explode( ',', $langrecord );
+			[ $langname, $language, $flag ] = explode( ',', $langrecord );
 
 			// Only send languages which are active
 			if ( $this->transposh->options->is_active_language( $code ) ||

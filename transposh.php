@@ -1305,7 +1305,7 @@ class transposh_plugin {
 			if ( strpos( $_SERVER['REQUEST_URI'], 'wp-admin/edit' ) !== false ) {
 				tp_logger( 'iamhere?' . strpos( $_SERVER['REQUEST_URI'], 'wp-admin/edit' ) );
 				$plugpath = @parse_url( $this->transposh_plugin_url, PHP_URL_PATH );
-				list( $langeng, $langorig, $langflag ) = explode( ',', transposh_consts::$languages[ $lang ] );
+				[ $langeng, $langorig, $langflag ] = explode( ',', transposh_consts::$languages[ $lang ] );
 				//$text = transposh_utils::display_flag("$plugpath/img/flags", $langflag, $langorig, false) . ' ' . $text;
 				$text = "[$lang] " . $text;
 			} else {
@@ -1616,7 +1616,7 @@ class transposh_plugin {
 			$i = 0;
 			$q = array();
 			foreach ( $_GET['q'] as $p ) {
-				list( , $trans ) = $this->database->fetch_translation( stripslashes( $p ), $tl );
+				[ , $trans ] = $this->database->fetch_translation( stripslashes( $p ), $tl );
 				if ( ! $trans ) {
 					$q[] = urlencode( stripslashes( $p ) ); // fix for the + case?
 				} else {
@@ -1715,7 +1715,7 @@ class transposh_plugin {
 		$sid       = '';
 		$timestamp = 0;
 		if ( get_option( TRANSPOSH_OPTIONS_YANDEXPROXY, array() ) ) {
-			list( $sid, $timestamp ) = get_option( TRANSPOSH_OPTIONS_YANDEXPROXY, array() );
+			[ $sid, $timestamp ] = get_option( TRANSPOSH_OPTIONS_YANDEXPROXY, array() );
 		}
 		if ( $sid == '' ) {
 			if ( ( time() - TRANSPOSH_YANDEXPROXY_DELAY > $timestamp ) ) {
@@ -1893,7 +1893,7 @@ class transposh_plugin {
 // Proxied translation for google translate
 	public function get_google_translation( $tl, $sl, $q ) {
 		if ( get_option( TRANSPOSH_OPTIONS_GOOGLEPROXY, array() ) ) {
-			list( $googlemethod, $timestamp ) = get_option( TRANSPOSH_OPTIONS_GOOGLEPROXY, array() );
+			[ $googlemethod, $timestamp ] = get_option( TRANSPOSH_OPTIONS_GOOGLEPROXY, array() );
 			//$googlemethod = 0;
 			//$timestamp = 0;
 			tp_logger( "Google method $googlemethod, $timestamp", 1 );

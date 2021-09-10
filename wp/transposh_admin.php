@@ -94,14 +94,14 @@ class transposh_plugin_admin {
 				$viewable_langs = array();
 
 				// first set the default language
-				list ( $langcode, ) = explode( ",", $_POST['languages'][0] );
+				[ $langcode, ] = explode( ",", $_POST['languages'][0] );
 				$this->transposh->options->default_language = $langcode;
 				unset( $_POST['languages'][0] );
 
 				// update the list of supported/editable/sortable languages
 				tp_logger( $_POST['languages'] );
 				foreach ( $_POST['languages'] as $lang ) {
-					list ( $langcode, $viewable ) = explode( ",", $lang );
+					[ $langcode, $viewable ] = explode( ",", $lang );
 					// clean possible wrong data
 					if ( transposh_consts::get_language_name( $langcode ) === '' ) {
 						continue;
@@ -468,7 +468,7 @@ class transposh_plugin_admin {
 		}
 
 		// this is the default language location
-		list ( $langname, $langorigname, $flag ) = explode( ",",
+		[ $langname, $langorigname, $flag ] = explode( ",",
 			transposh_consts::$languages[ $this->transposh->options->default_language ] );
 		echo '<div id="default_lang" style="overflow:auto;padding-bottom:10px;">';
 		$this->header( __( 'Default Language (drag another language here to make it default)', TRANSPOSH_TEXT_DOMAIN ),
@@ -488,7 +488,7 @@ class transposh_plugin_admin {
 		echo '<ul id="sortable">';
 		foreach ( $this->transposh->options->get_sorted_langs() as $langcode => $langrecord ) {
 			tp_logger( $langcode, 5 );
-			list ( $langname, $langorigname, $flag ) = explode( ",", $langrecord );
+			[ $langname, $langorigname, $flag ] = explode( ",", $langrecord );
 			echo '<li id="' . $langcode . '" class="languages ' . ( $this->transposh->options->is_active_language( $langcode ) || $this->transposh->options->is_default_language( $langcode ) ? "lng_active" : "" )
 			     . '"><div style="float:' . $this->localeleft . '">'
 			     . transposh_utils::display_flag( "{$this->transposh->transposh_plugin_url}/img/flags", $flag,

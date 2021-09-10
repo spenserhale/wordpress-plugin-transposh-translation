@@ -347,11 +347,11 @@ class transposh_utils {
 		$fragment  = '';
 		// todo - check query part/fragment... sanitize
 		if ( strpos( $href, '#' ) !== false ) {
-			list ( $href, $fragment ) = explode( '#', $href );
+			[ $href, $fragment ] = explode( '#', $href );
 			$fragment = '#' . $fragment;
 		}
 		if ( strpos( $href, '?' ) !== false ) {
-			list ( $href, $querypart ) = explode( '?', $href );
+			[ $href, $querypart ] = explode( '?', $href );
 			$querypart = '?' . $querypart;
 		}
 		$href  = substr( $href, strlen( $home_url ) );
@@ -363,7 +363,7 @@ class transposh_utils {
 			if ( is_numeric( $part ) ) {
 				$translated_text = $part;
 			} else {
-				list( $source, $translated_text ) = call_user_func_array( $fetch_translation_func,
+				[ $source, $translated_text ] = call_user_func_array( $fetch_translation_func,
 					array( $part, $target_language ) );
 			}
 			if ( $translated_text ) {
@@ -373,7 +373,7 @@ class transposh_utils {
 				$url   .= '/' . $ttext;
 			} else {
 				// now the same attempt with '-' replaced to ' '
-				list( $source, $translated_text ) = call_user_func_array( $fetch_translation_func,
+				[ $source, $translated_text ] = call_user_func_array( $fetch_translation_func,
 					array( str_replace( '-', ' ', $part ), $target_language ) );
 				//logger ($part. ' '.str_replace('-', ' ', $part).' '.$translated_text);
 				if ( $translated_text ) {

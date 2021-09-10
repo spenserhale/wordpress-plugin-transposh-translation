@@ -378,7 +378,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 
 		// seek for given conditions
 		protected function seek( $selector, &$ret ) {
-			list( $tag, $key, $val, $exp, $no_key ) = $selector;
+			[ $tag, $key, $val, $exp, $no_key ] = $selector;
 
 			// xpath index
 			if ( $tag && $key && is_numeric( $key ) ) {
@@ -493,7 +493,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 					continue;
 				}
 
-				list( $tag, $key, $val, $exp, $no_key ) = array( $m[1], null, null, '=', false );
+				[ $tag, $key, $val, $exp, $no_key ] = array( $m[1], null, null, '=', false );
 				if ( ! empty( $m[2] ) ) {
 					$key = 'id';
 					$val = $m[2];

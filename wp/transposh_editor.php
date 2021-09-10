@@ -220,7 +220,7 @@ class transposh_editor_table extends WP_List_Table {
 		// echo $this->current_action();
 		if ( $this->current_action() === 'delete' ) {
 			if ( isset( $_GET['key'] ) ) {
-				list( $timestamp, $lang, $original ) = explode( ',', base64_decode( $_GET['key'] ), 3 );
+				[ $timestamp, $lang, $original ] = explode( ',', base64_decode( $_GET['key'] ), 3 );
 				// echo "($timestamp,$lang,$original)";
 				$return = $my_transposh_plugin->database->del_translation_history( $original, $lang, $timestamp );
 				echo json_encode( $return );
@@ -229,7 +229,7 @@ class transposh_editor_table extends WP_List_Table {
 			if ( isset( $_REQUEST['keys'] ) ) {
 				foreach ( $_REQUEST['keys'] as $key ) {
 					tp_logger( $key );
-					list( $timestamp, $lang, $original ) = explode( ',', base64_decode( $key ), 3 );
+					[ $timestamp, $lang, $original ] = explode( ',', base64_decode( $key ), 3 );
 					$my_transposh_plugin->database->del_translation_history( $original, $lang, $timestamp );
 				}
 				exit();
