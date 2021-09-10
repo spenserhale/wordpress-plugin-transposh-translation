@@ -1801,7 +1801,7 @@ class transposh_plugin {
 			}
 
 			return false;
-		};
+		}
 
 		$result = $jsonarr->text;
 

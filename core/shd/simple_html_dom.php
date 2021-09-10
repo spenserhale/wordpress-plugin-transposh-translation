@@ -738,7 +738,6 @@ if ( ! function_exists( "file_get_html" ) ) {
 
 			// parsing
 			while ( $this->parse() ) {
-				;
 			}
 			// end
 			$this->root->_[ HDOM_INFO_END ] = $this->cursor;
