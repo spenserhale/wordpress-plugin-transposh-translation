@@ -620,10 +620,10 @@ class tp_parser {
 			}
 		} // for anchors we will rewrite urls if we can
 		elseif ( $node->tag === 'a' ) {
-			array_push( $this->atags, $node );
+			$this->atags[] = $node;
 		} // same for options, although normally not required (ticket #34)
 		elseif ( $node->tag === 'option' ) {
-			array_push( $this->otags, $node );
+			$this->otags[] = $node;
 		} // in submit type inputs, we want to translate the value
 		elseif ( $node->tag === 'input' && $node->type === 'submit' ) {
 			$this->parsetext( $node->value );

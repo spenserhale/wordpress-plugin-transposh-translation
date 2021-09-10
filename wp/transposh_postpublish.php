@@ -179,9 +179,9 @@ class transposh_postpublish {
 							if ( ! @is_array( $json['p'][ $key ]['l'] ) ) {
 								$json['p'][ $key ]['l'] = array();
 							}
-							array_push( $json['p'][ $key ]['l'], $lang );
+							$json['p'][ $key ]['l'][] = $lang;
 							if ( ! in_array( $lang, $json['langs'] ) ) {
-								array_push( $json['langs'], $lang );
+								$json['langs'][] = $lang;
 							}
 						}
 					}
