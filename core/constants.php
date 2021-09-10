@@ -792,23 +792,20 @@ class transposh_consts {
 
 	public static function get_language_name( $lang ) {
 		[ $langname ] = explode( ",", self::$languages[ $lang ] );
-		$langname_r = apply_filters( "tp_language_name", $langname );
 
-		return $langname_r;
+		return apply_filters( "tp_language_name", $langname );
 	}
 
 	public static function get_language_orig_name( $lang ) {
 		[ , $langorigname ] = explode( ",", self::$languages[ $lang ] );
-		$langorigname_r = apply_filters( "tp_language_origname", $langorigname );
 
-		return $langorigname_r;
+		return apply_filters( "tp_language_origname", $langorigname );
 	}
 
 	public static function get_language_flag( $lang ) {
 		[ , , $flag ] = explode( ",", self::$languages[ $lang ] );
-		$flag_r = apply_filters( "tp_language_flag", $flag );
 
-		return $flag_r;
+		return apply_filters( "tp_language_flag", $flag );
 	}
 
 	public static function get_language_locale( $lang ) {

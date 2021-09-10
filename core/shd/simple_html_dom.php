@@ -276,9 +276,8 @@ if ( ! function_exists( "file_get_html" ) ) {
 		public function xmltext() {
 			$ret = $this->innertext();
 			$ret = str_ireplace( '<![CDATA[', '', $ret );
-			$ret = str_replace( ']]>', '', $ret );
 
-			return $ret;
+			return str_replace( ']]>', '', $ret );
 		}
 
 		// build node's text with tag

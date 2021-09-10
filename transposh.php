@@ -271,9 +271,7 @@ class transposh_plugin {
 		// $trace = debug_backtrace();
 		// tp_logger($trace);
 		// tp_logger($this->target_language);
-		$location = $this->rewrite_url( $location );
-
-		return $location;
+		return $this->rewrite_url( $location );
 	}
 
 	/**
@@ -1365,7 +1363,8 @@ class transposh_plugin {
 		if ( $translation != $orig && $translation != "'" ) { // who thought about this, causing apostrophes to break
 			$translation = TP_GTXT_BRK . $translation . TP_GTXT_BRK_CLOSER;
 		}
-		$translation = str_replace( array( '%s', '%1$s', '%2$s', '%3$s', '%4$s', '%5$s' ), array(
+
+		return str_replace( array( '%s', '%1$s', '%2$s', '%3$s', '%4$s', '%5$s' ), array(
 			TP_GTXT_IBRK . '%s' . TP_GTXT_IBRK_CLOSER,
 			TP_GTXT_IBRK . '%1$s' . TP_GTXT_IBRK_CLOSER,
 			TP_GTXT_IBRK . '%2$s' . TP_GTXT_IBRK_CLOSER,
@@ -1373,8 +1372,6 @@ class transposh_plugin {
 			TP_GTXT_IBRK . '%4$s' . TP_GTXT_IBRK_CLOSER,
 			TP_GTXT_IBRK . '%5$s' . TP_GTXT_IBRK_CLOSER
 		), $translation );
-
-		return $translation;
 	}
 
 	/**
@@ -1397,7 +1394,8 @@ class transposh_plugin {
 		if ( $translation != $single && $translation != $plural ) {
 			$translation = TP_GTXT_BRK . $translation . TP_GTXT_BRK_CLOSER;
 		}
-		$translation = str_replace( array( '%s', '%1$s', '%2$s', '%3$s', '%4$s', '%5$s' ), array(
+
+		return str_replace( array( '%s', '%1$s', '%2$s', '%3$s', '%4$s', '%5$s' ), array(
 			TP_GTXT_IBRK . '%s' . TP_GTXT_IBRK_CLOSER,
 			TP_GTXT_IBRK . '%1$s' . TP_GTXT_IBRK_CLOSER,
 			TP_GTXT_IBRK . '%2$s' . TP_GTXT_IBRK_CLOSER,
@@ -1405,8 +1403,6 @@ class transposh_plugin {
 			TP_GTXT_IBRK . '%4$s' . TP_GTXT_IBRK_CLOSER,
 			TP_GTXT_IBRK . '%5$s' . TP_GTXT_IBRK_CLOSER
 		), $translation );
-
-		return $translation;
 	}
 
 	/**
@@ -1799,9 +1795,7 @@ class transposh_plugin {
 			return false;
 		}
 
-		$result = $jsonarr->text;
-
-		return $result;
+		return $jsonarr->text;
 	}
 
 	// Proxied Baidu translate suggestions

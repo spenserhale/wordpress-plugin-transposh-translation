@@ -742,9 +742,7 @@ class transposh_database {
 		         "ORDER BY timestamp ASC $limitterm";
 		tp_logger( "query is $query" );
 
-		$rows = $GLOBALS['wpdb']->get_results( $query );
-
-		return $rows;
+		return $GLOBALS['wpdb']->get_results( $query );
 	}
 
 	/**
@@ -790,9 +788,7 @@ class transposh_database {
 		         "ORDER BY $orderby $order $limitterm";
 		tp_logger( "query is $query" );
 
-		$rows = $GLOBALS['wpdb']->get_results( $query, ARRAY_A );
-
-		return $rows;
+		return $GLOBALS['wpdb']->get_results( $query, ARRAY_A );
 	}
 
 	/**
@@ -826,9 +822,7 @@ class transposh_database {
 		         "WHERE $sourceterm $dateterm $filter";
 		tp_logger( "query is $query" );
 
-		$count = $GLOBALS['wpdb']->get_var( $query );
-
-		return $count;
+		return $GLOBALS['wpdb']->get_var( $query );
 	}
 
 	/*

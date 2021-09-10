@@ -84,15 +84,13 @@ class transposh_mail {
 	 * @return type
 	 */
 	public function transposh_mail_filter( $args ) {
-		$new_mail = array(
+		return array(
 			'to'          => $args['to'],
 			'subject'     => transposh_utils::clean_breakers( $args['subject'] ),
 			'message'     => transposh_utils::clean_breakers( $args['message'] ),
 			'headers'     => $args['headers'],
 			'attachments' => $args['attachments'],
 		);
-
-		return $new_mail;
 	}
 
 }

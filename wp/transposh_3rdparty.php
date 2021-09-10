@@ -150,10 +150,9 @@ class transposh_3rdparty {
 	 */
 	public function bbp_get_search_results_url( $url ) {
 		$lang = transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'], $this->home_url );
-		$href = transposh_utils::rewrite_url_lang_param( $url, $this->transposh->home_url,
-			$this->transposh->enable_permalinks_rewrite, $lang, false );
 
-		return $href;
+		return transposh_utils::rewrite_url_lang_param( $url, $this->transposh->home_url,
+			$this->transposh->enable_permalinks_rewrite, $lang, false );
 	}
 
 	/**
