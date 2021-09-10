@@ -79,11 +79,11 @@ class transposh_mail {
 	/**
 	 * This function should clean mails from stray transposh breakers inserted by locale markings
 	 *
-	 * @param  type  $args
+	 * @param  array  $args
 	 *
-	 * @return type
+	 * @return array
 	 */
-	public function transposh_mail_filter( $args ) {
+	public function transposh_mail_filter(array $args ):array {
 		return array(
 			'to'          => $args['to'],
 			'subject'     => transposh_utils::clean_breakers( $args['subject'] ),

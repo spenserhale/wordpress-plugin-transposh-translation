@@ -291,9 +291,9 @@ class transposh_utils {
 	 *
 	 * @param  array  $parsed  url_parse style array
 	 *
-	 * @return combined url
+	 * @return string|false url
 	 */
-	public static function glue_url( $parsed ) {
+	public static function glue_url( array $parsed ) {
 		if ( ! is_array( $parsed ) ) {
 			return false;
 		}
@@ -594,11 +594,11 @@ class transposh_utils {
 	/**
 	 * Cleans stray locale markings
 	 *
-	 * @param  type  $input
+	 * @param  string  $input
 	 *
-	 * @return type
+	 * @return string
 	 */
-	public static function clean_breakers( $input ): \type {
+	public static function clean_breakers( string $input ): string {
 		return str_replace( array( TP_GTXT_BRK, TP_GTXT_IBRK, TP_GTXT_BRK_CLOSER, TP_GTXT_IBRK_CLOSER ), '', $input );
 	}
 
