@@ -318,7 +318,7 @@ class transposh_utils {
 	 * Encode a string as base 64 while avoiding characters which should be avoided
 	 * in uri, e.g. + is interpeted as a space.
 	 */
-	public static function base64_url_encode( $input ) {
+	public static function base64_url_encode( $input ): string {
 		return strtr( base64_encode( $input ), '+/=', '-_,' );
 	}
 
@@ -340,7 +340,7 @@ class transposh_utils {
 	 *
 	 * @return string translated url permalink
 	 */
-	public static function translate_url( $href, $home_url, $target_language, $fetch_translation_func ) {
+	public static function translate_url( $href, $home_url, $target_language, $fetch_translation_func ): string {
 		$url       = '';
 		$querypart = '';
 		$fragment  = '';
@@ -402,7 +402,7 @@ class transposh_utils {
 	 *
 	 * @return string
 	 */
-	public static function get_original_url( $href, $home_url, $target_language, $fetch_translation_func ) {
+	public static function get_original_url( $href, $home_url, $target_language, $fetch_translation_func ): string {
 		$href   = substr( $href, strlen( $home_url ) );
 		$url    = stripslashes( urldecode( $href ) );
 		$params = ( $pos = strpos( $url, '?' ) ) ? substr( $url, $pos ) : '';
@@ -464,7 +464,7 @@ class transposh_utils {
 	 *
 	 * @return boolean if this is rewritable
 	 */
-	public static function is_rewriteable_url( $url, $home_url ) {
+	public static function is_rewriteable_url( $url, $home_url ): bool {
 		if ( strpos( $home_url, ':' ) ) {
 			$home_url = substr( $home_url, strpos( $home_url, ':' ) );
 		}
@@ -482,7 +482,7 @@ class transposh_utils {
 	 *
 	 * @return string Html with flag
 	 */
-	public static function display_flag( $path, $flag, $language, $css = false ) {
+	public static function display_flag( $path, $flag, $language, $css = false ): string {
 		return ! $css ? "<img src=\"$path/$flag.png\" title=\"$language\" alt=\"$language\"/>" : "<span title=\"$language\" class=\"trf trf-{$flag}\"></span>";
 	}
 
@@ -500,7 +500,7 @@ class transposh_utils {
 		$available_languages,
 		$default_lang = "auto",
 		$http_accept_language = "auto"
-	) {
+	): string {
 		// if $http_accept_language was left out, read it from the HTTP-Header
 		if ( $http_accept_language === "auto" ) {
 			$http_accept_language = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
@@ -585,7 +585,7 @@ class transposh_utils {
 			$_SERVER['HTTP_USER_AGENT'] );
 	}
 
-	public static function allow_cors() {
+	public static function allow_cors(): void {
 		header( 'Access-Control-Allow-Origin: *' );
 		header( 'Access-Control-Allow-Methods: GET, POST, OPTIONS' );
 		header( 'Access-Control-Allow-Headers: X-Requested-With' );
@@ -599,7 +599,7 @@ class transposh_utils {
 	 *
 	 * @return type
 	 */
-	public static function clean_breakers( $input ) {
+	public static function clean_breakers( $input ): \type {
 		return str_replace( array( TP_GTXT_BRK, TP_GTXT_IBRK, TP_GTXT_BRK_CLOSER, TP_GTXT_IBRK_CLOSER ), '', $input );
 	}
 
@@ -610,7 +610,7 @@ class transposh_utils {
 	 *
 	 * @return string
 	 */
-	public static function wordpress_user_by_by( $by ) {
+	public static function wordpress_user_by_by( $by ): string {
 		if ( strpos( $by, '.' ) === false && strpos( $by, ':' ) === false && is_numeric( $by ) ) {
 			$user_info = get_userdata( $by );
 			$by        = $user_info->user_login;

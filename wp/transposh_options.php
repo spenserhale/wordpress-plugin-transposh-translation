@@ -38,11 +38,11 @@ class transposh_option {
 		return (string) $this->value;
 	}
 
-	public function set_value( $value ) {
+	public function set_value( $value ): void {
 		$this->value = $value;
 	}
 
-	public function from_post() {
+	public function from_post(): void {
 		$this->value = $_POST[ $this->name ];
 	}
 
@@ -58,7 +58,7 @@ class transposh_option {
 		return $this->type;
 	}
 
-	public function post_value_id_name() {
+	public function post_value_id_name(): string {
 		return 'value="' . $this->value . '" id="' . $this->name . '" name="' . $this->name . '"';
 	}
 
@@ -174,7 +174,7 @@ class transposh_plugin_options {
 	private $changed = false;
 	private $vars = array();
 
-	public function set_default_option_value( $option, $value = '' ) {
+	public function set_default_option_value( $option, $value = '' ): void {
 		if ( ! isset( $this->options[ $option ] ) ) {
 			$this->options[ $option ] = $value;
 		}
@@ -182,7 +182,7 @@ class transposh_plugin_options {
 
 	// private $vars array() = (1,2,3);
 
-	public function register_option( $name, $type, $default_value = '' ) {
+	public function register_option( $name, $type, $default_value = '' ): void {
 		if ( ! isset( $this->options[ $name ] ) ) {
 			$this->options[ $name ] = $default_value;
 		}
@@ -291,7 +291,7 @@ class transposh_plugin_options {
 	 * @return array sorted list of languages, pointing to names and flags
 	 * @since 0.3.9
 	 */
-	public function get_sorted_langs() {
+	public function get_sorted_langs(): array {
 		if ( $this->sorted_languages ) {
 			tp_logger( $this->sorted_languages, 5 );
 
@@ -306,7 +306,7 @@ class transposh_plugin_options {
 	 * @return array sorted list of translation engines
 	 * @since 0.9.8
 	 */
-	public function get_sorted_engines() {
+	public function get_sorted_engines(): array {
 		if ( $this->preferred_translators ) {
 			tp_logger( $this->preferred_translators, 3 );
 
@@ -317,11 +317,11 @@ class transposh_plugin_options {
 		return transposh_consts::$engines;
 	}
 
-	public function get_transposh_admin_hide_warning( $id ) {
+	public function get_transposh_admin_hide_warning( $id ): bool {
 		return strpos( $this->transposh_admin_hide_warnings, $id . ',' ) !== false;
 	}
 
-	public function set_transposh_admin_hide_warning( $id ) {
+	public function set_transposh_admin_hide_warning( $id ): void {
 		if ( ! $this->get_transposh_admin_hide_warning( $id ) ) {
 			$this->transposh_admin_hide_warnings .= $id . ',';
 		}
@@ -330,7 +330,7 @@ class transposh_plugin_options {
 	/**
 	 * Updates options at the wordpress options table if there was a change
 	 */
-	public function update_options() {
+	public function update_options(): void {
 		if ( $this->changed ) {
 			foreach ( $this->vars as $name => $var ) {
 				$this->options[ $name ] = $var->get_value();
@@ -345,7 +345,7 @@ class transposh_plugin_options {
 	/**
 	 * Resets all options except keys
 	 */
-	public function reset_options() {
+	public function reset_options(): void {
 		$this->options = array();
 		foreach ( array( 'msn_key', 'google_key', 'oht_id', 'oht_key', 'transposh_key' ) as $key ) {
 			$this->options[ $key ] = $this->vars[ $key ]->get_value();
@@ -360,7 +360,7 @@ class transposh_plugin_options {
 	 *
 	 * @return boolean Is this the default language?
 	 */
-	public function is_default_language( $language ) { // XXXX
+	public function is_default_language( $language ): bool { // XXXX
 		return ( $this->default_language == $language || '' == $language );
 	}
 
@@ -368,7 +368,7 @@ class transposh_plugin_options {
 	 * Determine if the given language in on the list of active languages
 	 * @return boolean Is this language viewable?
 	 */
-	public function is_active_language( $language ) {
+	public function is_active_language( $language ): bool {
 		if ( $this->is_default_language( $language ) ) {
 			return true;
 		}

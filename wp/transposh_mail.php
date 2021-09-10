@@ -36,7 +36,7 @@ class transposh_mail {
 	 * Whom should we mail?
 	 * @return string email address
 	 */
-	public function get_mail_to() {
+	public function get_mail_to(): string {
 		if ( $this->transposh->options->mail_to ) {
 			$to = $this->transposh->options->mail_to;
 		} else {
@@ -54,7 +54,7 @@ class transposh_mail {
 	 * @param  string  $lang
 	 * @param  string  $translated_by
 	 */
-	public function transposh_mail_humantranslation( $translation, $original, $lang, $translated_by ) {
+	public function transposh_mail_humantranslation( $translation, $original, $lang, $translated_by ): void {
 		// if this option is off, no mail should be sent on translation
 		if ( ! $this->transposh->options->mail_ontranslate ) {
 			return;

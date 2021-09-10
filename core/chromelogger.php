@@ -155,7 +155,7 @@ class ChromePhp_tp {
 	 *
 	 * @return void
 	 */
-	public static function log() {
+	public static function log(): void {
 		$args = func_get_args();
 
 		return self::_log( '', $args );
@@ -168,7 +168,7 @@ class ChromePhp_tp {
 	 *
 	 * @return void
 	 */
-	public static function warn() {
+	public static function warn(): void {
 		$args = func_get_args();
 
 		return self::_log( self::WARN, $args );
@@ -181,7 +181,7 @@ class ChromePhp_tp {
 	 *
 	 * @return void
 	 */
-	public static function error() {
+	public static function error(): void {
 		$args = func_get_args();
 
 		return self::_log( self::ERROR, $args );
@@ -192,7 +192,7 @@ class ChromePhp_tp {
 	 *
 	 * @param  string value
 	 */
-	public static function group() {
+	public static function group(): void {
 		$args = func_get_args();
 
 		return self::_log( self::GROUP, $args );
@@ -205,7 +205,7 @@ class ChromePhp_tp {
 	 *
 	 * @return void
 	 */
-	public static function info() {
+	public static function info(): void {
 		$args = func_get_args();
 
 		return self::_log( self::INFO, $args );
@@ -216,7 +216,7 @@ class ChromePhp_tp {
 	 *
 	 * @param  string value
 	 */
-	public static function groupCollapsed() {
+	public static function groupCollapsed(): void {
 		$args = func_get_args();
 
 		return self::_log( self::GROUP_COLLAPSED, $args );
@@ -227,7 +227,7 @@ class ChromePhp_tp {
 	 *
 	 * @param  string value
 	 */
-	public static function groupEnd() {
+	public static function groupEnd(): void {
 		$args = func_get_args();
 
 		return self::_log( self::GROUP_END, $args );
@@ -238,7 +238,7 @@ class ChromePhp_tp {
 	 *
 	 * @param  string value
 	 */
-	public static function table() {
+	public static function table(): void {
 		$args = func_get_args();
 
 		return self::_log( self::TABLE, $args );
@@ -251,7 +251,7 @@ class ChromePhp_tp {
 	 *
 	 * @return void
 	 */
-	protected static function _log( $type, array $args ) {
+	protected static function _log( $type, array $args ): void {
 		// nothing passed in, don't do anything
 		if ( count( $args ) == 0 && $type != self::GROUP_END ) {
 			return;
@@ -284,7 +284,7 @@ class ChromePhp_tp {
 	 *
 	 * @return array
 	 */
-	protected function _convert( $object ) {
+	protected function _convert( $object ): array {
 		// if this isn't an object then just return it
 		if ( ! is_object( $object ) ) {
 			return $object;
@@ -347,7 +347,7 @@ class ChromePhp_tp {
 	 *
 	 * @return string
 	 */
-	protected function _getPropertyKey( ReflectionProperty $property ) {
+	protected function _getPropertyKey( ReflectionProperty $property ): ?string {
 		$static = $property->isStatic() ? ' static' : '';
 		if ( $property->isPublic() ) {
 			return 'public' . $static . ' ' . $property->getName();
@@ -368,7 +368,7 @@ class ChromePhp_tp {
 	 * @return void
 	 * @var mixed
 	 */
-	protected function _addRow( array $logs, $backtrace, $type ) {
+	protected function _addRow( array $logs, $backtrace, $type ): void {
 		// if this is logged on the same line for example in a loop, set it to null to save space
 		if ( in_array( $backtrace, $this->_backtraces ) ) {
 			$backtrace = null;
@@ -390,7 +390,7 @@ class ChromePhp_tp {
 		$this->_writeHeader( $this->_json );
 	}
 
-	protected function _writeHeader( $data ) {
+	protected function _writeHeader( $data ): void {
 		header( self::HEADER_NAME . ': ' . $this->_encode( $data ) );
 	}
 
@@ -401,7 +401,7 @@ class ChromePhp_tp {
 	 *
 	 * @return string
 	 */
-	protected function _encode( $data ) {
+	protected function _encode( $data ): string {
 		return base64_encode( utf8_encode( json_encode( $data ) ) );
 	}
 
@@ -413,7 +413,7 @@ class ChromePhp_tp {
 	 *
 	 * @return void
 	 */
-	public function addSetting( $key, $value ) {
+	public function addSetting( $key, $value ): void {
 		$this->_settings[ $key ] = $value;
 	}
 
@@ -424,7 +424,7 @@ class ChromePhp_tp {
 	 *
 	 * @return void
 	 */
-	public function addSettings( array $settings ) {
+	public function addSettings( array $settings ): void {
 		foreach ( $settings as $key => $value ) {
 			$this->addSetting( $key, $value );
 		}

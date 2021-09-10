@@ -26,7 +26,7 @@ class transposh_backup {
 		$this->transposh = &$transposh;
 	}
 
-	public function init_body() {
+	public function init_body(): array {
 		$body             = array();
 		$body['home_url'] = $this->transposh->home_url;
 		$body['key']      = $this->transposh->options->transposh_key;
@@ -36,7 +36,7 @@ class transposh_backup {
 		return $body;
 	}
 
-	public function do_backup() {
+	public function do_backup(): void {
 		$body = $this->init_body();
 		//Check if there are thing to backup, before even accessing the service
 		$rowstosend = $this->transposh->database->get_all_human_translation_history( 'null', 1 );
@@ -119,7 +119,7 @@ class transposh_backup {
 		echo '200 - backup in sync';
 	}
 
-	public function do_restore() {
+	public function do_restore(): void {
 		$body['to']       = time(); //TODO: fix this to get from DB
 		$body['home_url'] = $this->transposh->home_url;
 		$body['key']      = $this->transposh->options->transposh_key;

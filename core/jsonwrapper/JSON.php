@@ -143,7 +143,7 @@ class Services_JSON {
 	 * @return   string  UTF-8 character
 	 * @access   private
 	 */
-	public function utf162utf8( $utf16 ) {
+	public function utf162utf8( $utf16 ): string {
 		// oh please oh please oh please oh please oh please
 		if ( function_exists( 'mb_convert_encoding' ) ) {
 			return mb_convert_encoding( $utf16, 'UTF-8', 'UTF-16' );
@@ -187,7 +187,7 @@ class Services_JSON {
 	 * @return   string  UTF-16 character
 	 * @access   private
 	 */
-	public function utf82utf16( $utf8 ) {
+	public function utf82utf16( $utf8 ): string {
 		// oh please oh please oh please oh please oh please
 		if ( function_exists( 'mb_convert_encoding' ) ) {
 			return mb_convert_encoding( $utf8, 'UTF-16', 'UTF-8' );
@@ -443,7 +443,7 @@ class Services_JSON {
 	 * @return   string  string value stripped of comments and whitespace
 	 * @access   private
 	 */
-	public function reduce_string( $str ) {
+	public function reduce_string( $str ): string {
 		$str = preg_replace( array(
 
 			// eliminate single line comments in '// ...' form
@@ -747,7 +747,7 @@ class Services_JSON {
 	/**
 	 * @todo Ultimately, this should just call PEAR::isError()
 	 */
-	public function isError( $data, $code = null ) {
+	public function isError( $data, $code = null ): bool {
 		if ( class_exists( 'pear' ) ) {
 			return PEAR::isError( $data, $code );
 		}

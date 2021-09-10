@@ -38,7 +38,7 @@ class transposh_base_widget {
 	 * @param  string  $plugin_dir
 	 * @param  string  $plugin_url
 	 */
-	public static function tp_widget_css( $file, $plugin_dir, $plugin_url ) {
+	public static function tp_widget_css( $file, $plugin_dir, $plugin_url ): void {
 		tp_logger( 'looking for css:' . $file, 4 );
 		$basefile   = substr( $file, 0, - 4 );
 		$widget_css = TRANSPOSH_DIR_WIDGETS . '/' . $basefile . ".css";
@@ -55,7 +55,7 @@ class transposh_base_widget {
 	 * @param  string  $plugin_dir
 	 * @param  string  $plugin_url
 	 */
-	public static function tp_widget_js( $file, $plugin_dir, $plugin_url ) {
+	public static function tp_widget_js( $file, $plugin_dir, $plugin_url ): void {
 		tp_logger( 'looking for js:' . $file, 4 );
 		$basefile  = substr( $file, 0, - 4 );
 		$widget_js = TRANSPOSH_DIR_WIDGETS . '/' . $basefile . ".js";
@@ -174,7 +174,7 @@ class transposh_plugin_widget extends WP_Widget {
 	/**
 	 * Add custom css, i.e. transposh_widget.css, flags now override widget
 	 */
-	public function add_transposh_widget_css() {
+	public function add_transposh_widget_css(): void {
 		// first we discover all active widgets of ours, and aggregate the files
 		$activewidgets = array();
 		$settings      = $this->get_settings();
@@ -205,7 +205,7 @@ class transposh_plugin_widget extends WP_Widget {
 	/**
 	 * Add custom js, i.e. transposh_widget.js
 	 */
-	public function add_transposh_widget_js() {
+	public function add_transposh_widget_js(): void {
 		$activewidgets = array();
 		$settings      = $this->get_settings();
 		foreach ( $settings as $key => $value ) {
@@ -239,7 +239,7 @@ class transposh_plugin_widget extends WP_Widget {
 	 *
 	 * @return array
 	 */
-	public function create_widget_args( $clean_page_url ) {
+	public function create_widget_args( $clean_page_url ): array {
 		// only calculate urls once even for multiple instances
 		static $widget_args;
 		if ( is_array( $widget_args ) ) {
@@ -377,7 +377,7 @@ class transposh_plugin_widget extends WP_Widget {
 	/**
 	 * Inspired (and used code) from the get_plugins function of wordpress
 	 */
-	public function get_widgets( $widget_folder = '' ) {
+	public function get_widgets( $widget_folder = '' ): array {
 		get_plugins();
 
 		$tp_widgets  = array();

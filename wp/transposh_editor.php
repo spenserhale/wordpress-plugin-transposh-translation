@@ -17,14 +17,14 @@ class transposh_editor_table extends WP_List_Table {
 		) );
 	}
 
-	public function print_style() {
+	public function print_style(): void {
 		echo '<style type="text/css">';
 		echo '.wp-list-table .column-lang { width: 5%; }';
 		echo '.wp-list-table .column-source { width: 5%; }';
 		echo '</style>';
 	}
 
-	public function add_screen_options() {
+	public function add_screen_options(): void {
 		$option = 'per_page';
 		$args   = array(
 			'label'   => __( 'Translations', TRANSPOSH_TEXT_DOMAIN ),
@@ -38,7 +38,7 @@ class transposh_editor_table extends WP_List_Table {
 		_e( 'No translations found.', TRANSPOSH_TEXT_DOMAIN );
 	}
 
-	public function item_key( $item ) {
+	public function item_key( $item ): string {
 		return base64_encode( $item['timestamp'] . ',' . $item['lang'] . ',' . $item['original'] );
 	}
 
@@ -84,7 +84,7 @@ class transposh_editor_table extends WP_List_Table {
 		);
 	}
 
-	public function column_lang( $item ) {
+	public function column_lang( $item ): string {
 		$actions = array(
 			// 'edit' => sprintf('<a href="?page=%s&action=%s&book=%s">Edit</a>', $_REQUEST['page'], 'edit', 1/*$item['ID']*/),
 			'filter' => sprintf( '<a href="?page=%s&action=%s&fl=%s">Filter</a>', $_REQUEST['page'], 'filter-lang',
@@ -95,7 +95,7 @@ class transposh_editor_table extends WP_List_Table {
 			$this->row_actions( $actions ) );
 	}
 
-	public function column_original( $item ) {
+	public function column_original( $item ): string {
 		$actions = array(
 			// 'edit' => sprintf('<a href="?page=%s&action=%s&book=%s">Edit</a>', $_REQUEST['page'], 'edit', 1/*$item['ID']*/),
 			'delete' => sprintf( '<a href="?page=%s&action=%s&key=%s">' . __( 'Delete' ) . '</a>', $_REQUEST['page'],
@@ -113,7 +113,7 @@ class transposh_editor_table extends WP_List_Table {
 		return $item['translated'];
 	}
 
-	public function column_translated_by( $item ) {
+	public function column_translated_by( $item ): string {
 		// check if its a user and try to grab his login
 		$by      = transposh_utils::wordpress_user_by_by( $item['translated_by'] );
 		$actions = array(
@@ -186,7 +186,7 @@ class transposh_editor_table extends WP_List_Table {
 			$orderby, $order, $this->filter );
 	}
 
-	public function render_table() {
+	public function render_table(): void {
 		echo '</pre><div class="wrap"><h2>' . __( 'Translations', TRANSPOSH_TEXT_DOMAIN ) . '</h2>';
 		$this->prepare_items();
 		if ( $this->filter ) {
@@ -208,7 +208,7 @@ class transposh_editor_table extends WP_List_Table {
 	 *
 	 * @global transposh_plugin $my_transposh_plugin
 	 */
-	public function perform_actions() {
+	public function perform_actions(): void {
 		global $my_transposh_plugin;
 		// echo "Actioning";
 		// echo $this->current_action();

@@ -66,14 +66,14 @@ class transposh_3rdparty {
 		add_filter( 'woocommerce_get_cart_url', array( &$this, 'woo_uri_filter' ) );
 	}
 
-	public function add_analyticator_tracking() {
+	public function add_analyticator_tracking(): void {
 		echo "	_gaq.push(['_setAccount', 'UA-4663695-5']);\n";
 		echo "	_gaq.push(['_setDomainName', 'none']);\n";
 		echo "	_gaq.push(['_setAllowLinker', true]);\n";
 		echo "	_gaq.push(['_trackPageview']);\n";
 	}
 
-	public function super_cache_invalidate() {
+	public function super_cache_invalidate(): void {
 		//Now, we are actually using the referrer and not the request, with some precautions
 		$GLOBALS['wp_cache_request_uri'] = substr( $_SERVER['HTTP_REFERER'], stripos( $_SERVER['HTTP_REFERER'],
 				$_SERVER['HTTP_HOST'] ) + strlen( $_SERVER[''] . $_SERVER['HTTP_HOST'] ) );
@@ -113,7 +113,7 @@ class transposh_3rdparty {
 		@unlink( $meta_pathname );
 	}
 
-	public function w3tc_invalidate() {
+	public function w3tc_invalidate(): void {
 		tp_logger( "W3TC invalidate:" . $_SERVER['HTTP_REFERER'] );
 		$id = url_to_postid( $_SERVER['HTTP_REFERER'] );
 		if ( is_numeric( $id ) ) {
@@ -131,7 +131,7 @@ class transposh_3rdparty {
 	 *
 	 * @return string The url that buddypress should see
 	 */
-	public function bp_uri_filter( $uri ) {
+	public function bp_uri_filter( $uri ): string {
 		$lang = transposh_utils::get_language_from_url( $uri, $this->transposh->home_url );
 		//TODO - check using get_clean_url
 		$uri = transposh_utils::cleanup_url( $uri, $this->transposh->home_url );
@@ -160,7 +160,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  BP_Activity_Activity  $params
 	 */
-	public function bp_activity_after_save( $params ) {
+	public function bp_activity_after_save( $params ): void {
 		// we don't need to modify our own activity stream
 		if ( $params->type === 'new_translation' ) {
 			return;
@@ -179,7 +179,7 @@ class transposh_3rdparty {
 	 *
 	 * @return string modified content
 	 */
-	public function bp_get_activity_content_body( $content, $activity = "" ) { //XXX
+	public function bp_get_activity_content_body( $content, $activity = "" ): string { //XXX
 		$activity_lang = bp_activity_get_meta( $activity->id, 'tp_language' );
 		if ( $activity_lang ) {
 			$content = "<span lang =\"$activity_lang\">" . $content . "</span>";
@@ -243,7 +243,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  GoogleSitemapGeneratorPage  $sm_page  Object containing the page information
 	 */
-	public function add_sm_transposh_urls( $sm_page ) {
+	public function add_sm_transposh_urls( $sm_page ): void {
 		tp_logger( "in sitemap add url: " . $sm_page->GetUrl() . " " . $sm_page->GetPriority(), 4 );
 		$sm_page = clone $sm_page;
 		// we need the generator object (we know it must exist...)
@@ -308,7 +308,7 @@ class transposh_3rdparty {
 	 *
 	 * @param  yoast_url array $yoast_url Object containing the page information
 	 */
-	public function add_yoast_transposh_urls( $yoast_url ) {
+	public function add_yoast_transposh_urls( $yoast_url ): array {
 		tp_logger( "in sitemap add url: " . $yoast_url['loc'] . " " . $yoast_url['pri'], 2 );
 		$urls = array();
 

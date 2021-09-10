@@ -85,7 +85,7 @@ class transposh_plugin_admin {
 	/**
 	 * Handle newly posted admin options.
 	 */
-	public function update_admin_options() {
+	public function update_admin_options(): void {
 		tp_logger( 'Enter', 1 );
 		tp_logger( $_POST );
 
@@ -206,7 +206,7 @@ class transposh_plugin_admin {
 		$this->transposh->options->update_options();
 	}
 
-	public function admin_menu() {
+	public function admin_menu(): void {
 		// key is page name, first is description, second is side menu description, third is if this contains settings
 		$this->pages = array(
 			'tp_main'     => array( __( 'Dashboard', TRANSPOSH_TEXT_DOMAIN ) ),
@@ -257,7 +257,7 @@ class transposh_plugin_admin {
 	 *
 	 * @return void
 	 */
-	public function admin_print_styles() {
+	public function admin_print_styles(): void {
 		if ( $this->page === 'tp_editor' ) {
 			$this->editor_table->print_style();
 		}
@@ -268,7 +268,7 @@ class transposh_plugin_admin {
 	 *
 	 * @return void
 	 */
-	public function admin_print_scripts() {
+	public function admin_print_scripts(): void {
 		switch ( $this->page ) {
 			case 'tp_main':
 				wp_enqueue_script( 'common' );
@@ -326,7 +326,7 @@ class transposh_plugin_admin {
 			$this->transposh->transposh_plugin_url . '/' . TRANSPOSH_DIR_CSS . '/admin.css' ); ///, array('transposh'), TRANSPOSH_PLUGIN_VER, true)
 	}
 
-	public function load() {
+	public function load(): void {
 		// figure out page and other stuff...
 		//echo 'loaded!?';
 		global $wp_locale;
@@ -388,7 +388,7 @@ class transposh_plugin_admin {
 		}
 	}
 
-	public function options() {
+	public function options(): void {
 		echo '<div class="wrap">';
 		//screen_icon('transposh-logo'); --depracated?
 
@@ -427,14 +427,14 @@ class transposh_plugin_admin {
 	}
 
 	// not sure if this is the best place for this function, but heck
-	public function on_load_comments_page() {
+	public function on_load_comments_page(): void {
 		wp_enqueue_script( 'transposhcomments',
 			$this->transposh->transposh_plugin_url . '/' . TRANSPOSH_DIR_JS . '/admin/commentslang.js',
 			array( 'jquery' ), TRANSPOSH_PLUGIN_VER );
 	}
 
 	//executed to show the plugins complete admin page
-	public function tp_main() {
+	public function tp_main(): void {
 		echo '<div id="dashboard-widgets-wrap">';
 
 		/** Load WordPress dashboard API */
@@ -454,7 +454,7 @@ class transposh_plugin_admin {
 	 *
 	 * @param  string  $data
 	 */
-	public function tp_langs() {
+	public function tp_langs(): void {
 		// we need some styles
 		global $wp_locale;
 		if ( $wp_locale->text_direction === 'rtl' ) {
@@ -544,7 +544,7 @@ class transposh_plugin_admin {
 	  } */
 
 	// Show normal settings
-	public function tp_settings() {
+	public function tp_settings(): void {
 		$this->section( __( 'Upgrade to full version', TRANSPOSH_TEXT_DOMAIN ) );
 		$this->checkbox( $this->transposh->options->allow_full_version_upgrade_o
 			, __( 'Allow upgrading to full version', TRANSPOSH_TEXT_DOMAIN )
@@ -666,7 +666,7 @@ class transposh_plugin_admin {
 		$this->sectionstop();
 	}
 
-	public function tp_engines() {
+	public function tp_engines(): void {
 		// we need some styles
 		global $wp_locale;
 		if ( $wp_locale->text_direction === 'rtl' ) {
@@ -744,7 +744,7 @@ class transposh_plugin_admin {
 		$this->sectionstop();
 	}
 
-	public function tp_widget() {
+	public function tp_widget(): void {
 		//       $this->checkbox($this->transposh->options->widget_progressbar_o, __('Show progress bar', TRANSPOSH_TEXT_DOMAIN)
 		//               , __('Show progress bar when a client triggers automatic translation', TRANSPOSH_TEXT_DOMAIN));
 		$this->section( __( 'Widget settings', TRANSPOSH_TEXT_DOMAIN ) );
@@ -758,7 +758,7 @@ class transposh_plugin_admin {
 		$this->sectionstop();
 	}
 
-	public function tp_advanced() {
+	public function tp_advanced(): void {
 		$this->checkbox( $this->transposh->options->enable_url_translate_o,
 			__( 'Enable url translation', TRANSPOSH_TEXT_DOMAIN ) . ' (' . __( 'experimental',
 				TRANSPOSH_TEXT_DOMAIN ) . ')',
@@ -808,12 +808,12 @@ class transposh_plugin_admin {
 		$this->sectionstop();
 	}
 
-	public function tp_editor() {
+	public function tp_editor(): void {
 		$this->editor_table->render_table();
 	}
 
 	//
-	public function tp_utils() {
+	public function tp_utils(): void {
 		echo '<div id="backup_result"></div>';
 		echo '<div style="margin:10px 0"><a id="transposh-backup" href="#" class="button">' . __( 'Do Backup Now',
 				TRANSPOSH_TEXT_DOMAIN ) . '</a></div>';
@@ -842,7 +842,7 @@ class transposh_plugin_admin {
 		//get_posts
 	}
 
-	public function tp_about() {
+	public function tp_about(): void {
 		$this->section( __( 'About Transposh', TRANSPOSH_TEXT_DOMAIN ) );
 		echo __( 'Transposh was started at 2008 and is dedicated to provide tools to ease website translation.',
 			TRANSPOSH_TEXT_DOMAIN );
@@ -875,7 +875,7 @@ class transposh_plugin_admin {
 		  'clear_working' => false)); */
 	}
 
-	public function tp_support() {
+	public function tp_support(): void {
 		echo '<p>';
 		$this->section( __( 'Transposh support', TRANSPOSH_TEXT_DOMAIN )
 			, __( 'Have you encountered any problem with our plugin and need our help?',
@@ -944,7 +944,7 @@ class transposh_plugin_admin {
 	}
 
 	// executed if the post arrives initiated by pressing the submit button of form
-	public function on_save_changes() {
+	public function on_save_changes(): void {
 		//user permission check
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( __( 'Problems?', TRANSPOSH_TEXT_DOMAIN ) );
@@ -962,18 +962,18 @@ class transposh_plugin_admin {
 	// below you will find for each registered metabox the callback method, that produces the content inside the boxes
 	// i did not describe each callback dedicated, what they do can be easily inspected and compare with the admin page displayed
 
-	public function on_sidebox_news_content() {
+	public function on_sidebox_news_content(): void {
 		echo '<div style="margin:6px">';
 		wp_widget_rss_output( 'http://feeds2.feedburner.com/transposh', array( 'items' => 5 ) );
 		echo '</div>';
 	}
 
-	public function on_sidebox_stats_content() {
+	public function on_sidebox_stats_content(): void {
 		$this->transposh->database->db_stats();
 	}
 
 	/** UTILITY FUNCTIONS * */
-	private function section( $head, $text = '' ) {
+	private function section( $head, $text = '' ): void {
 		echo '<div class="postbox">';
 		echo '<h2 class="transposh_section_top">' . $head . '</h2>';
 		echo '<div class="inside">';
@@ -982,11 +982,11 @@ class transposh_plugin_admin {
 		}
 	}
 
-	private function sectionstop() {
+	private function sectionstop(): void {
 		echo '</div></div>';
 	}
 
-	private function header( $head, $help = '' ) {
+	private function header( $head, $help = '' ): void {
 		if ( ! isset( $head ) ) {
 			return;
 		}
@@ -1000,7 +1000,7 @@ class transposh_plugin_admin {
 		}
 	}
 
-	private function normaltext( $head, $help = '' ) {
+	private function normaltext( $head, $help = '' ): void {
 		if ( ! isset( $head ) ) {
 			return;
 		}
@@ -1014,7 +1014,7 @@ class transposh_plugin_admin {
 	 * @param  string  $head
 	 * @param  string  $text
 	 */
-	private function checkbox( $tpo, $head, $text ) {
+	private function checkbox( $tpo, $head, $text ): void {
 		$this->header( $head );
 		echo '<input type="checkbox" value="1" name="' . $tpo->get_name() . '" ' . checked( $tpo->get_value(), true,
 				false ) . '/> ' . $text;
@@ -1028,7 +1028,7 @@ class transposh_plugin_admin {
 	 * @param  array  $options
 	 * @param  boolean  $use_key
 	 */
-	private function select( $tpo, $head, $label, $options, $use_key = true ) {
+	private function select( $tpo, $head, $label, $options, $use_key = true ): void {
 		$this->header( $head );
 		echo '<label for="' . $tpo->get_name() . '">' . $label .
 		     '<select name="' . $tpo->get_name() . '">';
@@ -1040,7 +1040,7 @@ class transposh_plugin_admin {
 		     '</label>';
 	}
 
-	private function textinput( $tpo, $head, $label, $length = 35, $help = '' ) {
+	private function textinput( $tpo, $head, $label, $length = 35, $help = '' ): void {
 		if ( $head ) {
 			$this->header( $head, $help );
 		}
@@ -1048,7 +1048,7 @@ class transposh_plugin_admin {
 	}
 
 	/** UTILITY FUNCTIONS  END * */
-	public function tp_notices() {
+	public function tp_notices(): void {
 		if ( (int) ini_get( 'memory_limit' ) < 64 ) {
 			$this->add_warning( 'tp_mem_warning',
 				sprintf( __( 'Your current PHP memory limit of %s is quite low, if you experience blank pages please consider increasing it.',
@@ -1074,7 +1074,7 @@ class transposh_plugin_admin {
 	 * this function will remove any notices that are not ours from our administration pages
 	 * @global type $wp_filter
 	 */
-	public function remove_other_admin_notices() {
+	public function remove_other_admin_notices(): void {
 		if ( $this->page ) {
 			global $wp_filter;
 			$actions = $wp_filter;
@@ -1095,7 +1095,7 @@ class transposh_plugin_admin {
 		}
 	}
 
-	public function add_warning( $id, $message, $level = 'error' ) {
+	public function add_warning( $id, $message, $level = 'error' ): void {
 		if ( ! $this->transposh->options->get_transposh_admin_hide_warning( $id ) ) {
 			//$this->add_warning_script();
 			wp_enqueue_script( 'transposh_warningclose',
@@ -1123,36 +1123,36 @@ class transposh_plugin_admin {
 	}
 
 	// ajax stuff!
-	public function on_ajax_tp_close_warning() {
+	public function on_ajax_tp_close_warning(): void {
 		$this->transposh->options->set_transposh_admin_hide_warning( $_POST['id'] );
 		$this->transposh->options->update_options();
 		die(); // this is required to return a proper result
 	}
 
-	public function on_ajax_tp_reset() {
+	public function on_ajax_tp_reset(): void {
 		$this->transposh->options->reset_options();
 		die();
 	}
 
-	public function on_ajax_tp_backup() {
+	public function on_ajax_tp_backup(): void {
 		$this->transposh->run_backup();
 		die();
 	}
 
 	// Start restore on demand
-	public function on_ajax_tp_restore() {
+	public function on_ajax_tp_restore(): void {
 		$this->transposh->run_restore();
 		die();
 	}
 
 	// Start cleanup on demand
-	public function on_ajax_tp_cleanup() {
+	public function on_ajax_tp_cleanup(): void {
 		$this->transposh->database->cleanup( $_POST['days'] );
 		die();
 	}
 
 	// Start maint
-	public function on_ajax_tp_maint() {
+	public function on_ajax_tp_maint(): void {
 		$this->transposh->database->setup_db( true );
 		die();
 	}
@@ -1201,7 +1201,7 @@ class transposh_plugin_admin {
 //        die();
 //    }
 	// Start full translation
-	public function on_ajax_tp_translate_all() {
+	public function on_ajax_tp_translate_all(): void {
 		// get all ids in need of translation
 		global $wpdb;
 		$page_ids = $wpdb->get_col( "SELECT ID FROM $wpdb->posts WHERE (post_type='page' OR post_type='post') AND (post_status='publish' OR post_status='private') ORDER BY ID DESC" );
@@ -1216,13 +1216,13 @@ class transposh_plugin_admin {
 	}
 
 	// getting phrases of a post (if we are in admin)
-	public function on_ajax_tp_post_phrases() {
+	public function on_ajax_tp_post_phrases(): void {
 		$this->transposh->postpublish->get_post_phrases( $_GET['post'] );
 		die();
 	}
 
 	// Handle comments language change on the admin side
-	public function on_ajax_tp_comment_lang() {
+	public function on_ajax_tp_comment_lang(): void {
 		delete_comment_meta( $_GET['cid'], 'tp_language' );
 		if ( $_GET['lang'] ) {
 			add_comment_meta( $_GET['cid'], 'tp_language', $_GET['lang'], true );

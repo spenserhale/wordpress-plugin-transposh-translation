@@ -112,7 +112,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// clean up memory due to php5 circular references memory leak...
-		public function clear() {
+		public function clear(): void {
 			$this->dom      = null;
 			$this->nodes    = null;
 			$this->parent   = null;
@@ -120,7 +120,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// dump node's tree
-		public function dump( $show_attr = true ) {
+		public function dump( $show_attr = true ): void {
 			dump_html_tree( $this, $show_attr );
 		}
 
@@ -281,7 +281,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// build node's text with tag
-		public function makeup() {
+		public function makeup(): string {
 			// text, comment, unknown
 			if ( isset( $this->_[ HDOM_INFO_TEXT ] ) ) {
 				return $this->dom->restore_noise( $this->_[ HDOM_INFO_TEXT ] );
@@ -378,7 +378,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// seek for given conditions
-		protected function seek( $selector, &$ret ) {
+		protected function seek( $selector, &$ret ): void {
 			[ $tag, $key, $val, $exp, $no_key ] = $selector;
 
 			// xpath index
@@ -476,7 +476,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 			return false;
 		}
 
-		protected function parse_selector( $selector_string ) {
+		protected function parse_selector( $selector_string ): array {
 			// pattern of CSS selectors, modified from mootools
 			$pattern = "/([\w\-:\*]*)(?:\#([\w\-]+)|\.([\w\-]+))?(?:\[@?(!?[\w\-:]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is"; // new version
 			preg_match_all( $pattern, trim( $selector_string ) . ' ', $matches, PREG_SET_ORDER );
@@ -594,7 +594,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// camel naming conventions
-		public function getAllAttributes() {
+		public function getAllAttributes(): array {
 			return $this->attr;
 		}
 
@@ -602,15 +602,15 @@ if ( ! function_exists( "file_get_html" ) ) {
 			return $this->__get( $name );
 		}
 
-		public function setAttribute( $name, $value ) {
+		public function setAttribute( $name, $value ): void {
 			$this->__set( $name, $value );
 		}
 
-		public function hasAttribute( $name ) {
+		public function hasAttribute( $name ): bool {
 			return $this->__isset( $name );
 		}
 
-		public function removeAttribute( $name ) {
+		public function removeAttribute( $name ): void {
 			$this->__set( $name, null );
 		}
 
@@ -712,7 +712,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// load html from string
-		public function load( $str, $lowercase = true ) {
+		public function load( $str, $lowercase = true ): void {
 			// prepare
 			$this->prepare( $str, $lowercase );
 			// strip out comments
@@ -742,18 +742,18 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// load html from file
-		public function load_file() {
+		public function load_file(): void {
 			$args = func_get_args();
 			$this->load( file_get_contents( ...$args ), true );
 		}
 
 		// set callback function
-		public function set_callback( $function_name ) {
+		public function set_callback( $function_name ): void {
 			$this->callback = $function_name;
 		}
 
 		// remove callback function
-		public function remove_callback() {
+		public function remove_callback(): void {
 			$this->callback = null;
 		}
 
@@ -773,7 +773,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// clean up memory due to php5 circular references memory leak...
-		public function clear() {
+		public function clear(): void {
 			foreach ( $this->nodes as $n ) {
 				$n->clear();
 				$n = null;
@@ -796,12 +796,12 @@ if ( ! function_exists( "file_get_html" ) ) {
 			unset( $this->doc, $this->noise );
 		}
 
-		public function dump( $show_attr = true ) {
+		public function dump( $show_attr = true ): void {
 			$this->root->dump( $show_attr );
 		}
 
 		// prepare HTML data and init everything
-		protected function prepare( $str, $lowercase = true ) {
+		protected function prepare( $str, $lowercase = true ): void {
 			$this->clear();
 			$this->doc                        = $str;
 			$this->pos                        = 0;
@@ -822,7 +822,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// parse html content
-		protected function parse() {
+		protected function parse(): bool {
 			if ( ( $s = $this->copy_until_char( '<' ) ) === '' ) {
 				return $this->read_tag();
 			}
@@ -837,7 +837,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// read tag info
-		protected function read_tag() {
+		protected function read_tag(): bool {
 			if ( $this->char !== '<' ) {
 				$this->root->_[ HDOM_INFO_END ] = $this->cursor;
 
@@ -1060,7 +1060,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// parse attributes
-		protected function parse_attr( $node, $name, &$space ) {
+		protected function parse_attr( $node, $name, &$space ): void {
 			$space[2] = $this->copy_skip( $this->token_blank );
 			switch ( $this->char ) {
 				case '"':
@@ -1082,7 +1082,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// link node's parent
-		protected function link_nodes( &$node, $is_child ) {
+		protected function link_nodes( &$node, $is_child ): void {
 			$node->parent          = $this->parent;
 			$this->parent->nodes[] = $node;
 			if ( $is_child ) {
@@ -1091,7 +1091,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// as a text node
-		protected function as_text_node( $tag ) {
+		protected function as_text_node( $tag ): bool {
 			$node = new simple_html_dom_node( $this );
 			++ $this->cursor;
 			$node->_[ HDOM_INFO_TEXT ] = '</' . $tag . '>';
@@ -1101,7 +1101,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 			return true;
 		}
 
-		protected function skip( $chars ) {
+		protected function skip( $chars ): void {
 			$this->pos  += strspn( $this->doc, $chars, $this->pos );
 			$this->char = ( $this->pos < $this->size ) ? $this->doc[ $this->pos ] : null; // next
 		}
@@ -1183,7 +1183,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// remove noise from html content
-		protected function remove_noise( $pattern, $remove_tag = false ) {
+		protected function remove_noise( $pattern, $remove_tag = false ): void {
 			$count = preg_match_all( $pattern, $this->doc, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE );
 			//       logger ("meo:" . $pattern . $count);
 
@@ -1259,7 +1259,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 			return $this->find( $name, $idx );
 		}
 
-		public function loadFile() {
+		public function loadFile(): void {
 			$args = func_get_args();
 			$this->load( file_get_contents( ...$args ), true );
 		}

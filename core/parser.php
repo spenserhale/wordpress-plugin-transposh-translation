@@ -62,7 +62,7 @@ class tp_parserstats {
 	 * Calculated values - computer translated phrases
 	 * @return int How many phrases were auto-translated
 	 */
-	public function get_computer_translated_phrases() {
+	public function get_computer_translated_phrases(): int {
 		return $this->translated_phrases - $this->human_translated_phrases;
 	}
 
@@ -70,21 +70,21 @@ class tp_parserstats {
 	 * Calculated values - missing phrases
 	 * @return int How many phrases are missing
 	 */
-	public function get_missing_phrases() {
+	public function get_missing_phrases(): int {
 		return $this->total_phrases - $this->translated_phrases;
 	}
 
 	/**
 	 * Start the timer
 	 */
-	public function start_timing() {
+	public function start_timing(): void {
 		$this->start_time = microtime( true );
 	}
 
 	/**
 	 * Stop timing, store time for reference
 	 */
-	public function stop_timing() {
+	public function stop_timing(): void {
 		$this->time = number_format( microtime( true ) - $this->start_time, 3 );
 	}
 
@@ -215,7 +215,7 @@ class tp_parser {
 	 *
 	 * @return int length of entity
 	 */
-	public function is_html_entity( $string, $position ) {
+	public function is_html_entity( $string, $position ): int {
 		if ( $string[ $position ] === '&' ) {
 			$end_pos = $position + 1;
 			while ( $string[ $end_pos ] === '#' || $this->is_digit( $string[ $end_pos ] ) || $this->is_a_to_z_character( $string[ $end_pos ] ) ) {
@@ -239,7 +239,7 @@ class tp_parser {
 	 *
 	 * @return boolean true if not a breaker (apostrophy)
 	 */
-	public function is_entity_breaker( $entity ) { // &#8216;&#8217;??
+	public function is_entity_breaker( $entity ): bool { // &#8216;&#8217;??
 		return ! ( stripos( '&#8216;&#8217;&apos;&quot;&#039;&#39;&rsquo;&lsquo;&rdquo;&ldquo;', $entity ) !== false );
 	}
 
@@ -317,7 +317,7 @@ class tp_parser {
 	 * &scaron;    &#353;                        latin small letter s with caron
 	 * &Yuml;      &#376;                        latin capital letter Y with diaeresis
 	 */
-	public function is_entity_letter( $entity ) {
+	public function is_entity_letter( $entity ): bool {
 		tp_logger( "checking ($entity) - " . htmlentities( $entity ), 4 );
 		$entnum = (int) substr( $entity, 2 );
 		// skip multiply and divide (215, 247)
@@ -340,7 +340,7 @@ class tp_parser {
 	 *
 	 * @return int length of breaker if current position marks a break in sentence
 	 */
-	public function is_sentence_breaker( $char, $nextchar, $nextnextchar ) {
+	public function is_sentence_breaker( $char, $nextchar, $nextnextchar ): int {
 		if ( ( $char == '.' || $char == '-' ) && ( $this->is_white_space( $nextchar ) ) ) {
 			return 1;
 		}
@@ -379,7 +379,7 @@ class tp_parser {
 	 * Determines if the current position marks the begining of a number, e.g. 123 050-391212232
 	 * @return int length of number.
 	 */
-	public function is_number( $page, $position ) {
+	public function is_number( $page, $position ): int {
 		return strspn( $page, '0123456789-+$%#*,.\\/', $position );
 	}
 
@@ -389,7 +389,7 @@ class tp_parser {
 	 * @param  int  $start  - beginning of phrase in element
 	 * @param  int  $end  - end of phrase in element
 	 */
-	public function tag_phrase( $string, $start, $end ) {
+	public function tag_phrase( $string, $start, $end ): void {
 		$phrase      = trim( substr( $string, $start, $end - $start ) );
 		$phrasefixed = trim( str_replace( '&nbsp;', ' ', $phrase ) );
 //        $logstr = str_replace(array(chr(1),chr(2),chr(3),chr(4)), array('[1]','[2]','[3]','[4]'), $string);
@@ -427,7 +427,7 @@ class tp_parser {
 	 *
 	 * @param  string  $string  - the string which is "broken" into smaller strings
 	 */
-	public function parsetext( $string ) {
+	public function parsetext( $string ): void {
 		$pos = 0;
 		//	$pos = skip_white_space($string, $pos);
 		// skip CDATA in feed_fix mode
@@ -545,7 +545,7 @@ class tp_parser {
 	 *
 	 * @param  simple_html_dom_node  $node
 	 */
-	public function translate_tagging( $node, $level = 0 ) {
+	public function translate_tagging( $node, $level = 0 ): void {
 		$this->currentnode = $node;
 		// we don't want to translate non-translatable classes
 		if ( stripos( $node->class, NO_TRANSLATE_CLASS ) !== false || stripos( $node->class,
@@ -680,7 +680,7 @@ class tp_parser {
 		$source,
 		$for_hidden_element = false,
 		$src_lang = ''
-	) {
+	): string {
 		// Use base64 encoding to make that when the page is translated (i.e. update_translation) we
 		// get back exactlly the same string without having the client decode/encode it in anyway.
 		$this->edit_span_created = true;
@@ -722,7 +722,7 @@ class tp_parser {
 	 * @param  type  $numbers
 	 * @param  type  $entities
 	 */
-	public function change_parsing_rules( $puncts, $numbers, $entities ) {
+	public function change_parsing_rules( $puncts, $numbers, $entities ): void {
 		$this->punct_breaks = $puncts;
 		$this->num_breaks   = $numbers;
 		$this->ent_breaks   = $entities;
@@ -1110,7 +1110,7 @@ class tp_parser {
 	 * @return array List of phrases (or an empty one)
 	 * @since 0.3.5
 	 */
-	public function get_phrases_list( $string ) {
+	public function get_phrases_list( $string ): array {
 		$result = array();
 		// create our dom
 		$this->html = str_get_html( '<span lang="xx">' . $string . '</span>' );

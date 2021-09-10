@@ -55,7 +55,7 @@ class tp_logger {
 	 * @param  mixed  $msg
 	 * @param  int  $severity
 	 */
-	public function do_log( $msg, $severity = 3, $do_backtrace = false, $nest = 0 ) {
+	public function do_log( $msg, $severity = 3, $do_backtrace = false, $nest = 0 ): void {
 		if ( $severity <= $this->debug_level ) {
 			if ( $this->show_caller ) {
 				$trace = debug_backtrace();
@@ -122,7 +122,7 @@ class tp_logger {
 	 *
 	 * @return logger
 	 */
-	public static function getInstance( $AutoCreate = false ) {
+	public static function getInstance( $AutoCreate = false ): ?\logger {
 		if ( $AutoCreate === true && ! self::$instance ) {
 			self::init();
 		}
@@ -138,15 +138,15 @@ class tp_logger {
 		return self::$instance = new self();
 	}
 
-	public function set_debug_level( $int ) {
+	public function set_debug_level( $int ): void {
 		$this->debug_level = $int;
 	}
 
-	public function set_log_file( $filename ) {
+	public function set_log_file( $filename ): void {
 		$this->logfile = $filename;
 	}
 
-	public function set_remoteip( $remoteip ) {
+	public function set_remoteip( $remoteip ): void {
 		$this->remoteip = $remoteip;
 	}
 
