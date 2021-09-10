@@ -626,4 +626,3 @@ class transposh_utils {
 
 }
 
-?>

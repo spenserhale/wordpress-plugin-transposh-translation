@@ -51,4 +51,4 @@ class tpw_default extends transposh_base_widget {
 
 }
 
-?>
+

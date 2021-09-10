@@ -171,4 +171,3 @@ $GLOBALS['tp_logger'] = tp_logger::getInstance( true );
   $GLOBALS['tp_logger'] = tp_logger::getInstance(true);
   $GLOBALS['tp_logger']->show_caller = true;
  */
-?>

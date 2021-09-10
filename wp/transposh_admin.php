@@ -1233,4 +1233,3 @@ class transposh_plugin_admin {
 
 }
 
-?>

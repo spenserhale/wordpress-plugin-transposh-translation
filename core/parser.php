@@ -1128,4 +1128,3 @@ class tp_parser {
 
 }
 
-?>

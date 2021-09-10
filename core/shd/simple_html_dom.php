@@ -1269,4 +1269,3 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 	}
 }
-?>

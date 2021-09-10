@@ -258,4 +258,3 @@ class transposh_postpublish {
 
 }
 
-?>
