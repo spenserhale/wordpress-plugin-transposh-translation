@@ -151,8 +151,8 @@ class transposh_utils {
 		$enable_permalinks_rewrite,
 		string $lang,
 		bool $is_edit,
-		bool $use_params_only
-	) {
+		bool $use_params_only = false
+	): string {
 		tp_logger( "rewrite old url: $url, permalinks: $enable_permalinks_rewrite, lang: $lang, is_edit: $is_edit, home_url: $home_url",
 			5 );
 

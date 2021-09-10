@@ -269,7 +269,8 @@ class transposh_plugin_widget extends WP_Widget {
 					$page_url,
 					$this->transposh->home_url,
 					$this->transposh->enable_permalinks_rewrite,
-					$this->transposh->options->is_default_language( $code ) ? '' : $code, $this->transposh->edit_mode
+					$this->transposh->options->is_default_language( $code ) ? '' : $code,
+					$this->transposh->edit_mode
 				);
 				$widget_args[] = array(
 					'lang'     => $langname,
