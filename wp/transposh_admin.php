@@ -475,8 +475,7 @@ class transposh_plugin_admin {
 		$this->header( __( 'Default Language (drag another language here to make it default)', TRANSPOSH_TEXT_DOMAIN ),
 			'languages' );
 		echo '<ul id="default_list"><li id="' . $this->transposh->options->default_language . '" class="languages">'
-		     . transposh_utils::display_flag( "{$this->transposh->transposh_plugin_url}/img/flags", $flag,
-				$langorigname/* $this->transposh->options->get_widget_css_flags() */ )
+		     . transposh_utils::display_flag( "{$this->transposh->transposh_plugin_url}/img/flags", $flag, $langorigname, false)
 		     . '<input type="hidden" name="languages[]" value="' . $this->transposh->options->default_language . '" />'
 		     . '&nbsp;<span class="langname">' . $langorigname . '</span><span class="langname hidden">' . $langname . '</span></li>';
 		echo '</ul></div>';
@@ -492,8 +491,7 @@ class transposh_plugin_admin {
 			[ $langname, $langorigname, $flag ] = explode( ",", $langrecord );
 			echo '<li id="' . $langcode . '" class="languages ' . ( $this->transposh->options->is_active_language( $langcode ) || $this->transposh->options->is_default_language( $langcode ) ? "lng_active" : "" )
 			     . '"><div style="float:' . $this->localeleft . '">'
-			     . transposh_utils::display_flag( "{$this->transposh->transposh_plugin_url}/img/flags", $flag,
-					false /* $langorigname,$this->transposh->options->get_widget_css_flags() */ )
+			     . transposh_utils::display_flag( "{$this->transposh->transposh_plugin_url}/img/flags", $flag, false, false)
 			     // DOC THIS BUGBUG fix!
 			     . '<input type="hidden" name="languages[]" value="' . $langcode . ( $this->transposh->options->is_active_language( $langcode ) ? ",v" : "," ) . '" />'
 			     . '&nbsp;<span class="langname">' . $langorigname . '</span><span class="langname hidden">' . $langname . '</span></div>';
