@@ -667,19 +667,20 @@ class transposh_consts {
 				'vi'
 			),
 			//<li><a href="###" class="data-lang" value="wyw">文言文</a></li>  //wyw - old chinese
-			'langconv' => array( 'ar'    => 'ara',
-			                     'et'    => 'est',
-			                     'bg'    => 'bul',
-			                     'da'    => 'dan',
-			                     'fr'    => 'fra',
-			                     'fi'    => 'fin',
-			                     'ko'    => 'kor',
-			                     'ro'    => 'rom',
-			                     'sv'    => 'swe',
-			                     'sl'    => 'slo',
-			                     'es'    => 'spa',
-			                     'zh-tw' => 'cht',
-			                     'vi'    => 'vie'
+			'langconv' => array(
+				'ar'    => 'ara',
+				'et'    => 'est',
+				'bg'    => 'bul',
+				'da'    => 'dan',
+				'fr'    => 'fra',
+				'fi'    => 'fin',
+				'ko'    => 'kor',
+				'ro'    => 'rom',
+				'sv'    => 'swe',
+				'sl'    => 'slo',
+				'es'    => 'spa',
+				'zh-tw' => 'cht',
+				'vi'    => 'vie'
 			)
 		),
 		'y' => array(

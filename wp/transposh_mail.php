@@ -54,7 +54,12 @@ class transposh_mail {
 	 * @param  string  $lang
 	 * @param  string  $translated_by
 	 */
-	public function transposh_mail_humantranslation( string $translation, string $original, string $lang, string $translated_by ): void {
+	public function transposh_mail_humantranslation(
+		string $translation,
+		string $original,
+		string $lang,
+		string $translated_by
+	): void {
 		// if this option is off, no mail should be sent on translation
 		if ( ! $this->transposh->options->mail_ontranslate ) {
 			return;
@@ -83,7 +88,7 @@ class transposh_mail {
 	 *
 	 * @return array
 	 */
-	public function transposh_mail_filter(array $args ):array {
+	public function transposh_mail_filter( array $args ): array {
 		return array(
 			'to'          => $args['to'],
 			'subject'     => transposh_utils::clean_breakers( $args['subject'] ),

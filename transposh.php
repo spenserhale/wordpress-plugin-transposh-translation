@@ -673,7 +673,7 @@ class transposh_plugin {
 						$bestlang = transposh_utils::prefered_language( explode( ',',
 							$this->options->viewable_languages ), $this->options->default_language );
 						// we won't redirect if we should not, or this is a presumable bot
-					} elseif ( $this->options->enable_geoip_redirect && function_exists('geoip_detect2_get_info_from_current_ip') ) {
+					} elseif ( $this->options->enable_geoip_redirect && function_exists( 'geoip_detect2_get_info_from_current_ip' ) ) {
 						$country  = geoip_detect2_get_info_from_current_ip()->country->isoCode;
 						$bestlang = transposh_utils::language_from_country( explode( ',',
 							$this->options->viewable_languages ), $country, $this->options->default_language );
@@ -1429,12 +1429,12 @@ class transposh_plugin {
 	 * Support for tp shortcodes - [tp]
 	 * @see http://trac.transposh.org/wiki/ShortCodes
 	 *
-	 * @param  array  $atts
+	 * @param  array|string  $atts
 	 * @param  string|null  $content
 	 *
 	 * @return string
 	 */
-	public function tp_shortcode( array $atts, string $content = null ): string {
+	public function tp_shortcode( $atts, string $content = null ): string {
 		$only_class = '';
 		$lang       = '';
 		$nt_class   = '';
@@ -1448,12 +1448,12 @@ class transposh_plugin {
 
 		if ( isset( $atts['not_in'] ) && $this->target_language && stripos( $atts['not_in'],
 				$this->target_language ) !== false ) {
-					return;
-				}
+			return '';
+		}
 
 		if ( isset( $atts['locale'] ) || in_array( 'locale', $atts ) ) {
 			if ( isset( $atts['lang'] ) && stripos( $atts['lang'], $this->target_language ) === false ) {
-				return;
+				return '';
 			}
 
 			return get_locale();
@@ -1461,7 +1461,7 @@ class transposh_plugin {
 
 		if ( isset( $atts['mylang'] ) || in_array( 'mylang', $atts ) ) {
 			if ( isset( $atts['lang'] ) && stripos( $atts['lang'], $this->target_language ) === false ) {
-				return;
+				return '';
 			}
 
 			return $this->target_language;
@@ -2142,6 +2142,7 @@ class transposh_plugin {
 
 	// Set our cookie and return (if no js works - or we are in the default language)
 	public function on_ajax_nopriv_tp_cookie_bck(): void {
+		global $my_transposh_plugin;
 		setcookie( 'TR_LNG', transposh_utils::get_language_from_url( $_SERVER['HTTP_REFERER'], $this->home_url ),
 			time() + 90 * 24 * 60 * 60, COOKIEPATH, COOKIE_DOMAIN );
 		if ( $_SERVER['HTTP_REFERER'] ) {

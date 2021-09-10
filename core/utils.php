@@ -340,7 +340,12 @@ class transposh_utils {
 	 *
 	 * @return string translated url permalink
 	 */
-	public static function translate_url( string $href, string $home_url, string $target_language, callable $fetch_translation_func ): string {
+	public static function translate_url(
+		string $href,
+		string $home_url,
+		string $target_language,
+		callable $fetch_translation_func
+	): string {
 		$url       = '';
 		$querypart = '';
 		$fragment  = '';
@@ -401,7 +406,12 @@ class transposh_utils {
 	 *
 	 * @return string
 	 */
-	public static function get_original_url( string $href, string $home_url, string $target_language, callable $fetch_translation_func ): string {
+	public static function get_original_url(
+		string $href,
+		string $home_url,
+		string $target_language,
+		callable $fetch_translation_func
+	): string {
 		$href   = substr( $href, strlen( $home_url ) );
 		$url    = stripslashes( urldecode( $href ) );
 		$params = ( $pos = strpos( $url, '?' ) ) ? substr( $url, $pos ) : '';

@@ -208,7 +208,7 @@ if ( ! function_exists( "file_get_html" ) ) {
 		}
 
 		// get dom node's outer text (with tag)
-		public function outertext() {
+		public function outertext(): string {
 			if ( $this->tag === 'root' ) {
 				return $this->innertext();
 			}
@@ -674,16 +674,23 @@ if ( ! function_exists( "file_get_html" ) ) {
 		protected string $token_slash = " />\r\n\t";
 		protected string $token_attr = ' >';
 		// use isset instead of in_array, performance boost about 30%...
-		protected array $self_closing_tags = array( 'img'    => 1,
-		                                            'br'     => 1,
-		                                            'input'  => 1,
-		                                            'meta'   => 1,
-		                                            'hr'     => 1,
-		                                            'base'   => 1,
-		                                            'embed'  => 1,
-		                                            'spacer' => 1
+		protected array $self_closing_tags = array(
+			'img'    => 1,
+			'br'     => 1,
+			'input'  => 1,
+			'meta'   => 1,
+			'hr'     => 1,
+			'base'   => 1,
+			'embed'  => 1,
+			'spacer' => 1
 		);
-		protected array $block_tags = array( 'root' => 1, 'body' => 1, 'form' => 1, 'div' => 1, 'span' => 1, 'table' => 1 );
+		protected array $block_tags = array( 'root'  => 1,
+		                                     'body'  => 1,
+		                                     'form'  => 1,
+		                                     'div'   => 1,
+		                                     'span'  => 1,
+		                                     'table' => 1
+		);
 		protected array $optional_closing_tags = array(
 			'tr'   => array( 'tr' => 1, 'td' => 1, 'th' => 1 ),
 			'th'   => array( 'th' => 1 ),

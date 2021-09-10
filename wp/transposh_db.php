@@ -1143,10 +1143,10 @@ class transposh_database {
 		$translation = esc_sql( html_entity_decode( $translation, ENT_NOQUOTES, 'UTF-8' ) );
 		$source      = 0;
 		// for now - just update it...
-		$values    .= "('" . $original . "','" . $translation . "','" . $lang . "','" . $source . "')";
-		$delvalues .= "(original ='$original' AND lang='$lang')";
+		$values    = "('" . $original . "','" . $translation . "','" . $lang . "','" . $source . "')";
+		$delvalues = "(original ='$original' AND lang='$lang')";
 		// Setting the transaction log records
-		$logvalues .= "('" . $original . "','" . $translation . "','" . $lang . "','" . $by . "',FROM_UNIXTIME(" . $timestamp . "),'" . $source . "')";
+		$logvalues = "('" . $original . "','" . $translation . "','" . $lang . "','" . $by . "',FROM_UNIXTIME(" . $timestamp . "),'" . $source . "')";
 
 		$update = "DELETE FROM " . $this->translation_table . " WHERE $delvalues";
 		tp_logger( $update );

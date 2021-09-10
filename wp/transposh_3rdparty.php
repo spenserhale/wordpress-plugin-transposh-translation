@@ -306,7 +306,7 @@ class transposh_3rdparty {
 	 * }
 	 * -------------------------------------------------------------------------
 	 *
-	 * @param array $yoast_url Object containing the page information
+	 * @param  array  $yoast_url  Object containing the page information
 	 */
 	public function add_yoast_transposh_urls( array $yoast_url ): array {
 		tp_logger( "in sitemap add url: " . $yoast_url['loc'] . " " . $yoast_url['pri'], 2 );
