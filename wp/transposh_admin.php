@@ -617,7 +617,7 @@ class transposh_plugin_admin {
 				, __( 'This enables auto detection of language based on IP Geo detection. ' .
 				      'This will redirect the first page accessed in the session to the same page with the detected language.',
 					TRANSPOSH_TEXT_DOMAIN ) );
-			$isocode  = geoip_detect2_get_info_from_current_ip()->country->isoCode;
+			$isocode  = geoip_detect2_get_info_from_ip()->country->isoCode;
 			$bestlang = transposh_utils::language_from_country( explode( ',',
 				$this->transposh->options->viewable_languages ), $isocode,
 				$this->transposh->options->default_language );

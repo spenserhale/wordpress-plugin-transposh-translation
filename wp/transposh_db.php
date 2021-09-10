@@ -111,7 +111,7 @@ class transposh_database {
 				return false;
 			}
 			tp_logger( 'apcu', 5 );
-		} elseif ( function_exists( 'xcache_get' ) ) {
+		} elseif ( function_exists( 'xcache_isset' ) ) {
 			$rc = @xcache_isset( $key );
 			if ( $rc === false ) {
 				return false;
