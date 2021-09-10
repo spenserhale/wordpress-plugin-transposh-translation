@@ -36,10 +36,10 @@ class tp_logger {
 	/** @var boolean shell we show which function called the logger */
 	public $show_caller = true;
 
-	/** @var used for remote firephp debugging */
+	/** @var string for remote firephp debugging */
 	private $remoteip;
 
-	/** @var logger Singelton instance of our logger */
+	/** @var tp_logger Singelton instance of our logger */
 	protected static $instance = null;
 
 	public function __construct() {
@@ -118,9 +118,9 @@ class tp_logger {
 	 *
 	 * @param  boolean  $AutoCreate
 	 *
-	 * @return logger
+	 * @return tp_logger
 	 */
-	public static function getInstance( $AutoCreate = false ): ?\logger {
+	public static function getInstance( bool $AutoCreate ): ?tp_logger {
 		if ( $AutoCreate === true && ! self::$instance ) {
 			self::init();
 		}
@@ -130,9 +130,9 @@ class tp_logger {
 
 	/**
 	 * Creates logger object and stores it for singleton access
-	 * @return logger
+	 * @return tp_logger
 	 */
-	public static function init() {
+	public static function init(): tp_logger {
 		return self::$instance = new self();
 	}
 
